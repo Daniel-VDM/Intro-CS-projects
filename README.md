@@ -1,4 +1,4 @@
-# Overview of Contents
+# Overview
 
 ##### SHORT DESCRIPTION OF EACH FOLDER  #####
 
