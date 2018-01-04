@@ -1,5 +1,4 @@
-# My_Cal_Projects
-All of my projects done at UC Berkeley
+# Overview of Contents
 
 ##### SHORT DESCRIPTION OF EACH FOLDER  #####
 
