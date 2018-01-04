@@ -1,4 +1,4 @@
-# -CS61A-Maps
+# -Project-Maps
 Second major project for Structure and Interpretation of Computer Programs
 
 ************************************************
@@ -30,7 +30,7 @@ Short Description of each file:
 
 ##### PERSONAL NOTE #####
 
-Disclaimer:  All projects in CS61A at UC Berkeley were NOT done from scratch. Instead, students had to create core logic algorithms using the tools provided and learned. Furthermore, a testing program is provided alongside the project (called 'okpy') to ensure that the algorithms functions as desired. 
+Disclaimer:  All projects in CS61A (Structure and Interpretation of Computer Programs) at UC Berkeley were NOT done from scratch. Instead, students had to create core logic algorithms using the tools provided and learned. Furthermore, a testing program is provided alongside the project (called 'okpy') to ensure that the algorithms functions as desired. 
 
   
 This project introduced the concept of data abstraction, in which we had to create and use our own data abstraction. It was a precursor to learning and using the object system in Python. Furthermore, it exposed me to the methods of machine learning as well as working on a larger project. 

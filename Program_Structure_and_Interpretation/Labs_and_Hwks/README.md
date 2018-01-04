@@ -1,7 +1,7 @@
-# -CS61A-Labs_and_Hwks
+# Labs_and_Hwks
 Miscellaneous Labs and Homework code
 
-This displays my knowledge of 3 programming languages, thus 3 programming paradigms: Python (Object Oriented Programming), Scheme (Functional Programming), and SQL (Declarative Programming). 
+This displays my knowledge of 3 programming languages, thus 3 programming paradigms: Python (mostly Object Oriented Programming), Scheme (Functional Programming), and SQL (Declarative Programming). 
 
 
 ##### Personal Note #####

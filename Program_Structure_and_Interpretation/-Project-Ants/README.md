@@ -1,4 +1,4 @@
-# -CS61A-Ants
+# -Project-Ants
 Third major project for Structure and Interpretation of Computer Programs
 
 ************************************************
@@ -31,7 +31,7 @@ Short Description of each file:
 
 ##### PERSONAL NOTE #####
 
-Disclaimer:  All projects in CS61A at UC Berkeley were NOT done from scratch. Instead, students had to create core logic algorithms using the tools provided and learned. Furthermore, a testing program is provided alongside the project (called 'okpy') to ensure that the algorithms functions as desired. 
+Disclaimer:  All projects in CS61A (Structure and Interpretation of Computer Programs) at UC Berkeley were NOT done from scratch. Instead, students had to create core logic algorithms using the tools provided and learned. Furthermore, a testing program is provided alongside the project (called 'okpy') to ensure that the algorithms functions as desired. 
   
 This project built on the idea of data abstraction and untalized the object system in Python instead of abstract data types. 
 
