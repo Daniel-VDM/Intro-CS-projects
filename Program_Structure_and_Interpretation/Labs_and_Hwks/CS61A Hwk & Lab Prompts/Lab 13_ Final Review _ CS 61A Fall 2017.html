@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<!-- saved from url=(0028)https://cs61a.org/lab/lab13/ -->
+<html lang="en" class="gr__cs61a_org"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="CS 61A: Structure and Interpretation of Computer Programs">
+    <meta name="keywords" content="CS 61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS">
+    <meta name="author" content="John DeNero, Paul Hilfinger">
+    
+    <meta name="viewport" content="width=device-width">
+
+    <script src="./Lab 13_ Final Review _ CS 61A Fall 2017_files/jquery.min.js.download"></script>
+    <script src="./Lab 13_ Final Review _ CS 61A Fall 2017_files/bootstrap.min.js.download"></script>
+    <script src="./Lab 13_ Final Review _ CS 61A Fall 2017_files/highlight.min.js.download"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="./Lab 13_ Final Review _ CS 61A Fall 2017_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./Lab 13_ Final Review _ CS 61A Fall 2017_files/css">
+    <link rel="stylesheet" href="./Lab 13_ Final Review _ CS 61A Fall 2017_files/style.css">
+    <link rel="stylesheet" href="./Lab 13_ Final Review _ CS 61A Fall 2017_files/mono-blue.css">
+    <link rel="icon" href="https://cs61a.org/assets/images/favicon.ico">
+
+    
+
+    <title>
+Lab 13: Final Review | CS 61A Fall 2017
+</title>
+  </head>
+
+  <body id="index" class="home" data-gr-c-s-loaded="true">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://cs61a.org/">CS 61A</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+            <li><a href="https://cs61a.org/resources.html">Resources</a></li>
+            <li><a href="https://cs61a.org/articles/about.html">Policies</a></li>
+            <li><a href="http://tutor.cs61a.org/">Tutor</a></li>
+            <li><a href="https://piazza.com/berkeley/fall2017/cs61a" target="_blank">Piazza</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class="row">
+  <div class="col-md-9">
+    <header>
+      <h1>
+        
+Lab 13: Final Review
+
+        
+        <ul class="inline-block list-inline">
+          <li><a href="https://cs61a.org/lab/lab13/lab13.zip" class="label label-outline">lab13.zip</a></li>
+        </ul>
+        
+      </h1>
+    </header>
+    
+
+<p><i>Due at 11:59pm on Friday, 12/01/17.</i></p>
+
+
+<h2 id="starter-files">Starter Files</h2>
+
+
+<p>Download <a href="https://cs61a.org/lab/lab13/lab13.zip">lab13.zip</a>.
+Inside the archive, you will find starter files for the questions in this lab,
+  along with a copy of the <a href="https://cs61a.org/lab/lab13/ok">Ok</a> autograder.</p>
+
+
+<h2 id="submission">Submission</h2>
+
+<p>By the end of this lab, you should have submitted the lab with
+<code>python3 ok --submit</code>. You may submit more than once before the
+deadline; only the final submission will be graded.
+Check that you have successfully submitted your code on
+<a href="https://okpy.org/">okpy.org</a>.</p>
+
+<ul>
+  <li>To receive credit for this lab, you must complete Questions 1-4 in <a href="https://cs61a.org/lab/lab13/lab13.py">lab13.py</a> 
+  and <a href="https://cs61a.org/lab/lab13/lab13.scm">lab13.scm</a> and submit through OK.</li>
+  <li>Question 5-7 are considered <strong>extra practice</strong>.
+  They can be found in the <a href="https://cs61a.org/lab/lab13/lab13_extra.scm">lab13_extra.scm</a> and 
+  <a href="https://cs61a.org/lab/lab13/lab13_extra.sql">lab13_extra.sql</a> files. It is recommended that you complete 
+  them on your own time.</li>
+</ul>
+
+
+
+    
+<h1 id="required-questions">Required Questions</h1>
+
+
+
+<h2 id="scheme">Scheme</h2>
+
+<p>These questions are to be done in <code>lab13.scm</code>.
+</p><h3 class="question" id="q1">Q1: Compose All</h3><p></p>
+
+<p>Implement <code>compose-all</code>, which takes a list of one-argument functions and
+returns a one-argument function that applies each function in that list in turn
+to its argument. For example, if <code>func</code> is the result of calling <code>compose-all</code> on a list of functions <code>(f g h)</code>, then <code>(func x)</code> should be equivalent to the result of calling <code>(h (g (f x)))</code>.</p>
+
+
+
+<pre><code class="hljs makefile">(<span class="hljs-keyword">define</span> (compose-all funcs)
+<div class="alt solution-1">  'YOUR-CODE-HERE
+  nil
+</div><div class="solution solution-1">  (lambda (x)
+    (if (null? funcs)
+        x
+        ((compose-all (cdr funcs)) ((car funcs) x))))</div>)</code></pre>
+
+
+        <button id="solution-1" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q compose-all</code></pre>
+
+<h3 class="question" id="q2">Q2: Deep Map</h3>
+
+<p>Write the function <code>deep-map</code>, which takes a function <code>fn</code> and a nested list
+<code>s</code>. A nested list is a list where each element is either a number or a list
+(e.g. <code>(1 (2) 3)</code> where <code>1</code>, <code>(2)</code>, and <code>3</code> are the elements). It returns a list
+with identical structure to <code>s</code>, but replacing each non-list element by the
+result of applying <code>fn</code> on it, even for elements within sub-lists. For example:</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> (define (double x) (* 2 x))</span>
+double
+<span class="hljs-meta">scm&gt;</span><span class="bash"> (deep-map double <span class="hljs-string">'(2 (3 4)))</span></span>
+(4 (6 8))</code></pre>
+
+<p>Assume that the input has no dotted (malformed) lists.</p>
+
+<blockquote><p><em>Hint</em>: You can use the function <code>list?</code>, which checks if a value
+is a list.</p></blockquote>
+
+
+
+<pre><code class="hljs makefile">(<span class="hljs-keyword">define</span> (deep-map fn s)
+<div class="alt solution-2">  'YOUR-CODE-HERE
+  nil
+</div><div class="solution solution-2">  (cond ((null? s) s)
+        ((list? (car s)) (cons (deep-map fn (car s))
+                               (deep-map fn (cdr s))))
+        (<span class="hljs-keyword">else</span> (cons (fn (car s))
+                    (deep-map fn (cdr s)))))</div>)</code></pre>
+
+
+        <button id="solution-2" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q deep-map</code></pre>
+
+
+<h2 id="generators">Generators</h2>
+
+<p>These questions are to be done in <code>lab13.py</code>.
+</p><h3 class="question" id="q3">Q3: Generators generator</h3><p></p>
+
+<p>Write the function <code>make_generators_generator</code>, which takes a generator
+function <code>g</code> and defines a generator which yields generators. The <code>i</code>th generator 
+yielded will generate items 1 through <code>i</code> yielded by the
+generator returned by <code>g</code>.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">make_generators_generator</span><span class="hljs-params">(g)</span>:</span>
+    <span class="hljs-string">"""Generates all the "sub"-generators of the generator returned by
+    the generator function g.
+
+    &gt;&gt;&gt; def ints_to(n):
+    ...     for i in range(1, n + 1):
+    ...          yield i
+    ...
+    &gt;&gt;&gt; def ints_to_5():
+    ...     for item in ints_to(5):
+    ...         yield item
+    ...
+    &gt;&gt;&gt; for gen in make_generators_generator(ints_to_5):
+    ...     print("Next Generator:")
+    ...     for item in gen:
+    ...         print(item)
+    ...
+    Next Generator:
+    1
+    Next Generator:
+    1
+    2
+    Next Generator:
+    1
+    2
+    3
+    Next Generator:
+    1
+    2
+    3
+    4
+    Next Generator:
+    1
+    2
+    3
+    4
+    5
+    """</span>
+<div class="alt solution-3">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-3">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gen</span><span class="hljs-params">(i)</span>:</span>
+        <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> g():
+            <span class="hljs-keyword">if</span> i &lt;= <span class="hljs-number">0</span>:
+                <span class="hljs-keyword">break</span>
+            <span class="hljs-keyword">yield</span> item
+            i -= <span class="hljs-number">1</span>
+    i = <span class="hljs-number">1</span>
+    <span class="hljs-keyword">for</span> item <span class="hljs-keyword">in</span> g():
+        <span class="hljs-keyword">yield</span> gen(i)
+        i += <span class="hljs-number">1</span></div></code></pre>
+
+
+        <button id="solution-3" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q make_generators_generator</code></pre>
+<h3 class="question" id="q4">Q4: Generate Permutations</h3>
+
+<p>Given a list of unique elements, a <em>permutation</em> of the list is a
+reordering of the elements. For example, <code>[2, 1, 3]</code>, <code>[1, 3, 2]</code>, and
+<code>[3, 2, 1]</code> are all permutations of the list <code>[1, 2, 3]</code>.</p>
+
+<p>Implement <code>permutations</code>, a generator function that takes in a <code>lst</code> and outputs
+all permutations of <code>lst</code>, each as a list (see doctest for an example).</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">permutations</span><span class="hljs-params">(lst)</span>:</span>
+    <span class="hljs-string">"""Generates all permutations of sequence LST. Each permutation is a
+    list of the elements in LST in a different order.
+
+    The order of the permutations does not matter.
+
+    &gt;&gt;&gt; sorted(permutations([1, 2, 3]))
+    [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]
+    &gt;&gt;&gt; type(permutations([1, 2, 3]))
+    &lt;class 'generator'&gt;
+    &gt;&gt;&gt; sorted(permutations((10, 20, 30)))
+    [[10, 20, 30], [10, 30, 20], [20, 10, 30], [20, 30, 10], [30, 10, 20], [30, 20, 10]]
+    &gt;&gt;&gt; sorted(permutations("ab"))
+    [['a', 'b'], ['b', 'a']]
+    """</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> lst:
+        <span class="hljs-keyword">yield</span> []
+        <span class="hljs-keyword">return</span>
+<div class="alt solution-4">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-4">    <span class="hljs-keyword">for</span> perm <span class="hljs-keyword">in</span> permutations(lst[<span class="hljs-number">1</span>:]):
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(lst)):
+            <span class="hljs-keyword">yield</span> perm[:i] + [lst[<span class="hljs-number">0</span>]] + perm[i:]</div></code></pre>
+
+
+        <button id="solution-4" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>The order in which you generate permutations is irrelevant.</p>
+
+<blockquote><p><strong>Hint:</strong> If you had the permutations of <code>lst</code> minus one element, how could
+you use that to generate the permutations of the full <code>lst</code>?</p></blockquote>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q permutations</code></pre>
+
+
+<h1 id="optional-questions">Optional Questions</h1>
+
+
+
+<h2 id="more-scheme">More Scheme</h2>
+
+<p>This question is to be done in <code>lab13_extra.scm</code>.
+</p><h3 class="question" id="q5">Q5: Tally</h3><p></p>
+
+<p>Implement <code>tally</code>, which takes a list of <code>names</code> and returns a
+list of pairs, one pair for each unique name in <code>names</code>. Each pair should
+contain a name and the number of times that the name appeared in <code>names</code>. Each
+name should appear only once in the output, and the names should be ordered by
+when they first appear in <code>names</code>.</p>
+
+<p><em>Hint</em>: Use the <code>eq?</code> procedure to test if two names are the same.</p>
+
+
+
+<pre><code class="hljs makefile">(<span class="hljs-keyword">define</span> (tally names)
+<div class="alt solution-5">  'YOUR-CODE-HERE
+  nil
+</div><div class="solution solution-5">  (map (lambda (name) (cons name (count name names))) (unique names))</div>)</code></pre>
+
+
+        <button id="solution-5" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p><em>Hint</em>: If you find the procedure getting too complicated,
+you may want to try implementing the <code>count</code> and <code>unique</code> helper procedures to use in
+your solution. You may also want to use <code>map</code> and <code>filter</code> in your solution.</p>
+
+
+
+<pre><code class="hljs sql">; Using this helper procedure is optional. You are allowed to <span class="hljs-keyword">delete</span> it.
+(<span class="hljs-keyword">define</span> (<span class="hljs-keyword">unique</span> s)
+<div class="alt solution-6">  <span class="hljs-string">'YOUR-CODE-HERE
+  nil
+</span></div><div class="solution solution-6"><span class="hljs-string">  (if (null? s) nil
+      (cons (car s)
+            (unique (filter (lambda (x) (not (eq? (car s) x))) (cdr s)))))</span></div><span class="hljs-string">)
+; Using this helper procedure is optional. You are allowed to delete it.
+(define (count name s)
+</span><div class="alt solution-6"><span class="hljs-string">  '</span>YOUR-CODE-HERE
+  nil
+</div><div class="solution solution-6">  (<span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span>? s) <span class="hljs-number">0</span>
+      (+ (<span class="hljs-keyword">if</span> (eq? <span class="hljs-keyword">name</span> (car s)) <span class="hljs-number">1</span> <span class="hljs-number">0</span>)
+         (<span class="hljs-keyword">count</span> <span class="hljs-keyword">name</span> (cdr s))))</div>)</code></pre>
+
+
+        <button id="solution-6" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q tally</code></pre>
+
+
+<h2 id="streams">Streams</h2>
+
+<p>This question is to be done in <code>lab13_extra.scm</code>.
+</p><h3 class="question" id="q6">Q6: Run-Length Encoding</h3><p></p>
+
+<p>Run-length encoding is a very simple data compression technique,
+whereby runs of data are compressed and stored as a single value. A
+<em>run</em> is defined to be a contiguous sequence of the same number. For
+example, in the (finite) sequence</p>
+
+<pre><code class="hljs">1, 1, 1, 1, 1, 6, 6, 6, 6, 2, 5, 5, 5</code></pre>
+
+<p>there are four runs: one each of 1, 6, 2, and 5. We can represent the
+same sequence as a sequence of two-element lists:</p>
+
+<pre><code class="hljs">(1 5), (6 4), (2 1), (5 3)</code></pre>
+
+<p>Notice that the first element of each list is the number of times a
+particular number appears in a run, and the second element is the
+number in the run.</p>
+
+<p>We will extend this idea to (possibly infinite) streams. Write a
+function called <code>rle</code> that takes in a stream of data, and returns a
+corresponding stream of two-element lists, which represents the run-length
+encoded version of the stream. You do not have to consider compressing
+infinite runs.</p>
+
+
+
+<pre><code class="hljs makefile">(<span class="hljs-keyword">define</span> (rle s)
+<div class="alt solution-7">  'YOUR-CODE-HERE
+</div><div class="solution solution-7">  (<span class="hljs-keyword">define</span> (track-run elem st len)
+    (cond ((null? st) (cons-stream (list elem len) nil))
+          ((= elem (car st)) (track-run elem (cdr-stream st) (+ len 1)))
+          (<span class="hljs-keyword">else</span> (cons-stream (list elem len) (rle st))))
+  )
+  (if (null? s)
+      nil
+      (track-run (car s) (cdr-stream s) 1))</div>)</code></pre>
+
+
+        <button id="solution-7" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q rle</code></pre>
+
+
+<h2 id="sql">SQL</h2>
+
+<p>This question is to be done in <code>lab13_extra.sql</code>. Make sure you have your <code>sqlite3.exe</code> file in the folder!
+</p><h3 class="question" id="q7">Q7: Pairs</h3><p></p>
+
+<p>Let’s figure out all possible pairs of numbers between 0 and 42 that sum to 42 (the answer to Life, the Universe, and Everything)!</p>
+
+<p>To do this we can build a <code>pairs</code> table that contains all pairs without duplicates. This means 2,3 appears but 3,2 doesn't. Then we can use a query to select from this <code>pairs</code> table to find the ones that sum to 42.</p>
+
+<p>The first 5 rows should look something like this:</p>
+
+<pre><code class="hljs ruby">sqlite&gt; SELECT * FROM pairs LIMIT <span class="hljs-number">5</span>;
+<span class="hljs-number">0</span><span class="hljs-params">|0
+0|</span><span class="hljs-number">1</span>
+<span class="hljs-number">0</span><span class="hljs-params">|2
+0|</span><span class="hljs-number">3</span>
+<span class="hljs-number">0</span><span class="hljs-params">|4</span></code></pre>
+
+<blockquote><p><em>Hint:</em> You may want to first create a helper table containing all the possible values you might
+want to include in your pairs.</p></blockquote>
+
+<!--
+Try this on your own or with a neighbor in <code>lab12.sql</code>, but if you're short on time, scroll down to check the solution and an explanation.
+
+The first 10 columns should look something like this:
+
+<pre><code>sqlite&gt; SELECT * FROM pairs LIMIT 10;
+0|0
+0|1
+0|2
+0|3
+0|4
+0|5
+0|6
+0|7
+0|8
+0|9</code></pre>
+
+Then we can find all the possible combinations of adding pairs to get to 42 with the following query. Your final <code>pairs</code> table columns should be <code>x</code> and <code>y</code>.
+
+<pre><code>sqlite&gt; SELECT x, y FROM pairs WHERE x + y = 42 LIMIT 10;
+0|42
+1|41
+2|40
+3|39
+4|38
+5|37
+6|36
+7|35
+8|34
+9|33</code></pre>
+
+-->
+
+
+
+<pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> pairs <span class="hljs-keyword">AS</span>
+<div class="alt solution-8">  <span class="hljs-keyword">SELECT</span> <span class="hljs-string">"REPLACE THIS LINE WITH YOUR SOLUTION"</span>;
+</div><div class="solution solution-8">  WITH
+    nums(n) as (
+      <span class="hljs-keyword">SELECT</span> <span class="hljs-number">0</span> <span class="hljs-keyword">UNION</span>
+      <span class="hljs-keyword">SELECT</span> n + <span class="hljs-number">1</span> <span class="hljs-keyword">FROM</span> nums <span class="hljs-keyword">WHERE</span> n &lt; <span class="hljs-number">42</span>
+    )
+  <span class="hljs-keyword">SELECT</span> a.n <span class="hljs-keyword">AS</span> x, b.n <span class="hljs-keyword">AS</span> y <span class="hljs-keyword">FROM</span> nums <span class="hljs-keyword">AS</span> a, nums <span class="hljs-keyword">AS</span> b <span class="hljs-keyword">WHERE</span> a.n &lt;= b.n;</div></code></pre>
+
+
+        <button id="solution-8" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<!--
+The main crux of the problem is to create the <code>pairs</code> table. We first build a helper table <code>nums</code> which will have only one column <code>n</code>. The values will start at 0 and recursively build off of 0 by adding one. The final table will have all the values from 0 to 42, inclusive. We then can use a join to combine the two <code>nums</code> tables, one as <code>a</code> and one as <code>b</code>. By nature using a join will get every possible pair of values, so the final thing we need to do is get rid of duplicates. <code>a.n &lt;= b.n</code> will make sure the first tables number is always less than or equal to the second table and therefore remove duplicates.
+-->
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q pairs</code></pre>
+
+  </div>
+
+  <div class="col-md-3 sticky">
+    <nav class="hidden-print hidden-sm hidden-xs sidebar">
+      <ul class="nav nav-stacked noselect">
+  <li><a href="https://cs61a.org/lab/lab13/#required-questions">Required Questions</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab13/#scheme">Scheme</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab13/#q1">Q1: Compose All</a></li>
+      <li><a href="https://cs61a.org/lab/lab13/#q2">Q2: Deep Map</a></li>
+    </ul>
+    <li><a href="https://cs61a.org/lab/lab13/#generators">Generators</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab13/#q3">Q3: Generators generator</a></li>
+      <li><a href="https://cs61a.org/lab/lab13/#q4">Q4: Generate Permutations</a></li>
+    </ul>
+  </ul>
+  <li><a href="https://cs61a.org/lab/lab13/#optional-questions">Optional Questions</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab13/#more-scheme">More Scheme</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab13/#q5">Q5: Tally</a></li>
+    </ul>
+    <li><a href="https://cs61a.org/lab/lab13/#streams">Streams</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab13/#q6">Q6: Run-Length Encoding</a></li>
+    </ul>
+    <li><a href="https://cs61a.org/lab/lab13/#sql">SQL</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab13/#q7">Q7: Pairs</a></li>
+    </ul>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/resources.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/studying.html">Studying Guide</a></li>
+            <li><a href="https://cs61a.org/articles/debugging.html">Debugging Guide</a></li>
+            <li><a href="https://cs61a.org/articles/composition.html">Composition Guide</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/articles/about.html">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/about.html#assignments">Assignments</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#exams">Exams</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    
+
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+</script>
+
+
+<script>
+  $(function() {
+    var staging_domains = ['staging.cs61a.org', 'localhost', '127.0.0.1'];
+
+    var staging = staging_domains.indexOf(window.location.hostname) != -1;
+    var after_due_date = new Date("12/02/2017") < new Date();
+    var release_solutions = staging || after_due_date;
+
+    if (release_solutions) {
+      $('.toggle').css('display', 'inline-block');
+      $('.toggle').click(function() {
+        var solution_id = $(this).attr('id');
+        $('div.' + solution_id).slideToggle(600);
+      });
+    }
+  });
+</script>
+
+
+  
+</body></html>

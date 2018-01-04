@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<!-- saved from url=(0026)https://cs61a.org/hw/hw13/ -->
+<html lang="en" class="gr__cs61a_org"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="CS 61A: Structure and Interpretation of Computer Programs">
+    <meta name="keywords" content="CS 61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS">
+    <meta name="author" content="John DeNero, Paul Hilfinger">
+    
+    <meta name="viewport" content="width=device-width">
+
+    <script src="./Homework 13 _ CS 61A Fall 2017_files/jquery.min.js.download"></script>
+    <script src="./Homework 13 _ CS 61A Fall 2017_files/bootstrap.min.js.download"></script>
+    <script src="./Homework 13 _ CS 61A Fall 2017_files/highlight.min.js.download"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="./Homework 13 _ CS 61A Fall 2017_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./Homework 13 _ CS 61A Fall 2017_files/css">
+    <link rel="stylesheet" href="./Homework 13 _ CS 61A Fall 2017_files/style.css">
+    <link rel="stylesheet" href="./Homework 13 _ CS 61A Fall 2017_files/mono-blue.css">
+    <link rel="icon" href="https://cs61a.org/assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="./Homework 13 _ CS 61A Fall 2017_files/hw.css">
+
+
+    <title>
+Homework 13 | CS 61A Fall 2017
+</title>
+  </head>
+
+  <body id="index" class="home" data-gr-c-s-loaded="true">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://cs61a.org/">CS 61A</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+            <li><a href="https://cs61a.org/resources.html">Resources</a></li>
+            <li><a href="https://cs61a.org/articles/about.html">Policies</a></li>
+            <li><a href="http://tutor.cs61a.org/">Tutor</a></li>
+            <li><a href="https://piazza.com/berkeley/fall2017/cs61a" target="_blank">Piazza</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class="row">
+  <div class="col-md-9">
+    <header>
+      <h1>
+        
+Homework 13
+
+        
+        <ul class="inline-block list-inline">
+          <li><a href="https://cs61a.org/hw/hw13/hw13.zip" class="label label-outline">hw13.zip</a></li>
+        </ul>
+        
+      </h1>
+    </header>
+    
+<p><em>Due by 11:59pm on Thursday, 11/30</em></p>
+
+
+
+
+<h2>Instructions</h2>
+
+<p>Download <a href="https://cs61a.org/hw/hw13/hw13.zip">hw13.zip</a>.</p>
+
+<p><strong>Submission:</strong> When you are done, submit with
+<code>python3 ok --submit</code>.
+You may submit more than once before the deadline; only the final submission
+will be scored. Check that you have successfully submitted your code on
+<a href="https://okpy.org/">okpy.org</a>.
+See <a href="https://cs61a.org/lab/lab00#submit-the-assignment">Lab 0</a>
+for more instructions on submitting assignments.</p>
+
+<p><strong>Using Ok:</strong> If you have any questions about using Ok, please
+refer to <a href="https://cs61a.org/articles/using-ok.html">this guide.</a>
+
+
+  </p><p><strong>Readings:</strong> You might find the following references
+  useful:</p>
+  <ul>
+  <li><a href="http://composingprograms.com/pages/43-declarative-programming.html">Section 4.3 - Declarative Programming</a></li>
+</ul>
+
+
+
+
+    
+<p>To complete this homework assignment, you will need to use SQLite version
+3.8.3 or greater. See <a href="https://cs61a.org/lab/lab12">Lab 12</a> for setup and usage instructions.</p>
+
+<p>To check your progress, you can run <code>sqlite3</code> directly by running:</p>
+
+<pre><code class="hljs css"><span class="hljs-selector-tag">sqlite3</span> <span class="hljs-selector-tag">--init</span> <span class="hljs-selector-tag">hw13</span><span class="hljs-selector-class">.sql</span></code></pre>
+
+<p>You should also check your work using <code>ok</code>:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok</code></pre>
+
+<p>Also recall that you can perform string concatenation with the || operator:</p>
+
+<pre><code class="hljs ruby">sqlite&gt; SELECT <span class="hljs-string">"hello"</span> <span class="hljs-params">||</span> <span class="hljs-string">" "</span> <span class="hljs-params">||</span> <span class="hljs-string">"world"</span>
+hello world</code></pre>
+
+<h3 class="question" id="q1">Q1: A Friend in Need Requires Turkey Indeed</h3>
+
+<p>One of your friends has made the terrible mistake of booking Thanksgiving plane
+tickets late! However, upon seeing how well you did on your 61A SQL lab, your
+friend asked you to help find the best plane tickets for flying home in this
+darkest of hours.</p>
+
+<p>Of course, you'd like to find the cheapest flight possible, but regardless of
+the savings, you would also like to make sure you don't send your friend on too
+many flight transfers.</p>
+
+<p>Therefore, to help out your friend, find the cheapest set of flights from <strong>SFO
+to PDX</strong> but <strong>do not include options with more than two flights!</strong> You should
+generate a table with the following columns:</p>
+
+<ul>
+  <li>The set of airports that the flights pass through.</li>
+  <li>Total cost of a set of flights.</li>
+</ul>
+
+<p>Be sure to order your table from the <strong>cheapest to most expensive</strong> option.</p>
+
+<p>All of the available flights as well as their prices can be found in the
+<code>flights</code> table.</p>
+
+<p>You should get the following output:</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">sqlite&gt;</span><span class="bash"> SELECT * FROM schedule;</span>
+SFO, SLC, PDX|176
+SFO, LAX, PDX|186
+SFO, PDX|192</code></pre>
+
+<solution>
+
+<pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> schedule <span class="hljs-keyword">AS</span>
+  <span class="hljs-keyword">SELECT</span> <span class="hljs-string">"REPLACE THIS LINE WITH YOUR SOLUTION"</span>;
+</code></pre>
+
+</solution>
+
+<blockquote><p><strong>Hint:</strong> As with before, you may find it helpful to create a table using
+recursive select. What are all the things you need to keep track of? For
+example, it might be helpful to save the number of flights taken on the current
+path.</p>
+
+<p><strong>Hint:</strong> If your table is taking a long time to generate, it might be stuck in a
+loop somewhere. Notice that there are some flight paths that loop, e.g SLC to
+LAX to SLC again. To handle this, consider when you should stop adding rows to
+your table.</p></blockquote>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q schedule</code></pre>
+
+
+
+
+<h2 id="sql-aggregation">SQL Aggregation</h2>
+
+
+<p>Previously, we have been dealing with queries that process one row at a time.
+When we join, we make pairwise combinations of all of the rows. When we use
+<code>WHERE</code>, we filter out certain rows based on the condition. Alternatively,
+applying an <a href="http://www.sqlite.org/lang_aggfunc.html">aggregate function</a>
+such as <code>MAX(column)</code> combines the values in multiple rows.</p>
+
+<p>By default, we combine the values of the <em>entire</em> table. For example, if we
+wanted to count the number of flights from our <code>flights</code> table, we could use:</p>
+
+<pre><code class="hljs cs">sqlite&gt; <span class="hljs-function">SELECT <span class="hljs-title">COUNT</span>(<span class="hljs-params">*</span>) <span class="hljs-keyword">from</span> FLIGHTS</span>;
+<span class="hljs-number">13</span></code></pre>
+
+<p>What if we wanted to group together the values in similar rows and perform the
+aggregation operations within those groups? We use a <code>GROUP BY</code> clause.</p>
+
+<p>Here's another example. For each unique departure, collect all the rows having
+the same departure airport into a group. Then, select the <code>price</code> column and
+apply the <code>MIN</code> aggregation to recover the price of the cheapest departure from
+that group. The end result is a table of departure airports and the cheapest
+departing flight.</p>
+
+<pre><code class="hljs ruby">sqlite&gt; SELECT departure, MIN(price) FROM flights GROUP BY departure;
+AUH<span class="hljs-params">|932
+LAS|</span><span class="hljs-number">50</span>
+LAX<span class="hljs-params">|89
+SEA|</span><span class="hljs-number">32</span>
+SFO<span class="hljs-params">|40
+SLC|</span><span class="hljs-number">42</span></code></pre>
+
+<p>Just like how we can filter out rows with <code>WHERE</code>, we can also filter out
+groups with <code>HAVING</code>. <strong>Important:</strong> A <code>HAVING</code> clause should use an aggregate
+function. Suppose we want to see all airports with at least two departures:</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">sqlite&gt;</span><span class="bash"> SELECT departure FROM flights GROUP BY departure HAVING COUNT(*) &gt;= 2;</span>
+LAX
+SFO
+SLC</code></pre>
+
+<p>Note that the <code>COUNT(*)</code> aggregate just counts the number of rows in each group.
+Say we want to count the number of <em>distinct</em> airports instead. Then, we could
+use the following query:</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">sqlite&gt;</span><span class="bash"> SELECT COUNT(DISTINCT departure) FROM flights;</span>
+6</code></pre>
+
+<p>This enumerates all the different departure airports available in our <code>flights</code>
+table (in this case: SFO, LAX, AUH, SLC, SEA, and LAS).</p>
+
+
+<h3 id="self-restraint">Self Restraint</h3>
+
+
+<p>Tragically, many people find themselves overeating during Thanksgiving. With
+your new knowledge from 61A, you resolve to use SQL and plan a healthier meal!</p>
+
+<p>You are given a table <code>main_course</code> where each row corresponds to a possible
+Thanksgiving meal with two components: the meat and the side dish (in an amazing
+display of restraint, you are limiting yourself to just one side dish). You are
+also given a second table <code>pies</code> containing different types of pies as well as
+their caloric content. The idea is that you will pair the two items consisting
+of your main course (a row of the table <code>main_course</code>) with a pie that you will
+have for dessert. Use SQL's aggregation features to answer the following
+questions.</p>
+
+<h3 class="question" id="q2">Q2: Self Restraint, Part I</h3>
+
+<p>For this first part, we want to know how many selections of meats we have for
+our meal. Use a select statement to see how many different types of meats we
+have in our list of main courses (we would like to point out that the 61A staff
+is inclusive, and we have included tofurky as the "meat" in some meals 🙂).</p>
+
+<p>Store this answer in a one column, one row table called <code>number_of_options</code>.</p>
+
+<solution>
+
+<pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> number_of_options <span class="hljs-keyword">AS</span>
+  <span class="hljs-keyword">SELECT</span> <span class="hljs-string">"REPLACE THIS LINE WITH YOUR SOLUTION"</span>;
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q meals-part1</code></pre>
+
+
+
+<h3 class="question" id="q3">Q3: Self Restraint, Part II</h3>
+
+<p>Use aggregation in a select statement to count the number of "full" meals (i.e
+main course plus a pie) we can make with under 2500 calories total. For example,
+if you have turkey and cranberries along with pumpkin pie, you will have 2000 +
+500 = 2500 calories total (2000 from the main course, 500 from the pie).</p>
+
+<p>Store this answer in a one column, one row table called <code>calories</code>.</p>
+
+<solution>
+
+<pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> calories <span class="hljs-keyword">AS</span>
+  <span class="hljs-keyword">SELECT</span> <span class="hljs-string">"REPLACE THIS LINE WITH YOUR SOLUTION"</span>;
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q meals-part2</code></pre>
+
+
+
+<h3 class="question" id="q4">Q4: Self Restraint, Part III</h3>
+
+<p>We are mainly concerned with what meat is in our planned meal.
+For every type of meat, we want to see how healthy a meal exists with this meat
+(healthier means fewer calories for our purposes). Include this information for
+each meat in a table <code>healthiest_meats</code>.</p>
+
+<p>Also, if it is possible to make ANY full meal of more than 3000 calories (even
+just one) using a certain type of meat, then temptation will take over. For this
+reason, <strong>exclude such types of meat from your table.</strong></p>
+
+<p>In summary:</p>
+
+<ul>
+  <li>The <code>healthiest_meats</code> table should have two columns: meat and total calories.</li>
+  <li>Each row should have a meat and the number of calories of the full meal with
+  the least calories (full meals include pie) involving that type of meat.
+  Finally, exclude meats that are in <strong>any</strong> full meals of more than 3000
+  calories.</li>
+</ul>
+
+<blockquote><p><strong>Note:</strong> Remember that a <code>HAVING</code> clause requires an aggregate function!</p></blockquote>
+
+<solution>
+
+<pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> healthiest_meats <span class="hljs-keyword">AS</span>
+  <span class="hljs-keyword">SELECT</span> <span class="hljs-string">"REPLACE THIS LINE WITH YOUR SOLUTION"</span>;
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q meals-part3</code></pre>
+
+
+
+
+<h3 id="shopping-spree">Shopping Spree</h3>
+
+
+<h3 class="question" id="q5">Q5: Price Check</h3>
+
+<p>After you are full from your Thanksgiving dinner, you realize that you still
+need to buy gifts for all your loved ones over the holidays. However, you also
+want to spend as little money as possible (you're not cheap, just looking for a
+great sale!).</p>
+
+<p>Let's start off by surveying our options. Using the <code>products</code> table, write a
+query that creates a table <code>average_prices</code> that lists categories and the
+average price of items in the category
+(using <a href="https://en.wikipedia.org/wiki/List_price">MSRP</a> as the price).</p>
+
+<p>You should get the following output:</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">sqlite&gt;</span><span class="bash"> SELECT * FROM average_prices;</span>
+computer|109.09
+games|349.99
+phone|89.99</code></pre>
+
+<solution>
+
+<pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> average_prices <span class="hljs-keyword">AS</span>
+  <span class="hljs-keyword">SELECT</span> <span class="hljs-string">"REPLACE THIS LINE WITH YOUR SOLUTION"</span>;
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q cyber-monday-part1</code></pre>
+
+
+
+<h3 class="question" id="q6">Q6: The Price is Right</h3>
+
+<p>Now, you want to figure out which stores sell each item in products for the
+lowest price. Write a SQL query that uses the <code>inventory</code> table to create a
+table <code>lowest_prices</code> that lists items, the stores that sells that item for the
+lowest price, and the price that the store sells that item for.</p>
+
+<p>You should expect the following output:</p>
+
+<pre><code class="hljs ruby">sqlite&gt; SELECT * FROM lowest_prices;
+Hallmart<span class="hljs-params">|GameStation|</span><span class="hljs-number">298.98</span>
+Targive<span class="hljs-params">|QBox|</span><span class="hljs-number">390.98</span>
+Targive<span class="hljs-params">|iBook|</span><span class="hljs-number">110.99</span>
+RestBuy<span class="hljs-params">|kBook|</span><span class="hljs-number">94.99</span>
+Hallmart<span class="hljs-params">|qPhone|</span><span class="hljs-number">85.99</span>
+Hallmart<span class="hljs-params">|rPhone|</span><span class="hljs-number">69.99</span>
+RestBuy<span class="hljs-params">|uPhone|</span><span class="hljs-number">89.99</span>
+RestBuy<span class="hljs-params">|wBook|</span><span class="hljs-number">114.29</span></code></pre>
+
+<solution>
+
+<pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> lowest_prices <span class="hljs-keyword">AS</span>
+  <span class="hljs-keyword">SELECT</span> <span class="hljs-string">"REPLACE THIS LINE WITH YOUR SOLUTION"</span>;
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q cyber-monday-part2</code></pre>
+
+
+
+<h3 class="question" id="q7">Q7: Bang for your Buck</h3>
+
+<p>You want to make a shopping list by choosing the item that is the best deal
+possible for every category. For example, for the "phone" category, the uPhone
+is the best deal because the MSRP price of a uPhone divided by its ratings
+yields the lowest cost. That means that uPhones cost the lowest money per rating
+point out of all of the phones.</p>
+
+<p>Write a query to create a table <code>shopping_list</code> that lists the items that you
+want to buy from each category.</p>
+
+<p>After you've figured out which item you want to buy for each category, add
+another column that lists the store that sells that item for the lowest price.</p>
+
+<p>You should expect the following output:</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">sqlite&gt;</span><span class="bash"> SELECT * FROM shopping_list;</span>
+GameStation|Hallmart
+uPhone|RestBuy
+wBook|RestBuy</code></pre>
+
+<solution>
+
+<pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> shopping_list <span class="hljs-keyword">AS</span>
+  <span class="hljs-keyword">SELECT</span> <span class="hljs-string">"REPLACE THIS LINE WITH YOUR SOLUTION"</span>;
+</code></pre>
+
+</solution>
+
+<blockquote><p><strong>Hint</strong>: You should use the <code>lowest_prices</code> table you created in the previous
+question.</p></blockquote>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q cyber-monday-part3</code></pre>
+
+
+
+<h3 class="question" id="q8">Q8: Driving the Cyber Highways</h3>
+
+<p>Using the Mb (megabits) column from the <code>stores</code> table, write a query to
+calculate the total amount of bandwidth needed to get everything in your
+shopping list.</p>
+
+<solution>
+
+<pre><code class="hljs sql"><span class="hljs-keyword">CREATE</span> <span class="hljs-keyword">TABLE</span> total_bandwidth <span class="hljs-keyword">AS</span>
+  <span class="hljs-keyword">SELECT</span> <span class="hljs-string">"REPLACE THIS LINE WITH YOUR SOLUTION"</span>;
+</code></pre>
+
+</solution>
+
+<blockquote><p><strong>Hint</strong>: You should use the <code>shopping_list</code> table you created in the
+previous question.</p></blockquote>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q cyber-monday-part4</code></pre>
+
+
+
+  </div>
+
+  <div class="col-md-3 sticky">
+    <nav class="hidden-print hidden-sm hidden-xs sidebar">
+      <ul class="nav nav-stacked noselect">
+  <li><a href="https://cs61a.org/hw/hw13/#q1">Q1: A Friend in Need Requires Turkey Indeed</a></li>
+  <li><a href="https://cs61a.org/hw/hw13/#sql-aggregation">SQL Aggregation</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/hw/hw13/#self-restraint">Self Restraint</a></li>
+    <li><a href="https://cs61a.org/hw/hw13/#q2">Q2: Self Restraint, Part I</a></li>
+    <li><a href="https://cs61a.org/hw/hw13/#q3">Q3: Self Restraint, Part II</a></li>
+    <li><a href="https://cs61a.org/hw/hw13/#q4">Q4: Self Restraint, Part III</a></li>
+    <li><a href="https://cs61a.org/hw/hw13/#shopping-spree">Shopping Spree</a></li>
+    <li><a href="https://cs61a.org/hw/hw13/#q5">Q5: Price Check</a></li>
+    <li><a href="https://cs61a.org/hw/hw13/#q6">Q6: The Price is Right</a></li>
+    <li><a href="https://cs61a.org/hw/hw13/#q7">Q7: Bang for your Buck</a></li>
+    <li><a href="https://cs61a.org/hw/hw13/#q8">Q8: Driving the Cyber Highways</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/resources.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/studying.html">Studying Guide</a></li>
+            <li><a href="https://cs61a.org/articles/debugging.html">Debugging Guide</a></li>
+            <li><a href="https://cs61a.org/articles/composition.html">Composition Guide</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/articles/about.html">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/about.html#assignments">Assignments</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#exams">Exams</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+</script>
+
+  
+</body></html>

@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<!-- saved from url=(0026)https://cs61a.org/hw/hw05/ -->
+<html lang="en" class="gr__cs61a_org"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="CS 61A: Structure and Interpretation of Computer Programs">
+    <meta name="keywords" content="CS 61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS">
+    <meta name="author" content="John DeNero, Paul Hilfinger">
+    
+    <meta name="viewport" content="width=device-width">
+
+    <script src="./Homework 5 _ CS 61A Fall 2017_files/jquery.min.js.download"></script>
+    <script src="./Homework 5 _ CS 61A Fall 2017_files/bootstrap.min.js.download"></script>
+    <script src="./Homework 5 _ CS 61A Fall 2017_files/highlight.min.js.download"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="./Homework 5 _ CS 61A Fall 2017_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./Homework 5 _ CS 61A Fall 2017_files/css">
+    <link rel="stylesheet" href="./Homework 5 _ CS 61A Fall 2017_files/style.css">
+    <link rel="stylesheet" href="./Homework 5 _ CS 61A Fall 2017_files/mono-blue.css">
+    <link rel="icon" href="https://cs61a.org/assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="./Homework 5 _ CS 61A Fall 2017_files/hw.css">
+
+
+    <title>
+Homework 5 | CS 61A Fall 2017
+</title>
+  </head>
+
+  <body id="index" class="home" data-gr-c-s-loaded="true">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://cs61a.org/">CS 61A</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+            <li><a href="https://cs61a.org/resources.html">Resources</a></li>
+            <li><a href="https://cs61a.org/articles/about.html">Policies</a></li>
+            <li><a href="http://tutor.cs61a.org/">Tutor</a></li>
+            <li><a href="https://piazza.com/berkeley/fall2017/cs61a" target="_blank">Piazza</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class="row">
+  <div class="col-md-9">
+    <header>
+      <h1>
+        
+Homework 5
+
+        
+        <ul class="inline-block list-inline">
+          <li><a href="https://cs61a.org/hw/hw05/hw05.zip" class="label label-outline">hw05.zip</a></li>
+        </ul>
+        
+      </h1>
+    </header>
+    
+<p><em>Due by 11:59pm on Wednesday, 9/27</em></p>
+
+
+
+
+<h2>Instructions</h2>
+
+<p>Download <a href="https://cs61a.org/hw/hw05/hw05.zip">hw05.zip</a>.</p>
+
+<p><strong>Submission:</strong> When you are done, submit with
+<code>python3 ok --submit</code>.
+You may submit more than once before the deadline; only the final submission
+will be scored. Check that you have successfully submitted your code on
+<a href="https://okpy.org/">okpy.org</a>.
+See <a href="https://cs61a.org/lab/lab00#submit-the-assignment">Lab 0</a>
+for more instructions on submitting assignments.</p>
+
+<p><strong>Using Ok:</strong> If you have any questions about using Ok, please
+refer to <a href="https://cs61a.org/articles/using-ok.html">this guide.</a>
+
+
+  </p><p><strong>Readings:</strong> You might find the following references
+  useful:</p>
+  <ul>
+  <li><a href="http://composingprograms.com/pages/22-data-abstraction.html">Section 2.2</a></li>
+  <li><a href="http://composingprograms.com/pages/23-sequences.html">Section 2.3</a></li>
+  <li><a href="http://composingprograms.com/pages/24-mutable-data.html">Section 2.4</a></li>
+</ul>
+
+
+
+
+    
+<h1 id="required-questions">Required Questions</h1>
+
+<h3 class="question" id="q1">Q1: Replace Leaf</h3>
+
+<p>Define <code>replace_leaf</code>, which takes a tree <code>t</code>, a value <code>old</code>, and a value <code>new</code>.
+<code>replace_leaf</code> returns a new tree that's the same as <code>t</code> except that every leaf
+value equal to <code>old</code>  has been replaced with <code>new</code>.</p>
+
+<solution>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">replace_leaf</span><span class="hljs-params">(t, old, new)</span>:</span>
+    <span class="hljs-string">"""Returns a new tree where every leaf value equal to old has
+    been replaced with new.
+
+    &gt;&gt;&gt; yggdrasil = tree('odin',
+    ...                  [tree('balder',
+    ...                        [tree('thor'),
+    ...                         tree('loki')]),
+    ...                   tree('frigg',
+    ...                        [tree('thor')]),
+    ...                   tree('thor',
+    ...                        [tree('sif'),
+    ...                         tree('thor')]),
+    ...                   tree('thor')])
+    &gt;&gt;&gt; laerad = copy_tree(yggdrasil) # copy yggdrasil for testing purposes
+    &gt;&gt;&gt; print_tree(replace_leaf(yggdrasil, 'thor', 'freya'))
+    odin
+      balder
+        freya
+        loki
+      frigg
+        freya
+      thor
+        sif
+        freya
+      freya
+    &gt;&gt;&gt; laerad == yggdrasil # Make sure original tree is unmodified
+    True
+    """</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q replace_leaf</code></pre>
+
+
+
+<h3 class="question" id="q2">Q2: Towers of Hanoi</h3>
+
+<p>A classic puzzle called the Towers of Hanoi is a game that consists of three
+rods, and a number of disks of different sizes which can slide onto any rod.
+The puzzle starts with <code>n</code> disks in a neat stack in ascending order of size on
+a <code>start</code> rod, the smallest at the top, forming a conical shape.</p>
+
+<p><img class="img-responsive center-block" src="./Homework 5 _ CS 61A Fall 2017_files/Tower_of_Hanoi.jpeg" alt="Towers of Hanoi"></p>
+
+<p>The objective of the puzzle is to move the entire stack to an <code>end</code> rod,
+obeying the following rules:</p>
+
+<ul>
+  <li>Only one disk may be moved at a time.</li>
+  <li>Each move consists of taking the top (smallest) disk from one of the rods and
+  sliding it onto another rod, on top of the other disks that may already be
+  present on that rod.</li>
+  <li>No disk may be placed on top of a smaller disk.</li>
+</ul>
+
+<p>Complete the definition of <code>move_stack</code>, which prints out the steps required to
+move <code>n</code> disks from the <code>start</code> rod to the <code>end</code> rod without violating the
+rules.</p>
+
+<solution>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">print_move</span><span class="hljs-params">(origin, destination)</span>:</span>
+    <span class="hljs-string">"""Print instructions to move a disk."""</span>
+    print(<span class="hljs-string">"Move the top disk from rod"</span>, origin, <span class="hljs-string">"to rod"</span>, destination)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">move_stack</span><span class="hljs-params">(n, start, end)</span>:</span>
+    <span class="hljs-string">"""Print the moves required to move n disks on the start pole to the end
+    pole without violating the rules of Towers of Hanoi.
+
+    n -- number of disks
+    start -- a pole position, either 1, 2, or 3
+    end -- a pole position, either 1, 2, or 3
+
+    There are exactly three poles, and start and end must be different. Assume
+    that the start pole has at least n disks of increasing size, and the end
+    pole is either empty or has a top disk larger than the top n start disks.
+
+    &gt;&gt;&gt; move_stack(1, 1, 3)
+    Move the top disk from rod 1 to rod 3
+    &gt;&gt;&gt; move_stack(2, 1, 3)
+    Move the top disk from rod 1 to rod 2
+    Move the top disk from rod 1 to rod 3
+    Move the top disk from rod 2 to rod 3
+    &gt;&gt;&gt; move_stack(3, 1, 3)
+    Move the top disk from rod 1 to rod 3
+    Move the top disk from rod 1 to rod 2
+    Move the top disk from rod 3 to rod 2
+    Move the top disk from rod 1 to rod 3
+    Move the top disk from rod 2 to rod 1
+    Move the top disk from rod 2 to rod 3
+    Move the top disk from rod 1 to rod 3
+    """</span>
+    <span class="hljs-keyword">assert</span> <span class="hljs-number">1</span> &lt;= start &lt;= <span class="hljs-number">3</span> <span class="hljs-keyword">and</span> <span class="hljs-number">1</span> &lt;= end &lt;= <span class="hljs-number">3</span> <span class="hljs-keyword">and</span> start != end, <span class="hljs-string">"Bad start/end"</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q move_stack</code></pre>
+
+
+
+
+<h2 id="interval">Interval</h2>
+
+
+<p><strong>Acknowledgements.</strong> This interval arithmetic example is based on
+a classic problem from Structure and Interpretation of Computer Programs,
+<a href="http://mitpress.mit.edu/sicp/full-text/book/book-Z-H-14.html#%_sec_2.1.4">Section 2.1.4</a>.</p>
+
+<p><strong>Introduction.</strong> Alyssa P. Hacker is designing a system to help people
+solve engineering problems. One feature she wants to provide in her
+system is the ability to manipulate inexact quantities (such as
+measured parameters of physical devices) with known precision, so that
+when computations are done with such approximate quantities the results
+will be numbers of known precision.</p>
+
+<p>Alyssa's idea is to implement interval arithmetic as a set of
+arithmetic operations for combining "intervals" (objects that represent
+the range of possible values of an inexact quantity). The result of
+adding, subracting, multiplying, or dividing two intervals is itself an
+interval, representing the range of the result.</p>
+
+<p>Alyssa postulates the existence of an abstract object called an
+"interval" that has two endpoints: a lower bound and an upper bound.
+She also presumes that, given the endpoints of an interval, she can
+construct the interval using the data constructor interval.   Using the
+constructor and selectors, she defines the following operations:</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">str_interval</span><span class="hljs-params">(x)</span>:</span>
+    <span class="hljs-string">"""Return a string representation of interval x."""</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-string">'{0} to {1}'</span>.format(lower_bound(x), upper_bound(x))
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add_interval</span><span class="hljs-params">(x, y)</span>:</span>
+    <span class="hljs-string">"""Return an interval that contains the sum of any value in interval x and
+    any value in interval y."""</span>
+    lower = lower_bound(x) + lower_bound(y)
+    upper = upper_bound(x) + upper_bound(y)
+    <span class="hljs-keyword">return</span> interval(lower, upper)</code></pre>
+
+<h3 class="question" id="q3">Q3: Interval Abstraction</h3>
+
+<p>Alyssa's program is incomplete because she has not specified the implementation
+of the interval abstraction. She has implemented the constructor for you; fill
+in the implementation of the selectors.</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">interval</span><span class="hljs-params">(a, b)</span>:</span>
+    <span class="hljs-string">"""Construct an interval from a to b."""</span>
+    <span class="hljs-keyword">return</span> [a, b]
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">lower_bound</span><span class="hljs-params">(x)</span>:</span>
+    <span class="hljs-string">"""Return the lower bound of interval x."""</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">upper_bound</span><span class="hljs-params">(x)</span>:</span>
+    <span class="hljs-string">"""Return the upper bound of interval x."""</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</code></pre>
+
+<p>Use Ok to unlock and test your code:</p><pre><code class="nohighlight">python3 ok -q interval -u
+python3 ok -q interval</code></pre>
+
+<p>Louis Reasoner has also provided an implementation of interval
+multiplication. Beware: there are some data abstraction violations, so help him
+fix his code before someone <a href="https://youtu.be/QwoghxwETng">sets it on fire</a>.</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">mul_interval</span><span class="hljs-params">(x, y)</span>:</span>
+    <span class="hljs-string">"""Return the interval that contains the product of any value in x and any
+    value in y."""</span>
+    p1 = x[<span class="hljs-number">0</span>] * y[<span class="hljs-number">0</span>]
+    p2 = x[<span class="hljs-number">0</span>] * y[<span class="hljs-number">1</span>]
+    p3 = x[<span class="hljs-number">1</span>] * y[<span class="hljs-number">0</span>]
+    p4 = x[<span class="hljs-number">1</span>] * y[<span class="hljs-number">1</span>]
+    <span class="hljs-keyword">return</span> [min(p1, p2, p3, p4), max(p1, p2, p3, p4)]</code></pre>
+
+<p>Use Ok to unlock and test your code:</p><pre><code class="nohighlight">python3 ok -q mul_interval -u
+python3 ok -q mul_interval</code></pre>
+
+
+
+<h3 class="question" id="q4">Q4: Sub Interval</h3>
+
+<p>Using reasoning analogous to Alyssa's, define a subtraction function for
+intervals. Try to reuse functions that have already been implemented.</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sub_interval</span><span class="hljs-params">(x, y)</span>:</span>
+    <span class="hljs-string">"""Return the interval that contains the difference between any value in x
+    and any value in y."""</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</code></pre>
+
+<p>Use Ok to unlock and test your code:</p><pre><code class="nohighlight">python3 ok -q sub_interval -u
+python3 ok -q sub_interval</code></pre>
+
+
+
+<h3 class="question" id="q5">Q5: Div Interval</h3>
+
+<p>Alyssa implements division below by multiplying by the reciprocal of
+<code>y</code>. Ben Bitdiddle, an expert systems programmer, looks over Alyssa's
+shoulder and comments that it is not clear what it means to divide by
+an interval that spans zero. Add an <code>assert</code> statement to Alyssa's code
+to ensure that no such interval is used as a divisor:</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">div_interval</span><span class="hljs-params">(x, y)</span>:</span>
+    <span class="hljs-string">"""Return the interval that contains the quotient of any value in x divided by
+    any value in y. Division is implemented as the multiplication of x by the
+    reciprocal of y."""</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+    reciprocal_y = interval(<span class="hljs-number">1</span>/upper_bound(y), <span class="hljs-number">1</span>/lower_bound(y))
+    <span class="hljs-keyword">return</span> mul_interval(x, reciprocal_y)</code></pre>
+
+<p>Use Ok to unlock and test your code:</p><pre><code class="nohighlight">python3 ok -q div_interval -u
+python3 ok -q div_interval</code></pre>
+
+
+
+<h3 class="question" id="q6">Q6: Par Diff</h3>
+
+<p>After considerable work, Alyssa P. Hacker delivers her finished system.  Several
+years later, after she has forgotten all about it, she gets a frenzied call from
+an irate user, Lem E. Tweakit. It seems that Lem has noticed that the
+<a href="https://en.wikipedia.org/wiki/Series_and_parallel_circuits#Resistors_2">formula for parallel resistors</a>
+can be written in two algebraically equivalent ways:</p>
+
+<pre><code class="hljs">par1(r1, r2) = (r1 * r2) / (r1 + r2)</code></pre>
+
+<p>or</p>
+
+<pre><code class="hljs">par2(r1, r2) = 1 / (1/r1 + 1/r2)</code></pre>
+
+<p>He has written the following two programs, each of which computes the
+<code>parallel_resistors</code> formula differently::</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">par1</span><span class="hljs-params">(r1, r2)</span>:</span>
+    <span class="hljs-keyword">return</span> div_interval(mul_interval(r1, r2), add_interval(r1, r2))
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">par2</span><span class="hljs-params">(r1, r2)</span>:</span>
+    one = interval(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)
+    rep_r1 = div_interval(one, r1)
+    rep_r2 = div_interval(one, r2)
+    <span class="hljs-keyword">return</span> div_interval(one, add_interval(rep_r1, rep_r2))</code></pre>
+
+<p>Lem complains that Alyssa's program gives different answers for the two
+ways of computing. This is a serious complaint.</p>
+
+<p>Demonstrate that Lem is right. Investigate the behavior of the system
+on a variety of arithmetic expressions. Make some intervals <code>r1</code> and
+<code>r2</code>, and show that <code>par1</code> and <code>par2</code> can give different results.</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">check_par</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-string">"""Return two intervals that give different results for parallel resistors.
+
+    &gt;&gt;&gt; r1, r2 = check_par()
+    &gt;&gt;&gt; x = par1(r1, r2)
+    &gt;&gt;&gt; y = par2(r1, r2)
+    &gt;&gt;&gt; lower_bound(x) != lower_bound(y) or upper_bound(x) != upper_bound(y)
+    True
+    """</span>
+    r1 = interval(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>) <span class="hljs-comment"># Replace this line!</span>
+    r2 = interval(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>) <span class="hljs-comment"># Replace this line!</span>
+    <span class="hljs-keyword">return</span> r1, r2</code></pre>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q check_par</code></pre>
+
+
+
+<h3 class="question" id="q7">Q7: Multiple References</h3>
+
+<p>Eva Lu Ator, another user, has also noticed the different intervals
+computed by different but algebraically equivalent expressions. She
+says that the problem is multiple references to the same interval.</p>
+
+<p>The Multiple References Problem: a formula to compute with intervals
+using Alyssa's system will produce tighter error bounds if it can be
+written in such a form that no variable that represents an uncertain
+number is repeated.</p>
+
+<p>Thus, she says, <code>par2</code> is a better program for parallel resistances
+than <code>par1</code>. Is she right? Why? Write a function that returns a string
+containing a written explanation of your answer:</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">multiple_references_explanation</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-string">"""The multiple reference problem..."""</span>
+</code></pre>
+
+
+
+<h3 class="question" id="q8">Q8: Quadratic</h3>
+
+<p>Write a function <code>quadratic</code> that returns the interval of all values
+<code>f(t)</code> such that <code>t</code> is in the argument interval <code>x</code> and <code>f(t)</code> is a
+<a href="http://en.wikipedia.org/wiki/Quadratic_function">quadratic function</a>:</p>
+
+<pre><code class="hljs markdown">f(t) = a<span class="hljs-emphasis">*t*</span>t + b*t + c</code></pre>
+
+<p>Make sure that your implementation returns the smallest such interval,
+one that does not suffer from the multiple references problem.</p>
+
+<p><em>Hint</em>: the derivative <code>f'(t) = 2*a*t + b</code>, and so the extreme
+point of the quadratic is <code>-b/(2*a)</code>:</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">quadratic</span><span class="hljs-params">(x, a, b, c)</span>:</span>
+    <span class="hljs-string">"""Return the interval that is the range of the quadratic defined by
+    coefficients a, b, and c, for domain interval x.
+
+    &gt;&gt;&gt; str_interval(quadratic(interval(0, 2), -2, 3, -1))
+    '-3 to 0.125'
+    &gt;&gt;&gt; str_interval(quadratic(interval(1, 3), 2, -3, 1))
+    '0 to 10'
+    """</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</code></pre>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q quadratic</code></pre>
+
+
+
+
+<h1 id="extra-questions">Extra Questions</h1>
+
+
+<blockquote><p>Extra questions are not worth extra credit and are entirely optional. They are
+designed to challenge you to think creatively!</p></blockquote>
+
+<h3 class="question" id="q9">Q9: Polynomial</h3>
+
+<p>Write a function <code>polynomial</code> that takes an interval <code>x</code> and a list of
+coefficients <code>c</code>, and returns the interval containing all values of <code>f(t)</code> for
+<code>t</code> in interval <code>x</code>, where:</p>
+
+<pre><code class="hljs cpp">f(t) = c[k<span class="hljs-number">-1</span>] * <span class="hljs-built_in">pow</span>(t, k<span class="hljs-number">-1</span>) + c[k<span class="hljs-number">-2</span>] * <span class="hljs-built_in">pow</span>(t, k<span class="hljs-number">-2</span>) + ... + c[<span class="hljs-number">0</span>] * <span class="hljs-number">1</span></code></pre>
+
+<p>Like <code>quadratic</code>, your <code>polynomial</code> function should return the smallest such
+interval, one that does not suffer from the multiple references problem.</p>
+
+<p><em>Hint</em>: You can approximate this result. Try using <a href="http://www.composingprograms.com/pages/16-higher-order-functions.html#example-newton-s-method">Newton's
+method</a>.</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">polynomial</span><span class="hljs-params">(x, c)</span>:</span>
+    <span class="hljs-string">"""Return the interval that is the range of the polynomial defined by
+    coefficients c, for domain interval x.
+
+    &gt;&gt;&gt; str_interval(polynomial(interval(0, 2), [-1, 3, -2]))
+    '-3 to 0.125'
+    &gt;&gt;&gt; str_interval(polynomial(interval(1, 3), [1, -3, 2]))
+    '0 to 10'
+    &gt;&gt;&gt; str_interval(polynomial(interval(0.5, 2.25), [10, 24, -6, -8, 3]))
+    '18.0 to 23.0'
+    """</span>
+    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+
+</code></pre>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q polynomial</code></pre>
+
+  </div>
+
+  <div class="col-md-3 sticky">
+    <nav class="hidden-print hidden-sm hidden-xs sidebar">
+      <ul class="nav nav-stacked noselect">
+  <li><a href="https://cs61a.org/hw/hw05/#required-questions">Required Questions</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/hw/hw05/#q1">Q1: Replace Leaf</a></li>
+    <li><a href="https://cs61a.org/hw/hw05/#q2">Q2: Towers of Hanoi</a></li>
+  </ul>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/hw/hw05/#interval">Interval</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/hw/hw05/#q3">Q3: Interval Abstraction</a></li>
+      <li><a href="https://cs61a.org/hw/hw05/#q4">Q4: Sub Interval</a></li>
+      <li><a href="https://cs61a.org/hw/hw05/#q5">Q5: Div Interval</a></li>
+      <li><a href="https://cs61a.org/hw/hw05/#q6">Q6: Par Diff</a></li>
+      <li><a href="https://cs61a.org/hw/hw05/#q7">Q7: Multiple References</a></li>
+      <li><a href="https://cs61a.org/hw/hw05/#q8">Q8: Quadratic</a></li>
+    </ul>
+  </ul>
+  <li><a href="https://cs61a.org/hw/hw05/#extra-questions">Extra Questions</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/hw/hw05/#q9">Q9: Polynomial</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/resources.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/studying.html">Studying Guide</a></li>
+            <li><a href="https://cs61a.org/articles/debugging.html">Debugging Guide</a></li>
+            <li><a href="https://cs61a.org/articles/composition.html">Composition Guide</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/articles/about.html">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/about.html#assignments">Assignments</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#exams">Exams</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+</script>
+
+  
+</body></html>

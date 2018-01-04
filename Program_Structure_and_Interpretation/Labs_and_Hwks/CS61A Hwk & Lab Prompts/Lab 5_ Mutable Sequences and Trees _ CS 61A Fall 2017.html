@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<!-- saved from url=(0028)https://cs61a.org/lab/lab05/ -->
+<html lang="en" class="gr__cs61a_org"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="CS 61A: Structure and Interpretation of Computer Programs">
+    <meta name="keywords" content="CS 61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS">
+    <meta name="author" content="John DeNero, Paul Hilfinger">
+    
+    <meta name="viewport" content="width=device-width">
+
+    <script src="./Lab 5_ Mutable Sequences and Trees _ CS 61A Fall 2017_files/jquery.min.js.download"></script>
+    <script src="./Lab 5_ Mutable Sequences and Trees _ CS 61A Fall 2017_files/bootstrap.min.js.download"></script>
+    <script src="./Lab 5_ Mutable Sequences and Trees _ CS 61A Fall 2017_files/highlight.min.js.download"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="./Lab 5_ Mutable Sequences and Trees _ CS 61A Fall 2017_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./Lab 5_ Mutable Sequences and Trees _ CS 61A Fall 2017_files/css">
+    <link rel="stylesheet" href="./Lab 5_ Mutable Sequences and Trees _ CS 61A Fall 2017_files/style.css">
+    <link rel="stylesheet" href="./Lab 5_ Mutable Sequences and Trees _ CS 61A Fall 2017_files/mono-blue.css">
+    <link rel="icon" href="https://cs61a.org/assets/images/favicon.ico">
+
+    
+
+    <title>
+Lab 5: Mutable Sequences and Trees | CS 61A Fall 2017
+</title>
+  </head>
+
+  <body id="index" class="home" data-gr-c-s-loaded="true">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://cs61a.org/">CS 61A</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+            <li><a href="https://cs61a.org/resources.html">Resources</a></li>
+            <li><a href="https://cs61a.org/articles/about.html">Policies</a></li>
+            <li><a href="http://tutor.cs61a.org/">Tutor</a></li>
+            <li><a href="https://piazza.com/berkeley/fall2017/cs61a" target="_blank">Piazza</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class="row">
+  <div class="col-md-9">
+    <header>
+      <h1>
+        
+Lab 5: Mutable Sequences and Trees
+
+        
+        <ul class="inline-block list-inline">
+          <li><a href="https://cs61a.org/lab/lab05/lab05.zip" class="label label-outline">lab05.zip</a></li>
+        </ul>
+        
+      </h1>
+    </header>
+    
+
+<p><i>Due at 11:59pm on Friday, 09/29/2017.</i></p>
+
+
+<h2 id="starter-files">Starter Files</h2>
+
+
+<p>Download <a href="https://cs61a.org/lab/lab05/lab05.zip">lab05.zip</a>.
+Inside the archive, you will find starter files for the questions in this lab,
+  along with a copy of the <a href="https://cs61a.org/lab/lab05/ok">Ok</a> autograder.</p>
+
+
+<h2 id="submission">Submission</h2>
+
+<p>By the end of this lab, you should have submitted the lab with
+<code>python3 ok --submit</code>. You may submit more than once before the
+deadline; only the final submission will be graded.
+Check that you have successfully submitted your code on
+<a href="https://okpy.org/">okpy.org</a>.</p>
+
+<ul>
+  <li>Questions 1 through 6 must be completed in order to receive credit for this lab.
+  Starter code for coding questions is in <a href="https://cs61a.org/lab/lab05/lab05.py">lab05.py</a>.</li>
+  <li>Questions 7 through 10 (Coding) are <strong>optional</strong>. It is <em>recommended that you
+  complete these problems on your own time</em>. Starter code for these questions is
+  in <a href="https://cs61a.org/lab/lab05/lab05_extra.py">lab05_extra.py</a>.</li>
+</ul>
+
+
+
+    
+<h1 id="topics">Topics</h1>
+
+
+<p>Consult this section if you need a refresher on the material for this lab. It's
+okay to skip directly to <a href="https://cs61a.org/lab/lab05/#required-questions">the questions</a> and refer back
+here should you get stuck.</p>
+
+
+<h2 id="sequences">Sequences</h2>
+
+
+<p>Sequences are ordered collections of values that support element-selection and
+have length. The most common sequence you've worked with are lists, but many
+other Python types are sequences as well, including strings.</p>
+
+
+<h2 id="dictionaries">Dictionaries</h2>
+
+
+<p>Dictionaries are unordered sets of key-value pairs. Keys can only be immutable types (strings, numbers, tuples), but their corresponding value can be anything! To create a dictionary, use the following syntax:</p>
+
+<pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; singers = { <span class="hljs-string">'Adele'</span>: <span class="hljs-string">'Hello'</span>, <span class="hljs-number">1975</span>: <span class="hljs-string">'Chocolate'</span>, <span class="hljs-string">'The Weeknd'</span>: [<span class="hljs-string">'The Hills'</span>, <span class="hljs-string">'Earned It'</span>] }</code></pre>
+
+<p>The curly braces denote the key-value pairs in your dictionary. Each key-value
+pair is separated by a comma. For each pair, the key appears to the left of the
+colon and the value appears to the right of the colon. Note keys/values do not
+all have to be the same type, as you can see we have strings, integers and
+lists! Each key only appears once in a dictionary. You can retrieve values from
+your dictionary by "indexing" using the key:</p>
+
+<pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; singers[<span class="hljs-number">1975</span>]
+<span class="hljs-string">'Chocolate'</span>
+<span class="hljs-meta">&gt;&gt;</span>&gt; songs = singers[<span class="hljs-string">'The Weeknd'</span>]
+<span class="hljs-meta">&gt;&gt;</span>&gt; songs[<span class="hljs-number">0</span>]
+<span class="hljs-string">'The Hills'</span></code></pre>
+
+<p>You can add an entry or update an entry for an existing key in the dictionary
+using the following syntax.</p>
+
+<p>Note they are identical syntax, so be careful! You might end updating (and
+overwriting an old value) even if you intended to add, and vice versa.</p>
+
+<pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; singers[<span class="hljs-string">'Adele'</span>] = <span class="hljs-string">'Rolling in the Deep'</span>
+<span class="hljs-meta">&gt;&gt;</span>&gt; singers[<span class="hljs-string">'Adele'</span>]
+<span class="hljs-string">'Rolling in the Deep'</span>
+<span class="hljs-meta">&gt;&gt;</span>&gt; singers[<span class="hljs-string">'Kanye West'</span>] = <span class="hljs-string">'Real Friends'</span> <span class="hljs-comment"># New entry!</span>
+<span class="hljs-meta">&gt;&gt;</span>&gt; singers[<span class="hljs-string">'Kanye West'</span>]
+<span class="hljs-string">'Real Friends'</span></code></pre>
+
+<p>You can also check for membership of keys!</p>
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">'Adele'</span> <span class="hljs-keyword">in</span> singers
+<span class="hljs-keyword">True</span></code></pre>
+
+<p>Finally, here are some useful dictionary functions:</p>
+
+<ul>
+  <li><p><code>dict.keys()</code> will return a sequence of keys.</p>
+
+<pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; list(singers.keys()) <span class="hljs-comment"># We use list() to turn the sequence into a list</span>
+[<span class="hljs-number">1975</span>, <span class="hljs-string">'The Weeknd'</span>, <span class="hljs-string">'Adele'</span>]</code></pre></li>
+  <li><p><code>dict.values()</code> will return a sequence of values.</p>
+
+<pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; list(singers.values())
+[<span class="hljs-string">'Chocolate'</span>, [<span class="hljs-string">'The Hills'</span>, <span class="hljs-string">'Earned It'</span>], <span class="hljs-string">'Hello'</span>]</code></pre></li>
+  <li><p><code>dict.items()</code> will return a sequences of keys-value pairs.</p>
+
+<pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; list(singers.items())
+[(<span class="hljs-number">1975</span>, <span class="hljs-string">'Chocolate'</span>), (<span class="hljs-string">'The Weeknd'</span>, [<span class="hljs-string">'The Hills'</span>, <span class="hljs-string">'Earned It'</span>]), (<span class="hljs-string">'Adele'</span>, <span class="hljs-string">'Hello'</span>)]</code></pre></li>
+</ul>
+
+
+<h2 id="trees">Trees</h2>
+
+
+<p>A <code>tree</code> is a data structure that represents a hierarchy of information. A file system is a good example of a tree structure. For example, within your <code>cs61a</code> folder, you have folders separating your <code>projects</code>, <code>lab</code> assignments, and <code>homework</code>. The next level is folders that separate different assignments, <code>hw01</code>, <code>lab01</code>, <code>hog</code>, etc., and inside those are the files themselves, including the starter files and <code>ok</code>. Below is an incomplete diagram of what your <code>cs61a</code> directory might look like.</p>
+
+<p><img class="img-responsive center-block" src="./Lab 5_ Mutable Sequences and Trees _ CS 61A Fall 2017_files/cs61a-tree.png" alt="cs61a_tree"></p>
+
+<p>As you can see, unlike trees in nature, the tree abstract data type is drawn with the root at the top and the leaves at the bottom.</p>
+
+<p>Some tree terminology:</p>
+
+<ul>
+  <li><strong>root</strong>: the node at the top of the tree</li>
+  <li><strong>label</strong>: the value in a node; the label of the root is selected by the <code>label</code> function</li>
+  <li><strong>branches</strong>: a list of trees directly under the tree's root, selected by the <code>branches</code> function</li>
+  <li><strong>leaf</strong>: a tree with zero branches</li>
+  <li><strong>node</strong>: any location within the tree (e.g., root node, leaf nodes, etc.)</li>
+</ul>
+
+<p>Our <code>tree</code> abstract data type consists of a root and a list of its
+<code>branches</code>. To create a tree and access its root value and branches, use the
+following constructor and selectors:</p>
+
+<ul>
+  <li><p>Constructor</p>
+
+  <ul>
+    <li><code>tree(label, branches=[])</code>: creates a tree object with the given <code>label</code>
+    value at its root node and list of <code>branches</code>.</li>
+  </ul></li>
+  <li><p>Selectors</p>
+
+  <ul>
+    <li><code>label(tree)</code>: returns the value in the root node of <code>tree</code>.</li>
+    <li><code>branches(tree)</code>: returns the list of branches of the given <code>tree</code>.</li>
+  </ul></li>
+  <li><p>Convenience function</p>
+
+  <ul>
+    <li><code>is_leaf(tree)</code>: returns <code>True</code> if <code>tree</code>'s list of <code>branches</code> is empty, and
+    <code>False</code> otherwise.</li>
+  </ul></li>
+</ul>
+
+<p>For example, the tree generated by</p>
+
+<pre><code class="hljs cs">t = tree(<span class="hljs-number">1</span>,
+         [<span class="hljs-meta">tree(2),
+          tree(3,
+               [tree(4),
+                tree(5)</span>]),
+          tree(<span class="hljs-number">6</span>,
+               [<span class="hljs-meta">tree(7)</span>])])</code></pre>
+
+<p>would look like this:</p>
+
+<pre><code class="hljs">   1
+ / | \
+2  3  6
+  / \  \
+ 4   5  7</code></pre>
+
+<p>To extract the number <code>3</code> from this tree, which is the label of the root of its second branch, we would do this:</p>
+
+<pre><code class="hljs css"><span class="hljs-selector-tag">label</span>(<span class="hljs-selector-tag">branches</span>(<span class="hljs-selector-tag">t</span>)<span class="hljs-selector-attr">[1]</span>)</code></pre>
+
+<p>The <code>print_tree</code> function prints out a tree in a
+human-readable form. The exact form follows the pattern illustrated
+above, where the root is unindented, and each of its branches is
+indented one level further.</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">print_tree</span><span class="hljs-params">(t, indent=<span class="hljs-number">0</span>)</span>:</span>
+    <span class="hljs-string">"""Print a representation of this tree in which each node is
+    indented by two spaces times its depth from the root.
+
+    &gt;&gt;&gt; print_tree(tree(1))
+    1
+    &gt;&gt;&gt; print_tree(tree(1, [tree(2)]))
+    1
+      2
+    &gt;&gt;&gt; numbers = tree(1, [tree(2), tree(3, [tree(4), tree(5)]), tree(6, [tree(7)])])
+    &gt;&gt;&gt; print_tree(numbers)
+    1
+      2
+      3
+        4
+        5
+      6
+        7
+    """</span>
+    print(<span class="hljs-string">'  '</span> * indent + str(label(t)))
+    <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> branches(t):
+        print_tree(b, indent + <span class="hljs-number">1</span>)</code></pre>
+
+
+<h1 id="required-questions">Required Questions</h1>
+
+
+
+<h2 id="what-would-python-display">What Would Python Display?</h2>
+
+
+<h3 class="question" id="q1">Q1: Dictionaries</h3>
+
+<blockquote><p>What would Python display? Type it in the intepreter if you're stuck!</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q dicts -u</code></pre></blockquote>
+
+<pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; pokemon = {<span class="hljs-string">'pikachu'</span>: <span class="hljs-number">25</span>, <span class="hljs-string">'dragonair'</span>: <span class="hljs-number">148</span>, <span class="hljs-string">'mew'</span>: <span class="hljs-number">151</span>}
+<span class="hljs-meta">&gt;&gt;</span>&gt; pokemon[<span class="hljs-string">'pikachu'</span>]
+<div class="alt prompt-1">______</div><div class="solution prompt-1">25</div>
+<span class="hljs-meta">&gt;&gt;</span>&gt; len(pokemon)
+<div class="alt prompt-1">______</div><div class="solution prompt-1">3</div>
+<span class="hljs-meta">&gt;&gt;</span>&gt; pokemon[<span class="hljs-string">'jolteon'</span>] = <span class="hljs-number">135</span>
+<span class="hljs-meta">&gt;&gt;</span>&gt; pokemon[<span class="hljs-string">'ditto'</span>] = <span class="hljs-number">25</span>
+<span class="hljs-meta">&gt;&gt;</span>&gt; len(pokemon)
+<div class="alt prompt-1">______</div><div class="solution prompt-1">5</div>
+<span class="hljs-meta">&gt;&gt;</span>&gt; sorted(list(pokemon.keys()))  <span class="hljs-comment"># Alphabetically sorted list of pokemon's keys</span>
+<div class="alt prompt-1">_____<span class="hljs-number">_</span></div><div class="solution prompt-1">[<span class="hljs-string">'ditto'</span>, <span class="hljs-string">'dragonair'</span>, <span class="hljs-string">'jolteon'</span>, <span class="hljs-string">'mew'</span>, <span class="hljs-string">'pikachu'</span>]</div>
+<span class="hljs-meta">&gt;&gt;</span>&gt; <span class="hljs-string">'mewtwo'</span> in pokemon
+<div class="alt prompt-1">______</div><div class="solution prompt-1">False</div>
+<span class="hljs-meta">&gt;&gt;</span>&gt; pokemon[<span class="hljs-string">'ditto'</span>] = pokemon[<span class="hljs-string">'jolteon'</span>]
+<span class="hljs-meta">&gt;&gt;</span>&gt; sorted(list(pokemon.keys()))  <span class="hljs-comment"># Alphabetically sorted list of pokemon's keys</span>
+<div class="alt prompt-1">_____<span class="hljs-number">_</span></div><div class="solution prompt-1">[<span class="hljs-string">'ditto'</span>, <span class="hljs-string">'dragonair'</span>, <span class="hljs-string">'jolteon'</span>, <span class="hljs-string">'mew'</span>, <span class="hljs-string">'pikachu'</span>]</div>
+<span class="hljs-meta">&gt;&gt;</span>&gt; pokemon[<span class="hljs-string">'ditto'</span>]
+<div class="alt prompt-1">______</div><div class="solution prompt-1">135</div></code></pre>
+        <button id="prompt-1" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; letters = {<span class="hljs-string">'a'</span>: 1, <span class="hljs-string">'b'</span>: 2, <span class="hljs-string">'c'</span>: 3}</span>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; <span class="hljs-string">'a'</span> <span class="hljs-keyword">in</span> letters</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2">True</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; 2 <span class="hljs-keyword">in</span> letters</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2">False</div></code></pre>
+        <button id="prompt-2" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; food = {<span class="hljs-string">'bulgogi'</span>: <span class="hljs-number">10</span>, <span class="hljs-string">'falafel'</span>: <span class="hljs-number">4</span>, <span class="hljs-string">'ceviche'</span>: <span class="hljs-number">7</span>}
+<span class="hljs-meta">&gt;&gt;</span>&gt; food[<span class="hljs-string">'ultimate'</span>] = food[<span class="hljs-string">'bulgogi'</span>] + food[<span class="hljs-string">'ceviche'</span>]
+<span class="hljs-meta">&gt;&gt;</span>&gt; food[<span class="hljs-string">'ultimate'</span>]
+<div class="alt prompt-3">______</div><div class="solution prompt-3">17</div>
+<span class="hljs-meta">&gt;&gt;</span>&gt; len(food)
+<div class="alt prompt-3">______</div><div class="solution prompt-3">4</div>
+<span class="hljs-meta">&gt;&gt;</span>&gt; food[<span class="hljs-string">'ultimate'</span>] += food[<span class="hljs-string">'falafel'</span>]
+<span class="hljs-meta">&gt;&gt;</span>&gt; food[<span class="hljs-string">'ultimate'</span>]
+<div class="alt prompt-3">______</div><div class="solution prompt-3">21</div>
+<span class="hljs-meta">&gt;&gt;</span>&gt; sorted(list(food.keys()))  <span class="hljs-comment"># Alphabetically sorted list of food's keys</span>
+<div class="alt prompt-3">_____<span class="hljs-number">_</span></div><div class="solution prompt-3">[<span class="hljs-string">'bulgogi'</span>, <span class="hljs-string">'ceviche'</span>, <span class="hljs-string">'falafel'</span>, <span class="hljs-string">'ultimate'</span>]</div>
+<span class="hljs-meta">&gt;&gt;</span>&gt; food[<span class="hljs-string">'bulgogi'</span>] = food[<span class="hljs-string">'falafel'</span>]
+<span class="hljs-meta">&gt;&gt;</span>&gt; len(food)
+<div class="alt prompt-3">______</div><div class="solution prompt-3">4</div>
+<span class="hljs-meta">&gt;&gt;</span>&gt; <span class="hljs-string">'gogi'</span> in food
+<div class="alt prompt-3">______</div><div class="solution prompt-3">False</div></code></pre>
+        <button id="prompt-3" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<!-- Note that the last example demonstrates that dictionaries cannot use
+other mutable data structures as keys. We'll discuss mutability further in the future.  -->
+
+<!-- >>> pokemon[('diglett', 'diglett', 'diglett')] = 51
+>>> pokemon[25] = 'pikachu'
+>>> pokemon
+{'mew': 151, 'ditto': 135, 'jolteon': 135, 25: 'pikachu',
+'pikachu': 25, ('diglett', 'diglett', 'diglett'): 51,
+'dragonair': 148}
+>>> pokemon['mewtwo'] = pokemon['mew'] * 2
+>>> pokemon
+{'mew': 151, 'ditto': 135, 'jolteon': 135, 25: 'pikachu',
+'pikachu': 25, ('diglett', 'diglett', 'diglett'): 51,
+'mewtwo': 302, 'dragonair': 148
+>>> pokemon[['firetype', 'flying']] = 146
+Error: unhashable type -->
+
+<h3 class="question" id="q2">Q2: Tree Structure</h3>
+
+<p>As described above, trees are constructed recursively with smaller subtrees
+using the constructor:</p>
+
+<pre><code class="hljs">tree(label, branches=[])</code></pre>
+
+<blockquote><p>Test your understanding of how trees are constructed in Python by examining
+trees and deciding which of the choices of Python code matches that tree:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q structure -u</code></pre></blockquote>
+
+<h3 class="question" id="q3">Q3: Height &amp; Depth</h3>
+
+<p>The <em>depth</em> of a node in a tree is defined as the number of edges between that
+node and the root. The <strong>root</strong> has depth 0, its branches have depth 1, and so
+on.</p>
+
+<p>The <strong>height</strong> of a tree is the <strong>depth</strong> of the lowest leaf (furthest away
+from the root).</p>
+
+<blockquote><p>Test your understanding of <strong>depth</strong> and <strong>height</strong> with Ok tests using the
+following command:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q height_depth -u</code></pre></blockquote>
+
+
+<h2 id="coding-practice">Coding Practice</h2>
+
+
+<h3 class="question" id="q4">Q4: Map, Filter, Reduce</h3>
+
+<p>As an exercise, implement three functions <code>map</code>, <code>filter</code>, and <code>reduce</code>.</p>
+
+<p><code>map</code> takes in a one argument function <code>fn</code> and a sequence <code>seq</code> and returns a
+list containing <code>fn</code> applied to each element in <code>seq</code>.</p>
+
+<p><code>filter</code> takes in a predicate function <code>pred</code> and a sequence <code>seq</code> and returns a
+list containing all elements in <code>seq</code> for which <code>pred</code> returns True.</p>
+
+<p><code>reduce</code> takes in a two argument function <code>combiner</code> and a non-empty sequence
+<code>seq</code> and combines the elements in <code>seq</code> into one value using <code>combiner</code>.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">map</span><span class="hljs-params">(fn, seq)</span>:</span>
+    <span class="hljs-string">"""Applies fn onto each element in seq and returns a list.
+
+    &gt;&gt;&gt; map(lambda x: x*x, [1, 2, 3])
+    [1, 4, 9]
+    """</span>
+<div class="alt solution-1">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-1">    result = []
+    <span class="hljs-keyword">for</span> elem <span class="hljs-keyword">in</span> seq:
+        result += [fn(elem)]
+    <span class="hljs-keyword">return</span> result</div>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">filter</span><span class="hljs-params">(pred, seq)</span>:</span>
+    <span class="hljs-string">"""Keeps elements in seq only if they satisfy pred.
+
+    &gt;&gt;&gt; filter(lambda x: x % 2 == 0, [1, 2, 3, 4])
+    [2, 4]
+    """</span>
+<div class="alt solution-1">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-1">    result = []
+    <span class="hljs-keyword">for</span> elem <span class="hljs-keyword">in</span> seq:
+        <span class="hljs-keyword">if</span> pred(elem):
+            result += [elem]
+    <span class="hljs-keyword">return</span> result</div>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">reduce</span><span class="hljs-params">(combiner, seq)</span>:</span>
+    <span class="hljs-string">"""Combines elements in seq using combiner.
+
+    &gt;&gt;&gt; reduce(lambda x, y: x + y, [1, 2, 3, 4])
+    10
+    &gt;&gt;&gt; reduce(lambda x, y: x * y, [1, 2, 3, 4])
+    24
+    &gt;&gt;&gt; reduce(lambda x, y: x * y, [4])
+    4
+    """</span>
+<div class="alt solution-1">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-1">    total = seq[<span class="hljs-number">0</span>]
+    <span class="hljs-keyword">for</span> elem <span class="hljs-keyword">in</span> seq[<span class="hljs-number">1</span>:]:
+        total = combiner(total, elem)
+    <span class="hljs-keyword">return</span> total</div></code></pre>
+
+
+        <button id="solution-1" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q map
+python3 ok -q filter
+python3 ok -q reduce</code></pre>
+
+
+<h2 id="pytunes-trees">pyTunes Trees</h2>
+
+
+<p>The CS 61A staff has created a music library called pyTunes. pyTunes organizes songs in folders that are labeled by category -- in other words, in a tree!</p>
+
+<p>The value at the root of the tree is your account name, which branches out
+into a hierarchy of categories: genres, artists, and albums, in that order.
+Songs (leaves in the tree) can be stored at any of these levels. A category
+cannot be empty (i.e. there will never be a node for a genre, artist, or
+album with no branches).</p>
+
+<h3 class="question" id="q5">Q5: Create pyTunes</h3>
+
+<p>All pyTunes accounts come with the free songs below. Define the function <code>make_pytunes</code>, which takes in <code>username</code> and creates this tree:</p>
+
+<p><img class="img-responsive center-block" src="./Lab 5_ Mutable Sequences and Trees _ CS 61A Fall 2017_files/pytunes.png" alt="pytunes tree"></p>
+
+<p>The doctest below shows the <code>print_tree</code> representation of a default pyTunes tree.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">make_pytunes</span><span class="hljs-params">(username)</span>:</span>
+    <span class="hljs-string">"""Return a pyTunes tree as shown in the diagram with USERNAME as the value
+    of the root.
+
+    &gt;&gt;&gt; pytunes = make_pytunes('i_love_music')
+    &gt;&gt;&gt; print_tree(pytunes)
+    i_love_music
+      pop
+        justin bieber
+          single
+            what do you mean?
+        2015 pop mashup
+      trance
+        darude
+          sandstorm
+    """</span>
+<div class="alt solution-2">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-2">    <span class="hljs-keyword">return</span> tree(username,
+             [tree(<span class="hljs-string">'pop'</span>,
+               [tree(<span class="hljs-string">'justin bieber'</span>,
+                 [tree(<span class="hljs-string">'single'</span>,
+                   [tree(<span class="hljs-string">'what do you mean?'</span>)])]),
+                tree(<span class="hljs-string">'2015 pop mashup'</span>)]),
+              tree(<span class="hljs-string">'trance'</span>,
+                [tree(<span class="hljs-string">'darude'</span>,
+                  [tree(<span class="hljs-string">'sandstorm'</span>)])])])</div></code></pre>
+
+
+        <button id="solution-2" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q make_pytunes</code></pre>
+
+<h3 class="question" id="q6">Q6: Number of Songs</h3>
+
+<p>A pyPod can only hold a certain number of songs, and you need to find out
+whether or not all the songs in your pyTunes account will fit. Define the
+function <code>num_songs</code>, which takes in a pyTunes tree <code>t</code> and returns the number
+of songs in <code>t</code>. Recall that there are no empty directories in pyTunes, so all
+leaves in <code>t</code> are songs.</p>
+
+<p><strong>Hint:</strong> You can use <code>is_leaf</code> to check whether a given tree is a leaf.</p>
+
+<pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; no_branches = tree(<span class="hljs-number">1</span>)
+<span class="hljs-meta">&gt;&gt;</span>&gt; is_leaf(no_branches)
+True
+<span class="hljs-meta">&gt;&gt;</span>&gt; is_leaf(tree(<span class="hljs-number">5</span>, [tree(<span class="hljs-number">3</span>), tree(<span class="hljs-number">4</span>)]))
+False</code></pre>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">num_songs</span><span class="hljs-params">(t)</span>:</span>
+    <span class="hljs-string">"""Return the number of songs in the pyTunes tree, t.
+
+    &gt;&gt;&gt; pytunes = make_pytunes('i_love_music')
+    &gt;&gt;&gt; num_songs(pytunes)
+    3
+    &gt;&gt;&gt; pytunes_simple = tree('i_am_picky', [tree('despacito')])
+    &gt;&gt;&gt; num_songs(pytunes_simple)
+    1
+    """</span>
+<div class="alt solution-3">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-3">    <span class="hljs-keyword">if</span> is_leaf(t):
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>
+    <span class="hljs-keyword">return</span> sum([num_songs(b) <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> branches(t)])
+
+<span class="hljs-comment"># Alternate solution</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">num_songs</span><span class="hljs-params">(t)</span>:</span>
+    <span class="hljs-keyword">if</span> is_leaf(t):
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>
+    leaves = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> branches(t):
+        leaves += num_songs(b)
+    <span class="hljs-keyword">return</span> leaves</div></code></pre>
+
+
+        <button id="solution-3" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q num_songs</code></pre>
+
+
+<h1 id="optional-questions">Optional Questions</h1>
+
+
+
+<h2 id="more-pytunes-functionality">More pyTunes Functionality</h2>
+
+
+<h3 class="question" id="q7">Q7: Add Song</h3>
+
+<p>Of course, you should be able to add music to your pyTunes. Write <code>add_song</code> to add <code>song</code> to the given <code>category</code>. You should not be able to add a song under a song or to a category that doesn't exist. See the doctests for examples.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add_song</span><span class="hljs-params">(t, song, category)</span>:</span>
+    <span class="hljs-string">"""Returns a new tree with SONG added to CATEGORY. Assume the CATEGORY
+    already exists.
+
+    &gt;&gt;&gt; country_tunes = tree('country_tunes',
+    ...                  [tree('country',
+    ...                    [tree('jason aldean',
+    ...                       [tree('johnny cash')]),
+    ...                     tree('johnny cash',
+    ...                       [tree('hurt')])])])
+    &gt;&gt;&gt; new_country = add_song(country_tunes, 'ring of fire', 'johnny cash')
+    &gt;&gt;&gt; print_tree(new_country)
+    country_tunes
+      country
+        jason aldean
+          johnny cash
+        johnny cash
+          hurt
+          ring of fire
+    """</span>
+<div class="alt solution-4">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-4">    <span class="hljs-keyword">if</span> label(t) == category <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> is_leaf(t):
+        <span class="hljs-keyword">return</span> tree(label(t), branches(t) + [tree(song)])
+    kept_branches = []
+    <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> branches(t):
+        kept_branches += [add_song(b, song, category)]
+    <span class="hljs-keyword">return</span> tree(label(t), kept_branches)
+
+<span class="hljs-comment"># Alternative Solution</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add_song</span><span class="hljs-params">(t, song, category)</span>:</span>
+    <span class="hljs-keyword">if</span> label(t) == category <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> is_leaf(t):
+        <span class="hljs-keyword">return</span> tree(label(t), branches(t) + [tree(song)])
+    all_branches = [add_song(b, song, category) <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> branches(t)]
+    <span class="hljs-keyword">return</span> tree(label(t), all_branches)</div></code></pre>
+
+
+        <button id="solution-4" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q add_song</code></pre>
+
+<h3 class="question" id="q8">Q8: Delete</h3>
+
+<p>You also want to be able to delete a song or category from your pyTunes. Define the function <code>delete</code>, which takes in a pyTunes tree <code>t</code> and returns a new tree that is the same as <code>t</code> except with <code>target</code> deleted. If <code>target</code> is a genre, artist, or album, delete it as well as everything inside of it. However, just deleting all the songs within a category should not remove that category. You may assume that <code>t</code> will not be the entire pyTunes account.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">delete</span><span class="hljs-params">(t, target)</span>:</span>
+    <span class="hljs-string">"""Returns the tree that results from deleting TARGET from t. If TARGET is
+    a category, delete everything inside of it.
+
+    &gt;&gt;&gt; my_account = tree('kpop_king',
+    ...                    [tree('korean',
+    ...                          [tree('gangnam style'),
+    ...                           tree('wedding dress')]),
+    ...                     tree('pop',
+    ...                           [tree('t-swift',
+    ...                                [tree('blank space')]),
+    ...                            tree('uptown funk'),
+    ...                            tree('see you again')])])
+    &gt;&gt;&gt; new = delete(my_account, 'pop')
+    &gt;&gt;&gt; print_tree(new)
+    kpop_king
+      korean
+        gangnam style
+        wedding dress
+    """</span>
+<div class="alt solution-5">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-5">    kept_branches = []
+    <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> branches(t):
+        <span class="hljs-keyword">if</span> label(b) != target:
+            kept_branches += [delete(b, target)]
+    <span class="hljs-keyword">return</span> tree(label(t), kept_branches)
+
+<span class="hljs-comment"># Alternate solution</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">delete</span><span class="hljs-params">(t, target)</span>:</span>
+    kept_branches = [delete(b, target) <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> branches(t) <span class="hljs-keyword">if</span> label(b) != target]
+    <span class="hljs-keyword">return</span> tree(label(t), kept_branches)</div></code></pre>
+
+
+        <button id="solution-5" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q delete</code></pre>
+
+
+<h2 id="shakespeare-and-dictionaries">Shakespeare and Dictionaries</h2>
+
+
+<p>We will use dictionaries to approximate the entire works of
+Shakespeare! We're going to use a bigram language model. Here's the
+idea: We start with some word -- we'll use "The" as an example. Then we
+look through all of the texts of Shakespeare and for every instance of
+"The" we record the word that follows "The" and add it to a list, known
+as the <em>successors</em> of "The".  Now suppose we've done this for every
+word Shakespeare has used, ever.</p>
+
+<p>Let's go back to "The". Now, we randomly choose a word from this list,
+say "cat". Then we look up the successors of "cat" and randomly choose
+a word from that list, and we continue this process. This eventually
+will terminate in a period (".") and we will have generated a
+Shakespearean sentence!</p>
+
+<p>The object that we'll be looking things up in is called a "successor
+table", although really it's just a dictionary. The keys in this
+dictionary are words, and the values are lists of successors to those
+words.</p>
+
+<h3 class="question" id="q9">Q9: Successor Tables</h3>
+Here's an incomplete definition of the <code>build_successors_table</code>
+function. The input is a list of words (corresponding to a
+Shakespearean text), and the output is a successors table. (By default,
+the first word is a successor to "."). See the example below.
+
+<blockquote><p>Note: there are two places where you need to write code, denoted by the two
+<code>"*** YOUR CODE HERE ***"</code></p></blockquote>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">build_successors_table</span><span class="hljs-params">(tokens)</span>:</span>
+    <span class="hljs-string">"""Return a dictionary: keys are words; values are lists of successors.
+
+    &gt;&gt;&gt; text = ['We', 'came', 'to', 'investigate', ',', 'catch', 'bad', 'guys', 'and', 'to', 'eat', 'pie', '.']
+    &gt;&gt;&gt; table = build_successors_table(text)
+    &gt;&gt;&gt; sorted(table)
+    [',', '.', 'We', 'and', 'bad', 'came', 'catch', 'eat', 'guys', 'investigate', 'pie', 'to']
+    &gt;&gt;&gt; table['to']
+    ['investigate', 'eat']
+    &gt;&gt;&gt; table['pie']
+    ['.']
+    &gt;&gt;&gt; table['.']
+    ['We']
+    """</span>
+    table = {}
+    prev = <span class="hljs-string">'.'</span>
+    <span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> tokens:
+        <span class="hljs-keyword">if</span> prev <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> table:
+<div class="alt solution-6">            <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-6">            table[prev] = []</div><div class="alt solution-6">        <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-6">        table[prev] += [word]</div>        prev = word
+    <span class="hljs-keyword">return</span> table</code></pre>
+
+
+        <button id="solution-6" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q build_successors_table</code></pre>
+
+<h3 class="question" id="q10">Q10: Construct the Sentence</h3>
+
+<p>Let's generate some sentences! Suppose we're given a starting word. We
+can look up this word in our table to find its list of successors, and
+then randomly select a word from this list to be the next word in the
+sentence. Then we just repeat until we reach some ending punctuation.</p>
+
+<p><em>Hint</em>: to randomly select from a list, first make sure you import the
+Python random library with <code>import random</code> and then use the expression
+<code>random.choice(my_list)</code>)</p>
+
+<p>This might not be a bad time to play around with adding strings
+together as well. Let's fill in the <code>construct_sent</code> function!</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">construct_sent</span><span class="hljs-params">(word, table)</span>:</span>
+    <span class="hljs-string">"""Prints a random sentence starting with word, sampling from
+    table.
+    """</span>
+    <span class="hljs-keyword">import</span> random
+    result = <span class="hljs-string">' '</span>
+    <span class="hljs-keyword">while</span> word <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> [<span class="hljs-string">'.'</span>, <span class="hljs-string">'!'</span>, <span class="hljs-string">'?'</span>]:
+<div class="alt solution-7">        <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-7">        result += word + <span class="hljs-string">' '</span>
+        word = random.choice(table[word])</div>    <span class="hljs-keyword">return</span> result + word</code></pre>
+
+
+        <button id="solution-7" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+
+<h3 id="putting-it-all-together">Putting it all together</h3>
+
+
+<p>Great! Now all that's left is to run our functions with some actual
+code. The following snippet included in the skeleton code will return
+a list containing the words in all of the works of Shakespeare.</p>
+
+<blockquote><p><em>Warning</em>: do <strong>NOT</strong> try to print the return result of this function.</p></blockquote>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">shakespeare_tokens</span><span class="hljs-params">(path=<span class="hljs-string">'shakespeare.txt'</span>, url=<span class="hljs-string">'http://composingprograms.com/shakespeare.txt'</span>)</span>:</span>
+    <span class="hljs-string">"""Return the words of Shakespeare's plays as a list."""</span>
+    <span class="hljs-keyword">import</span> os
+    <span class="hljs-keyword">from</span> urllib.request <span class="hljs-keyword">import</span> urlopen
+    <span class="hljs-keyword">if</span> os.path.exists(path):
+        <span class="hljs-keyword">return</span> open(<span class="hljs-string">'shakespeare.txt'</span>, encoding=<span class="hljs-string">'ascii'</span>).read().split()
+    <span class="hljs-keyword">else</span>:
+        shakespeare = urlopen(url)
+        <span class="hljs-keyword">return</span> shakespeare.read().decode(encoding=<span class="hljs-string">'ascii'</span>).split()</code></pre>
+
+<p>Next, we probably want an easy way to refer to our list of tokens and
+our successors table.  Let's make the following assignments (<em>Note:</em> the following lines are commented in the provided
+file. Uncomment them before proceeding.)</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">#</span><span class="bash"> Uncomment the following two lines</span>
+<span class="hljs-meta">#</span><span class="bash"> tokens = shakespeare_tokens()</span>
+<span class="hljs-meta">#</span><span class="bash"> table = build_successors_table(tokens)</span></code></pre>
+
+<p>Finally, let's define an easy to call utility function:</p>
+
+<pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sent</span><span class="hljs-params">()</span></span>:
+...     return construct_sent(<span class="hljs-string">'The'</span>, table)
+<span class="hljs-meta">&gt;&gt;</span>&gt; sent()
+<span class="hljs-string">" The plebeians have done us must be news-cramm'd  ."</span>
+
+<span class="hljs-meta">&gt;&gt;</span>&gt; sent()
+<span class="hljs-string">" The ravish'd thee , with the mercy of beauty !"</span>
+
+<span class="hljs-meta">&gt;&gt;</span>&gt; sent()
+<span class="hljs-string">" The bird of Tunis , or two white and plucker down with better ; that's God's sake ."</span></code></pre>
+
+<p>Notice that all the sentences start with the word "The". With a few
+modications, we can make our sentences start with a random word. The
+following <code>random_sent</code> function (defined in your starter file) will
+do the trick:</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">random_sent</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-keyword">import</span> random
+    <span class="hljs-keyword">return</span> construct_sent(random.choice(table[<span class="hljs-string">'.'</span>]), table)</code></pre>
+
+<p>Go ahead and load your file into Python (be sure to use the <code>-i</code> flag).
+You can now call the <code>random_sent</code> function to generate random
+Shakespearean sentences!</p>
+
+<pre><code class="hljs php">&gt;&gt;&gt; random_sent()
+<span class="hljs-string">' Long live by thy name , then , Dost thou more angel , good Master Deep-vow , And tak'</span>st more ado but following her , my sight Of speaking <span class="hljs-keyword">false</span> !<span class="hljs-string">'
+
+&gt;&gt;&gt; random_sent()
+'</span> Yes , why blame him , <span class="hljs-keyword">as</span> is <span class="hljs-keyword">as</span> I shall find a <span class="hljs-keyword">case</span> , That plays at the <span class="hljs-keyword">public</span> weal <span class="hljs-keyword">or</span> the ghost .<span class="hljs-string">'</span></code></pre>
+
+  </div>
+
+  <div class="col-md-3 sticky">
+    <nav class="hidden-print hidden-sm hidden-xs sidebar">
+      <ul class="nav nav-stacked noselect">
+  <li><a href="https://cs61a.org/lab/lab05/#topics">Topics</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab05/#sequences">Sequences</a></li>
+    <li><a href="https://cs61a.org/lab/lab05/#dictionaries">Dictionaries</a></li>
+    <li><a href="https://cs61a.org/lab/lab05/#trees">Trees</a></li>
+  </ul>
+  <li><a href="https://cs61a.org/lab/lab05/#required-questions">Required Questions</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab05/#what-would-python-display">What Would Python Display?</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab05/#q1">Q1: Dictionaries</a></li>
+      <li><a href="https://cs61a.org/lab/lab05/#q2">Q2: Tree Structure</a></li>
+      <li><a href="https://cs61a.org/lab/lab05/#q3">Q3: Height &amp; Depth</a></li>
+    </ul>
+    <li><a href="https://cs61a.org/lab/lab05/#coding-practice">Coding Practice</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab05/#q4">Q4: Map, Filter, Reduce</a></li>
+    </ul>
+    <li><a href="https://cs61a.org/lab/lab05/#pytunes-trees">pyTunes Trees</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab05/#q5">Q5: Create pyTunes</a></li>
+      <li><a href="https://cs61a.org/lab/lab05/#q6">Q6: Number of Songs</a></li>
+    </ul>
+  </ul>
+  <li><a href="https://cs61a.org/lab/lab05/#optional-questions">Optional Questions</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab05/#more-pytunes-functionality">More pyTunes Functionality</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab05/#q7">Q7: Add Song</a></li>
+      <li><a href="https://cs61a.org/lab/lab05/#q8">Q8: Delete</a></li>
+    </ul>
+    <li><a href="https://cs61a.org/lab/lab05/#shakespeare-and-dictionaries">Shakespeare and Dictionaries</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab05/#q9">Q9: Successor Tables</a></li>
+      <li><a href="https://cs61a.org/lab/lab05/#q10">Q10: Construct the Sentence</a></li>
+      <li><a href="https://cs61a.org/lab/lab05/#putting-it-all-together">Putting it all together</a></li>
+    </ul>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/resources.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/studying.html">Studying Guide</a></li>
+            <li><a href="https://cs61a.org/articles/debugging.html">Debugging Guide</a></li>
+            <li><a href="https://cs61a.org/articles/composition.html">Composition Guide</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/articles/about.html">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/about.html#assignments">Assignments</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#exams">Exams</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    
+
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+</script>
+
+
+<script>
+  $(function() {
+    var staging_domains = ['staging.cs61a.org', 'localhost', '127.0.0.1'];
+
+    var staging = staging_domains.indexOf(window.location.hostname) != -1;
+    var after_due_date = new Date("09/30/2017") < new Date();
+    var release_solutions = staging || after_due_date;
+
+    if (release_solutions) {
+      $('.toggle').css('display', 'inline-block');
+      $('.toggle').click(function() {
+        var solution_id = $(this).attr('id');
+        $('div.' + solution_id).slideToggle(600);
+      });
+    }
+  });
+</script>
+
+
+  
+</body></html>

@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<!-- saved from url=(0028)https://cs61a.org/lab/lab01/ -->
+<html lang="en" class="gr__cs61a_org"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="CS 61A: Structure and Interpretation of Computer Programs">
+    <meta name="keywords" content="CS 61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS">
+    <meta name="author" content="John DeNero, Paul Hilfinger">
+    
+    <meta name="viewport" content="width=device-width">
+
+    <script src="./Lab 1_ Expressions and Control Structures _ CS 61A Fall 2017_files/jquery.min.js.download"></script>
+    <script src="./Lab 1_ Expressions and Control Structures _ CS 61A Fall 2017_files/bootstrap.min.js.download"></script>
+    <script src="./Lab 1_ Expressions and Control Structures _ CS 61A Fall 2017_files/highlight.min.js.download"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="./Lab 1_ Expressions and Control Structures _ CS 61A Fall 2017_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./Lab 1_ Expressions and Control Structures _ CS 61A Fall 2017_files/css">
+    <link rel="stylesheet" href="./Lab 1_ Expressions and Control Structures _ CS 61A Fall 2017_files/style.css">
+    <link rel="stylesheet" href="./Lab 1_ Expressions and Control Structures _ CS 61A Fall 2017_files/mono-blue.css">
+    <link rel="icon" href="https://cs61a.org/assets/images/favicon.ico">
+
+    
+
+    <title>
+Lab 1: Expressions and Control Structures | CS 61A Fall 2017
+</title>
+  </head>
+
+  <body id="index" class="home" data-gr-c-s-loaded="true">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://cs61a.org/">CS 61A</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+            <li><a href="https://cs61a.org/resources.html">Resources</a></li>
+            <li><a href="https://cs61a.org/articles/about.html">Policies</a></li>
+            <li><a href="http://tutor.cs61a.org/">Tutor</a></li>
+            <li><a href="https://piazza.com/berkeley/fall2017/cs61a" target="_blank">Piazza</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class="row">
+  <div class="col-md-9">
+    <header>
+      <h1>
+        
+Lab 1: Expressions and Control Structures
+
+        
+        <ul class="inline-block list-inline">
+          <li><a href="https://cs61a.org/lab/lab01/lab01.zip" class="label label-outline">lab01.zip</a></li>
+        </ul>
+        
+      </h1>
+    </header>
+    
+
+<p><i>Due at 11:59pm on Friday, 09/01/2017.</i></p>
+
+
+<h2 id="starter-files">Starter Files</h2>
+
+
+<p>Download <a href="https://cs61a.org/lab/lab01/lab01.zip">lab01.zip</a>.
+Inside the archive, you will find starter files for the questions in this lab,
+  along with a copy of the <a href="https://cs61a.org/lab/lab01/ok">Ok</a> autograder.</p>
+
+
+<h2 id="submission">Submission</h2>
+
+<p>By the end of this lab, you should have submitted the lab with
+<code>python3 ok --submit</code>. You may submit more than once before the
+deadline; only the final submission will be graded.
+Check that you have successfully submitted your code on
+<a href="https://okpy.org/">okpy.org</a>.</p>
+
+<ul>
+  <li>Questions 1, 2, 3, 4, and 5 must be completed in order to receive credit for
+  the lab.</li>
+  <li><p>Questions 6 and 7 (What Would Python Display?) are <strong>optional</strong>.</p>
+
+  <p><em>It is recommended that you work on these should you finish the required
+  section early, or if you are struggling with the required questions.</em></p></li>
+  <li><p>Questions 8, 9, 10, and 11 (More Coding Practice) are <strong>optional</strong>.</p>
+
+  <p><em>It is recommended that you complete these problems on your own time.</em></p></li>
+</ul>
+
+
+
+    
+<h1 id="logistics">Logistics</h1>
+
+
+
+<h2 id="using-python">Using Python</h2>
+
+
+<p>When running a Python file, you can use <strong>options</strong> on the command line
+to inspect your code further. Here are a few that will come in handy.
+If you want to learn more about other Python command-line options, take a look
+at the <a href="https://docs.python.org/3.4/using/cmdline.html">documentation</a>.</p>
+
+<ul>
+  <li><p>Using no command-line options will run the code in the file you
+  provide and return you to the command line.</p>
+
+<pre><code class="hljs css"><span class="hljs-selector-tag">python3</span> <span class="hljs-selector-tag">lab01</span><span class="hljs-selector-class">.py</span></code></pre></li>
+  <li><p><strong><code>-i</code></strong>: The <code>-i</code> option runs your Python script, then opens an interactive
+  session. In an interactive session, you run Python code line by line and get
+  immediate feedback instead of running an entire file all at once. To exit,
+  type <code>exit()</code> into the interpreter prompt. You can also use the keyboard
+  shortcut <code>Ctrl-D</code> on Linux/Mac machines or <code>Ctrl-Z  Enter</code> on Windows.</p>
+
+  <p>If you edit the Python file while running it interactively, you will need to
+  exit and restart the interpreter in order for those changes to take effect.</p>
+
+<pre><code class="hljs css"><span class="hljs-selector-tag">python3</span> <span class="hljs-selector-tag">-i</span> <span class="hljs-selector-tag">lab01</span><span class="hljs-selector-class">.py</span></code></pre></li>
+  <li><p><strong><code>-m doctest</code></strong>: Runs doctests in a particular file. Doctests are
+  surrounded by triple quotes (<code>"""</code>) within functions. Each test consists of
+  <code>&gt;&gt;&gt;</code> followed by some Python code and the expected output.</p>
+
+<pre><code class="hljs css"> <span class="hljs-selector-tag">python3</span> <span class="hljs-selector-tag">-m</span> <span class="hljs-selector-tag">doctest</span> <span class="hljs-selector-tag">lab01</span><span class="hljs-selector-class">.py</span></code></pre></li>
+</ul>
+
+
+<h2 id="using-ok">Using OK</h2>
+
+
+<p>In 61A, we use a program called Ok for autograding labs, homeworks, and
+projects. You should have Ok in the starter files downloaded at the start of
+this lab. For more information on using Ok commands, learn more
+<a href="http://cs61a.org/articles/using-ok.html">here</a>. To use Ok to run doctests for a
+specified function, run the following command:</p>
+
+<pre><code class="hljs perl">python3 ok -<span class="hljs-string">q &lt;specified function&gt;</span></code></pre>
+
+<p>By default, only tests that did not pass will show up. You can use the <code>-v</code>
+option to show all tests, including tests you have passed:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -v</code></pre>
+
+<p>Finally, when you have finished all the questions in
+<a href="https://cs61a.org/lab/lab01/lab01.py">lab01.py</a>, you must submit the assignment using the
+<code>--submit</code> option:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok --submit</code></pre>
+
+
+<h1 id="topics">Topics</h1>
+
+
+<p>Consult this section if you need a refresher on the material for this lab. It's
+okay to skip directly to <a href="https://cs61a.org/lab/lab01/#required-questions">the questions</a> and refer back
+here should you get stuck.</p>
+
+
+<h2 id="division">Division</h2>
+
+
+<p>Let's compare the different division-related operators in Python:</p>
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+      <tbody><tr>
+        <th>True Division: <code>/</code> <br> (decimal division) </th>
+        <th>Floor Division: <code>//</code> <br> (integer division) </th>
+        <th>Modulo: <code>%</code> <br> (remainder) </th>
+
+  </tr>
+  <tr>
+    <td align="left">
+<pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; <span class="hljs-number">1</span> / <span class="hljs-number">5</span>
+<span class="hljs-number">0</span>.<span class="hljs-number">2</span>
+
+<span class="hljs-meta">&gt;&gt;</span>&gt; <span class="hljs-number">25</span> / <span class="hljs-number">4</span>
+<span class="hljs-number">6.25</span>
+
+<span class="hljs-meta">&gt;&gt;</span>&gt; <span class="hljs-number">4</span> / <span class="hljs-number">2</span>
+<span class="hljs-number">2.0</span>
+
+<span class="hljs-meta">&gt;&gt;</span>&gt; <span class="hljs-number">5</span> / <span class="hljs-number">0</span>
+ZeroDivisionError
+</code></pre>
+    </td>
+    <td align="left">
+<pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; 1 // 5</span>
+0
+<span class="hljs-meta">
+&gt;</span><span class="bash">&gt;&gt; 25 // 4</span>
+6
+<span class="hljs-meta">
+&gt;</span><span class="bash">&gt;&gt; 4 // 2</span>
+2
+<span class="hljs-meta">
+&gt;</span><span class="bash">&gt;&gt; 5 // 0</span>
+ZeroDivisionError
+</code></pre>
+    </td>
+    <td align="left">
+<pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; <span class="hljs-number">1</span> % <span class="hljs-number">5</span>
+<span class="hljs-number">1</span>
+
+<span class="hljs-meta">&gt;&gt;</span>&gt; <span class="hljs-number">25</span> % <span class="hljs-number">4</span>
+<span class="hljs-number">1</span>
+
+<span class="hljs-meta">&gt;&gt;</span>&gt; <span class="hljs-number">4</span> % <span class="hljs-number">2</span>
+<span class="hljs-number">0</span>
+
+<span class="hljs-meta">&gt;&gt;</span>&gt; <span class="hljs-number">5</span> % <span class="hljs-number">0</span>
+ZeroDivisionError
+</code></pre>
+    </td>
+  </tr>
+</tbody></table>
+</div>
+
+<p>Notice that Python outputs <code>ZeroDivisionError</code> for certain cases. We will go over this later in this lab under <a href="https://cs61a.org/lab/lab01/#error-messages">Error Messages</a>.</p>
+
+<p>One useful technique involving the <code>%</code> operator is to check
+whether a number <code>x</code> is divisible by another number <code>y</code>:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">x</span> % y == <span class="hljs-number">0</span></code></pre>
+
+<p>For example, in order to check if <code>x</code> is an even number:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">x</span> % <span class="hljs-number">2</span> == <span class="hljs-number">0</span></code></pre>
+
+
+<h2 id="boolean-operators">Boolean Operators</h2>
+
+
+<p>Python supports three boolean operators: <code>and</code>, <code>or</code>, and <code>not</code>:</p>
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>a = <span class="hljs-number">4</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>a &lt; <span class="hljs-number">2</span> <span class="hljs-keyword">and</span> a &gt; <span class="hljs-number">0</span>
+<span class="hljs-keyword">False</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>a &lt; <span class="hljs-number">2</span> <span class="hljs-keyword">or</span> a &gt; <span class="hljs-number">0</span>
+<span class="hljs-keyword">True</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">not</span> (a &gt; <span class="hljs-number">0</span>)
+<span class="hljs-keyword">False</span></code></pre>
+
+<ul>
+  <li><code>and</code> evaluates to <code>True</code> only if both operands evaluate to <code>True</code>.
+  If at least one operand is <code>False</code>, then <code>and</code> evaluates to <code>False</code>.</li>
+  <li><code>or</code> evaluates to <code>True</code> if at least one operand evaluates to <code>True</code>.
+  If both operands are <code>False</code>, then <code>or</code> evaluates to <code>False</code>.</li>
+  <li><code>not</code> evaluates to <code>True</code> if its operand evaluates to <code>False</code>. It evaluates
+  to <code>False</code> if its operand evalutes to <code>True</code>.</li>
+</ul>
+
+<p>What do you think the following expression evaluates to? Try it out in the
+Python interpreter.</p>
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">True</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">False</span> <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">True</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">False</span></code></pre>
+
+<p>It is difficult to read complex expressions, like the one above, and understand
+how a program will behave. Using parentheses can make your code easier to
+understand. Just so you know, Python interprets that expression in the
+following way:</p>
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>(<span class="hljs-keyword">True</span> <span class="hljs-keyword">and</span> (<span class="hljs-keyword">not</span> <span class="hljs-keyword">False</span>)) <span class="hljs-keyword">or</span> ((<span class="hljs-keyword">not</span> <span class="hljs-keyword">True</span>) <span class="hljs-keyword">and</span> <span class="hljs-keyword">False</span>)</code></pre>
+
+<p>This is because boolean operators, like arithmetic operators, have an order of operation:</p>
+
+<ul>
+  <li><code>not</code> has the highest priority</li>
+  <li><code>and</code></li>
+  <li><code>or</code> has the lowest priority</li>
+</ul>
+
+<p>It turns out <code>and</code> and <code>or</code> work on more than just booleans (<code>True</code>,
+<code>False</code>). Python values such as <code>0</code>, <code>None</code>, <code>''</code> (the empty string), and <code>[]</code>
+(the empty list) are considered false values. All other values are considered
+true values.</p>
+
+
+<h3 id="short-circuiting">Short Circuiting</h3>
+
+
+<p>What do you think will happen if we type the following into Python?</p>
+
+<pre><code class="hljs">1 / 0</code></pre>
+
+<p>Try it out in Python! You should see a <code>ZeroDivisionError</code>. But what about this expression?</p>
+
+<pre><code class="hljs php"><span class="hljs-keyword">True</span> <span class="hljs-keyword">or</span> <span class="hljs-number">1</span> / <span class="hljs-number">0</span></code></pre>
+
+<p>It evaluates to <code>True</code> because Python's <code>and</code> and <code>or</code> operators <em>short-circuit</em>. That is, they don't necessarily evaluate every operand.</p>
+
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <tbody><tr>
+      <th>Operator</th>
+      <th>Checks if:</th>
+      <th>Evaluates from left to right up to:</th>
+      <th>Example</th>
+    </tr>
+    <tr>
+      <td>AND</td>
+      <td>All values are true</td>
+      <td>The first false value</td>
+      <td><code>False and 1 / 0</code> evaluates to <code>False</code></td>
+    </tr>
+    <tr>
+      <td>OR</td>
+      <td>At least one value is true</td>
+      <td>The first true value</td>
+      <td><code>True or 1 / 0</code> evaluates to <code>True</code></td>
+    </tr>
+  </tbody></table>
+</div>
+
+<p>Short-circuiting happens when the operator reaches an operand that allows them to make a conclusion about the expression. For example, <code>and</code> will short-circuit as soon as it reaches the first false value because it then knows that not all the values are true.</p>
+
+<p>If <code>and</code> and <code>or</code> do not <em>short-circuit</em>, they just return the last
+value. Keep in mind that <code>and</code> and <code>or</code> don't always return booleans when using
+values other than <code>True</code> and <code>False</code>.</p>
+
+
+<h2 id="return-and-print"><code>return</code> and <code>print</code></h2>
+
+
+<p>Most functions that you define will contain a <code>return</code> statement. The <code>return</code>
+statement will give the result of some computation back to the caller of the
+function and exit the function. For example, the function <code>square</code> below takes
+in a number <code>x</code> and returns its square.</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">square</span><span class="hljs-params">(x)</span>:</span>
+    <span class="hljs-string">"""
+    &gt;&gt;&gt; square(4)
+    16
+    """</span>
+    <span class="hljs-keyword">return</span> x * x</code></pre>
+
+<p>When Python executes a <code>return</code> statement, the function terminates immediately.
+If Python reaches the end of the function body without executing a <code>return</code>
+statement, it will automatically return <code>None</code>.</p>
+
+<p>In contrast, the <code>print</code> function is used to display values in the Terminal.
+This can lead to some confusion between <code>print</code> and <code>return</code> because calling a
+function in the Python interpreter will print out the function's return value.</p>
+
+<p>However, unlike a <code>return</code> statement, when Python evaluates a <code>print</code>
+expression, the function does <em>not</em> terminate immediately.</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">what_prints</span><span class="hljs-params">()</span>:</span>
+    print(<span class="hljs-string">'Hello World!'</span>)
+    <span class="hljs-keyword">return</span> <span class="hljs-string">'Exiting this function.'</span>
+    print(<span class="hljs-string">'61A is awesome!'</span>)
+
+<span class="hljs-meta">&gt;&gt;&gt; </span>what_prints()
+Hello World!
+<span class="hljs-string">'Exiting this function.'</span></code></pre>
+
+<blockquote><p>Notice also that <code>print</code> will display text <strong>without the quotes</strong>, but
+<code>return</code> will preserve the quotes.</p></blockquote>
+
+
+<h2 id="if-statements">If Statements</h2>
+
+
+<p>You can review the syntax of <code>if</code> statements in
+<a href="http://composingprograms.com/pages/15-control.html#conditional-statements">Section 1.5.4</a>
+of Composing Programs.</p>
+
+<blockquote><p><em>Tip</em>: We sometimes see code that looks like this:</p>
+
+<pre><code class="hljs php"><span class="hljs-keyword">if</span> x &gt; <span class="hljs-number">3</span>:
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">True</span>
+<span class="hljs-keyword">else</span>:
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span></code></pre>
+
+<p>This can be written more concisely as <code>return x &gt; 3</code>. If your code looks like
+the code above, see if you can rewrite it more clearly!</p></blockquote>
+
+
+<h2 id="while-loops">While Loops</h2>
+
+
+<p>You can review the syntax of <code>while</code> loops in
+<a href="http://composingprograms.com/pages/15-control.html#iteration">Section 1.5.5</a>
+of Composing Programs.</p>
+
+
+<h2 id="error-messages">Error Messages</h2>
+
+
+<p>By now, you've probably seen a couple of error messages.
+They might look intimidating, but error messages are very helpful
+for debugging code. The following are some common types of errors:</p>
+
+<div class="table-responsive">
+  <table class="table table-bordered">
+    <tbody><tr>
+      <th>Error Types</th>
+      <th>Descriptions</th>
+    </tr>
+    <tr>
+      <td>SyntaxError</td>
+      <td align="left">Contained improper syntax (e.g. missing a colon after an <code>if</code> statement or forgetting to close parentheses/quotes)</td>
+    </tr>
+    <tr>
+      <td>IndentationError</td>
+      <td align="left">Contained improper indentation (e.g. inconsistent indentation of a function body)</td>
+    </tr>
+    <tr>
+      <td>TypeError</td>
+      <td align="left">Attempted operation on incompatible types (e.g. trying to add a function and a number) or called function with the wrong number of arguments</td>
+    </tr>
+    <tr>
+      <td>ZeroDivisionError</td>
+      <td align="left">Attempted division by zero</td>
+    </tr>
+  </tbody></table>
+</div>
+
+<p>Using these descriptions of error messages, you should be able to get
+a better idea of what went wrong with your code. <strong>If you run into
+error messages, try to identify the problem before asking for
+help.</strong> You can often Google unfamiliar error messages to see if others have
+made similar mistakes to help you debug.</p>
+
+<p>For example:</p>
+
+<pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; square(<span class="hljs-number">3</span>, <span class="hljs-number">3</span>)
+Traceback (most recent call last):
+  File <span class="hljs-string">"&lt;stdin&gt;"</span>, line <span class="hljs-number">1</span>, <span class="hljs-keyword">in</span> &lt;<span class="hljs-class"><span class="hljs-keyword">module</span>&gt;</span>
+<span class="hljs-symbol">TypeError:</span> square() takes <span class="hljs-number">1</span> positional argument but <span class="hljs-number">2</span> were given</code></pre>
+
+<p>Note:</p>
+
+<ul>
+  <li>The last line of an error message tells us the type of the error. In the
+  example above, we have a <code>TypeError</code>.</li>
+  <li>The error message tells us what we did wrong -- we gave <code>square</code> 2 arguments
+  when it can only take in 1 argument. In general, the last line is the most
+  helpful.</li>
+  <li>The second to last line of the error message tells us on which line the
+  error occurred. This helps us track down the error. In the example above,
+  <code>TypeError</code> occurred at <code>line 1</code>.</li>
+</ul>
+
+
+<h1 id="required-questions">Required Questions</h1>
+
+
+
+<h2 id="what-would-python-display-part-1">What Would Python Display (Part 1)?</h2>
+
+
+<h3 class="question" id="q1">Q1: WWPD: Veritasiness</h3>
+
+<blockquote><p>Use Ok to test your knowledge with the following "What Would Python Display?"
+questions:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q short_circuiting -u</code></pre></blockquote>
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">True</span> <span class="hljs-keyword">and</span> <span class="hljs-number">13</span>
+<div class="alt prompt-1">______</div><div class="solution prompt-1">13</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">False</span> <span class="hljs-keyword">or</span> <span class="hljs-number">0</span>
+<div class="alt prompt-1">______</div><div class="solution prompt-1">0</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">not</span> <span class="hljs-number">10</span>
+<div class="alt prompt-1">______</div><div class="solution prompt-1">False</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">not</span> <span class="hljs-keyword">None</span>
+<div class="alt prompt-1">______</div><div class="solution prompt-1">True</div></code></pre>
+        <button id="prompt-1" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">True</span> <span class="hljs-keyword">and</span> <span class="hljs-number">1</span> / <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">False</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2">Error (ZeroDivisionError)</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">True</span> <span class="hljs-keyword">or</span> <span class="hljs-number">1</span> / <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> <span class="hljs-keyword">False</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2">True</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">True</span> <span class="hljs-keyword">and</span> <span class="hljs-number">0</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2">0</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">False</span> <span class="hljs-keyword">or</span> <span class="hljs-number">1</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2">1</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-number">1</span> <span class="hljs-keyword">and</span> <span class="hljs-number">3</span> <span class="hljs-keyword">and</span> <span class="hljs-number">6</span> <span class="hljs-keyword">and</span> <span class="hljs-number">10</span> <span class="hljs-keyword">and</span> <span class="hljs-number">15</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2">15</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-number">0</span> <span class="hljs-keyword">or</span> <span class="hljs-keyword">False</span> <span class="hljs-keyword">or</span> <span class="hljs-number">2</span> <span class="hljs-keyword">or</span> <span class="hljs-number">1</span> / <span class="hljs-number">0</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2">2</div></code></pre>
+        <button id="prompt-2" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">not</span> <span class="hljs-number">0</span>
+<div class="alt prompt-3">______</div><div class="solution prompt-3">True</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>(<span class="hljs-number">1</span> + <span class="hljs-number">1</span>) <span class="hljs-keyword">and</span> <span class="hljs-number">1</span>
+<div class="alt prompt-3">______</div><div class="solution prompt-3">1</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-number">1</span>/<span class="hljs-number">0</span> <span class="hljs-keyword">or</span> <span class="hljs-keyword">True</span>
+<div class="alt prompt-3">______</div><div class="solution prompt-3">Error</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>(<span class="hljs-keyword">True</span> <span class="hljs-keyword">or</span> <span class="hljs-keyword">False</span>) <span class="hljs-keyword">and</span> <span class="hljs-keyword">False</span>
+<div class="alt prompt-3">______</div><div class="solution prompt-3">False</div></code></pre>
+        <button id="prompt-3" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<h3 class="question" id="q2">Q2: WWPD: Loops</h3>
+
+<blockquote><p>Use Ok to test your knowledge with the following "What Would Python Display?"
+questions:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q loops -u</code></pre></blockquote>
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>n = <span class="hljs-number">3</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">while</span> n &gt;= <span class="hljs-number">0</span>:
+<span class="hljs-meta">... </span>    n -= <span class="hljs-number">1</span>
+<span class="hljs-meta">... </span>    print(n)
+<div class="alt prompt-4">______</div><div class="solution prompt-4">2
+<span class="hljs-number">1</span>
+<span class="hljs-number">0</span>
+<span class="hljs-number">-1</span></div></code></pre>
+        <button id="prompt-4" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<blockquote><p><em>Hint</em>: Make sure your <code>while</code> loop conditions eventually evaluate to a false
+value, or they'll never stop! Typing <code>Ctrl-C</code> will stop infinite loops in the
+interpreter.</p></blockquote>
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>n = <span class="hljs-number">4</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">while</span> n &gt; <span class="hljs-number">0</span>:
+<span class="hljs-meta">... </span>    n += <span class="hljs-number">1</span>
+<span class="hljs-meta">... </span>    print(n)
+<div class="alt prompt-5">______</div><div class="solution prompt-5">5
+<span class="hljs-number">6</span>
+<span class="hljs-number">7</span>
+<span class="hljs-comment"># continues forever</span></div></code></pre>
+        <button id="prompt-5" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">go</span><span class="hljs-params">(n)</span>:</span>
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">if</span> n % <span class="hljs-number">2</span> != <span class="hljs-number">0</span>:
+<span class="hljs-meta">... </span>        print(n / <span class="hljs-number">2</span>)
+<span class="hljs-meta">... </span>        <span class="hljs-keyword">return</span>
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">while</span> n &gt; <span class="hljs-number">0</span>:
+<span class="hljs-meta">... </span>        print(n)
+<span class="hljs-meta">... </span>        n = n // <span class="hljs-number">2</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>go(<span class="hljs-number">4</span>)
+<div class="alt prompt-6">______</div><div class="solution prompt-6">4
+<span class="hljs-number">2</span>
+<span class="hljs-number">1</span></div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>go(<span class="hljs-number">5</span>)
+<div class="alt prompt-6">______</div><div class="solution prompt-6">2<span class="hljs-number">.5</span></div></code></pre>
+        <button id="prompt-6" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>zero = <span class="hljs-number">2</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">while</span> zero != <span class="hljs-number">0</span>:
+<span class="hljs-meta">... </span>   zero = zero // <span class="hljs-number">2</span>
+<span class="hljs-meta">... </span>   print(zero)
+<div class="alt prompt-7">______</div><div class="solution prompt-7">1
+<span class="hljs-number">0</span></div></code></pre>
+        <button id="prompt-7" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>positive = <span class="hljs-number">28</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">while</span> positive:
+<span class="hljs-meta">... </span>   print(<span class="hljs-string">"positive?"</span>)
+<span class="hljs-meta">... </span>   positive -= <span class="hljs-number">3</span>
+<div class="alt prompt-8">______</div><div class="solution prompt-8">Infinite Loop</div></code></pre>
+        <button id="prompt-8" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>positive = <span class="hljs-number">-9</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>negative = <span class="hljs-number">-12</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">while</span> negative:
+<span class="hljs-meta">... </span>   <span class="hljs-keyword">if</span> positive:
+<span class="hljs-meta">... </span>       print(negative)
+<span class="hljs-meta">... </span>   positive += <span class="hljs-number">3</span>
+<span class="hljs-meta">... </span>   negative += <span class="hljs-number">3</span>
+<div class="alt prompt-9">______</div><div class="solution prompt-9"><span class="hljs-number">-12</span>
+<span class="hljs-number">-9</span>
+<span class="hljs-number">-6</span></div></code></pre>
+        <button id="prompt-9" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+
+<h2 id="coding-practice">Coding Practice</h2>
+
+
+<h3 class="question" id="q3">Q3: Repeated</h3>
+
+<p>Implement the <code>repeated</code> function, which takes a one-argument function <code>f</code>, a
+positive integer <code>n</code>, and a parameter <code>x</code>. It returns the result of <em>composing</em>,
+or applying, <code>f</code> <code>n</code> times on <code>x</code>, i.e., <code>f(f(...f(x)...))</code>.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">repeated</span><span class="hljs-params">(f, n, x)</span>:</span>
+    <span class="hljs-string">"""Returns the result of composing f n times on x.
+
+    &gt;&gt;&gt; def square(x):
+    ...     return x * x
+    ...
+    &gt;&gt;&gt; repeated(square, 2, 3)  # square(square(3)), or 3 ** 4
+    81
+    &gt;&gt;&gt; repeated(square, 1, 4)  # square(4)
+    16
+    &gt;&gt;&gt; repeated(square, 6, 2)  # big number
+    18446744073709551616
+    &gt;&gt;&gt; def opposite(b):
+    ...     return not b
+    ...
+    &gt;&gt;&gt; repeated(opposite, 4, True)
+    True
+    &gt;&gt;&gt; repeated(opposite, 5, True)
+    False
+    &gt;&gt;&gt; repeated(opposite, 631, 1)
+    False
+    &gt;&gt;&gt; repeated(opposite, 3, 0)
+    True
+    """</span>
+<div class="alt solution-1">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-1">    result = x
+    <span class="hljs-keyword">while</span> n &gt; <span class="hljs-number">0</span>:
+        result = f(result)
+        n -= <span class="hljs-number">1</span>
+    <span class="hljs-keyword">return</span> result</div></code></pre>
+
+
+        <button id="solution-1" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q repeated</code></pre>
+
+<h3 class="question" id="q4">Q4: Sum Digits</h3>
+
+<p>Write a function that takes in an integer and sums its digits. (Using floor
+division and modulo might be helpful here!)</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">sum_digits</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-string">"""Sum all the digits of n.
+
+    &gt;&gt;&gt; sum_digits(10) # 1 + 0 = 1
+    1
+    &gt;&gt;&gt; sum_digits(4224) # 4 + 2 + 2 + 4 = 12
+    12
+    &gt;&gt;&gt; sum_digits(1234567890)
+    45
+    """</span>
+<div class="alt solution-2">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-2">    total = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> n &gt; <span class="hljs-number">0</span>:
+        total, n = total + n % <span class="hljs-number">10</span>, n // <span class="hljs-number">10</span>
+    <span class="hljs-keyword">return</span> total</div></code></pre>
+
+
+        <button id="solution-2" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q sum_digits</code></pre>
+
+<h3 class="question" id="q5">Q5: Double Eights</h3>
+
+<p>Write a function that takes in a number and determines if the digits contain two
+adjacent 8s.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">double_eights</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-string">"""Return true if n has two eights in a row.
+    &gt;&gt;&gt; double_eights(8)
+    False
+    &gt;&gt;&gt; double_eights(88)
+    True
+    &gt;&gt;&gt; double_eights(880088)
+    True
+    &gt;&gt;&gt; double_eights(12345)
+    False
+    &gt;&gt;&gt; double_eights(80808080)
+    False
+    """</span>
+<div class="alt solution-3">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-3">    prev_eight = <span class="hljs-keyword">False</span>
+    <span class="hljs-keyword">while</span> n &gt; <span class="hljs-number">0</span>:
+        last_digit = n % <span class="hljs-number">10</span>
+        <span class="hljs-keyword">if</span> last_digit == <span class="hljs-number">8</span> <span class="hljs-keyword">and</span> prev_eight:
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">True</span>
+        <span class="hljs-keyword">elif</span> last_digit == <span class="hljs-number">8</span>:
+            prev_eight = <span class="hljs-keyword">True</span>
+        <span class="hljs-keyword">else</span>:
+            prev_eight = <span class="hljs-keyword">False</span>
+        n = n // <span class="hljs-number">10</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span></div></code></pre>
+
+
+        <button id="solution-3" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q double_eights</code></pre>
+
+
+<h1 id="optional-questions">Optional Questions</h1>
+
+
+
+<h2 id="what-would-python-display-part-2">What Would Python Display (Part 2)?</h2>
+
+
+<h3 class="question" id="q6">Q6: WWPD: Truthiness</h3>
+
+<blockquote><p>Use Ok to test your knowledge with the following "What Would Python Display?"
+questions:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q truthiness -u</code></pre></blockquote>
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-number">0</span> <span class="hljs-keyword">or</span> <span class="hljs-keyword">True</span>
+<div class="alt prompt-10">______</div><div class="solution prompt-10">True</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">not</span> <span class="hljs-string">''</span> <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">False</span>
+<div class="alt prompt-10">______</div><div class="solution prompt-10">True</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-number">13</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">False</span>
+<div class="alt prompt-10">______</div><div class="solution prompt-10">False</div></code></pre>
+        <button id="prompt-10" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">False</span> <span class="hljs-keyword">or</span> <span class="hljs-number">1</span>
+<div class="alt prompt-11">______</div><div class="solution prompt-11">1</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-string">''</span> <span class="hljs-keyword">or</span> <span class="hljs-number">1</span> <span class="hljs-keyword">and</span> <span class="hljs-number">1</span>/<span class="hljs-number">0</span>
+<div class="alt prompt-11">______</div><div class="solution prompt-11">Error</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">not</span> <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> <span class="hljs-number">12</span> <span class="hljs-keyword">or</span> <span class="hljs-number">0</span>
+<div class="alt prompt-11">______</div><div class="solution prompt-11">12</div></code></pre>
+        <button id="prompt-11" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<h3 class="question" id="q7">Q7: WWPD: What If?</h3>
+
+<blockquote><p>Use Ok to test your knowledge with the following "What Would Python Display?"
+questions:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q what_if -u</code></pre></blockquote>
+
+<p>The functions below are already defined in <code>lab01.py</code>. If you get stuck, try
+<code>python3 -i lab01.py</code> and experiment.</p>
+
+<blockquote><p><strong>Hint</strong>: <code>print</code> (unlike <code>return</code>) does <em>not</em> cause the function to exit!</p></blockquote>
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">xk</span><span class="hljs-params">(c, d)</span>:</span>
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">if</span> c == <span class="hljs-number">4</span>:
+<span class="hljs-meta">... </span>        <span class="hljs-keyword">return</span> <span class="hljs-number">6</span>
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">elif</span> d &gt;= <span class="hljs-number">4</span>:
+<span class="hljs-meta">... </span>        <span class="hljs-keyword">return</span> <span class="hljs-number">6</span> + <span class="hljs-number">7</span> + c
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">else</span>:
+<span class="hljs-meta">... </span>        <span class="hljs-keyword">return</span> <span class="hljs-number">25</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>xk(<span class="hljs-number">10</span>, <span class="hljs-number">10</span>)
+<div class="alt prompt-12">______</div><div class="solution prompt-12">23</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>xk(<span class="hljs-number">10</span>, <span class="hljs-number">6</span>)
+<div class="alt prompt-12">______</div><div class="solution prompt-12">23</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>xk(<span class="hljs-number">4</span>, <span class="hljs-number">6</span>)
+<div class="alt prompt-12">______</div><div class="solution prompt-12">6</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>xk(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>)
+<div class="alt prompt-12">______</div><div class="solution prompt-12">25</div></code></pre>
+        <button id="prompt-12" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">how_big</span><span class="hljs-params">(x)</span>:</span>
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">if</span> x &gt; <span class="hljs-number">10</span>:
+<span class="hljs-meta">... </span>        print(<span class="hljs-string">'huge'</span>)
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">elif</span> x &gt; <span class="hljs-number">5</span>:
+<span class="hljs-meta">... </span>        <span class="hljs-keyword">return</span> <span class="hljs-string">'big'</span>
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">elif</span> x &gt; <span class="hljs-number">0</span>:
+<span class="hljs-meta">... </span>        print(<span class="hljs-string">'small'</span>)
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">else</span>:
+<span class="hljs-meta">... </span>        print(<span class="hljs-string">"nothin'"</span>)
+<span class="hljs-meta">&gt;&gt;&gt; </span>how_big(<span class="hljs-number">7</span>)
+<div class="alt prompt-13">______</div><div class="solution prompt-13"><span class="hljs-string">'big'</span></div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>how_big(<span class="hljs-number">12</span>)
+<div class="alt prompt-13">______</div><div class="solution prompt-13">huge</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>how_big(<span class="hljs-number">1</span>)
+<div class="alt prompt-13">______</div><div class="solution prompt-13">small</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>how_big(<span class="hljs-number">-1</span>)
+<div class="alt prompt-13">______</div><div class="solution prompt-13">nothin<span class="hljs-string">'</span></div></code></pre>
+        <button id="prompt-13" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">so_big</span><span class="hljs-params">(x)</span>:</span>
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">if</span> x &gt; <span class="hljs-number">10</span>:
+<span class="hljs-meta">... </span>        print(<span class="hljs-string">'huge'</span>)
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">if</span> x &gt; <span class="hljs-number">5</span>:
+<span class="hljs-meta">... </span>        <span class="hljs-keyword">return</span> <span class="hljs-string">'big'</span>
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">if</span> x &gt; <span class="hljs-number">0</span>:
+<span class="hljs-meta">... </span>        print(<span class="hljs-string">'small'</span>)
+<span class="hljs-meta">... </span>    print(<span class="hljs-string">"nothin'"</span>)
+<span class="hljs-meta">&gt;&gt;&gt; </span>so_big(<span class="hljs-number">7</span>)
+<div class="alt prompt-14">______</div><div class="solution prompt-14"><span class="hljs-string">'big'</span></div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>so_big(<span class="hljs-number">12</span>)
+<div class="alt prompt-14">______</div><div class="solution prompt-14">huge
+<span class="hljs-string">'big'</span></div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>so_big(<span class="hljs-number">1</span>)
+<div class="alt prompt-14">______</div><div class="solution prompt-14">small
+nothin<span class="hljs-string">'</span></div></code></pre>
+        <button id="prompt-14" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">ab</span><span class="hljs-params">(c, d)</span>:</span>
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">if</span> c &gt; <span class="hljs-number">5</span>:
+<span class="hljs-meta">... </span>        print(c)
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">elif</span> c &gt; <span class="hljs-number">7</span>:
+<span class="hljs-meta">... </span>        print(d)
+<span class="hljs-meta">... </span>    print(<span class="hljs-string">'foo'</span>)
+<span class="hljs-meta">&gt;&gt;&gt; </span>ab(<span class="hljs-number">10</span>, <span class="hljs-number">20</span>)
+<div class="alt prompt-15">______</div><div class="solution prompt-15">10
+foo</div></code></pre>
+        <button id="prompt-15" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">bake</span><span class="hljs-params">(cake, make)</span>:</span>
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">if</span> cake == <span class="hljs-number">0</span>:
+<span class="hljs-meta">... </span>        cake = cake + <span class="hljs-number">1</span>
+<span class="hljs-meta">... </span>        print(cake)
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">if</span> cake == <span class="hljs-number">1</span>:
+<span class="hljs-meta">... </span>        print(make)
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">else</span>:
+<span class="hljs-meta">... </span>        <span class="hljs-keyword">return</span> cake
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">return</span> make
+<span class="hljs-meta">&gt;&gt;&gt; </span>bake(<span class="hljs-number">0</span>, <span class="hljs-number">29</span>)
+<div class="alt prompt-16">______</div><div class="solution prompt-16">1
+<span class="hljs-number">29</span>
+<span class="hljs-number">29</span></div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>bake(<span class="hljs-number">1</span>, <span class="hljs-string">"mashed potatoes"</span>)
+<div class="alt prompt-16">______</div><div class="solution prompt-16">mashed potatoes
+<span class="hljs-string">'mashed potatoes'</span></div></code></pre>
+        <button id="prompt-16" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+
+<h2 id="more-coding-practice">More Coding Practice</h2>
+
+
+<h3 class="question" id="q8">Q8: Fix the Bug</h3>
+
+<p>The following snippet of code doesn't work! Figure out what is wrong
+and fix the bugs.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">both_positive</span><span class="hljs-params">(x, y)</span>:</span>
+    <span class="hljs-string">"""Returns True if both x and y are positive.
+
+    &gt;&gt;&gt; both_positive(-1, 1)
+    False
+    &gt;&gt;&gt; both_positive(1, 1)
+    True
+    """</span>
+<div class="alt solution-4">    <span class="hljs-keyword">return</span> x <span class="hljs-keyword">and</span> y &gt; <span class="hljs-number">0</span> <span class="hljs-comment"># You can replace this line!</span>
+</div><div class="solution solution-4">    <span class="hljs-keyword">return</span> x &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> y &gt; <span class="hljs-number">0</span></div></code></pre>
+
+<div class="solution solution-4">
+
+<p>The original line (<code>return x and y &gt; 0</code>) will check that two things are
+true:</p>
+
+<ol>
+  <li><code>x</code></li>
+  <li><code>y &gt; 0</code></li>
+</ol>
+
+<p>When will <code>x</code> be considered True? In Python, any number that is not 0
+is considered True. Thus, the first doctest will fail: <code>x = -1</code>
+and <code>-1 != 0</code>, and <code>y = 1 &gt; 0</code>, so both clauses are True.</p>
+
+</div>
+
+
+        <button id="solution-4" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q both_positive</code></pre>
+
+<h3 class="question" id="q9">Q9: Falling Factorial</h3>
+
+<p>Let's write a function <code>falling</code>, which is a "falling" factorial
+that takes two arguments, <code>n</code> and <code>k</code>, and returns the product of <code>k</code>
+consecutive numbers, starting from <code>n</code> and working downwards.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">falling</span><span class="hljs-params">(n, k)</span>:</span>
+    <span class="hljs-string">"""Compute the falling factorial of n to depth k.
+
+    &gt;&gt;&gt; falling(6, 3)  # 6 * 5 * 4
+    120
+    &gt;&gt;&gt; falling(4, 0)
+    1
+    &gt;&gt;&gt; falling(4, 3)  # 4 * 3 * 2
+    24
+    &gt;&gt;&gt; falling(4, 1)  # 4
+    4
+    """</span>
+<div class="alt solution-5">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-5">    total, stop = <span class="hljs-number">1</span>, n-k
+    <span class="hljs-keyword">while</span> n &gt; stop:
+        total, n = total*n, n<span class="hljs-number">-1</span>
+    <span class="hljs-keyword">return</span> total</div></code></pre>
+
+
+        <button id="solution-5" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q falling</code></pre>
+
+
+<h3 id="i-want-to-play-a-game">I Want to Play a Game</h3>
+
+
+<p>Now that you have learned about call expressions and control structures, you can
+code an algorithm! An algorithm is a set of steps to accomplish a task. You use
+algorithms every day -- from adding numbers by hand to getting to your next
+lecture.</p>
+
+<p>Let's play a number guessing game with Python! Pick a number and Python will
+guess randomly until it guesses correctly.</p>
+
+<p>All the code for this guessing game will be in <code>lab01_extra.py</code>. In your terminal,
+start an interactive session with Python:</p>
+
+<pre><code class="hljs css"><span class="hljs-selector-tag">python3</span> <span class="hljs-selector-tag">-i</span> <span class="hljs-selector-tag">lab01_extra</span><span class="hljs-selector-class">.py</span></code></pre>
+
+<p>The <code>guess_random</code> function will prompt you for a number, ask if its guess is
+correct (many times) and return the number of guesses Python had to make. To
+tell Python if its guess is correct, just enter <code>y</code> at the <code>[y/n]</code> prompt. If
+it's wrong, enter <code>n</code>. Python isn't very good at guessing yet, so if it's
+taking too long, you can type <code>Ctrl-C</code> to make it stop.</p>
+
+<pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; guess_random()
+Pick an integer between <span class="hljs-number">1</span> <span class="hljs-keyword">and</span> <span class="hljs-number">10</span> (inclusive) <span class="hljs-keyword">for</span> me to <span class="hljs-symbol">guess:</span> <span class="hljs-number">7</span>
+Is <span class="hljs-number">1</span> your number? [y/n] n
+Is <span class="hljs-number">5</span> your number? [y/n] n
+...</code></pre>
+
+<p>Randomly guessing works, but you can create an even better guessing strategy.</p>
+
+<h3 class="question" id="q10">Q10: Guess Linear</h3>
+
+<p>One weakness in the <code>guess_random</code> strategy is that it can repeat (incorrect)
+guesses. Rather than guessing wildly, let's guess numbers in increasing order.</p>
+
+<blockquote><p>Note: <code>is_correct</code> is a function that will ask the user if the guess is
+correct and return <code>True</code> if the user confirms that the guess matches the
+correct number. Feel free to reference the implementation of <code>guess_random</code> as
+you implement <code>guess_linear</code>.</p></blockquote>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">guess_linear</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-string">"""Guess in increasing order and return the number of guesses."""</span>
+    prompt_for_number(LOWER, UPPER)
+    num_guesses = <span class="hljs-number">1</span>
+    guess = LOWER
+<div class="alt solution-6">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-6">    <span class="hljs-keyword">while</span> <span class="hljs-keyword">not</span> is_correct(guess):
+        guess += <span class="hljs-number">1</span>
+        num_guesses += <span class="hljs-number">1</span></div>    <span class="hljs-keyword">return</span> num_guesses</code></pre>
+
+
+        <button id="solution-6" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>The best way to test this function is by playing with it interactively. See if
+your algorithm does what you expect!</p>
+
+<h3 class="question" id="q11">Q11: Guess Binary</h3>
+
+<p><strong>Challenge question.</strong> The <code>guess_linear</code> function can take a long time if
+your number is large. However, a strategy called <em>binary search</em> can find the
+correct number faster. The idea is to start in the middle of the range and
+after each incorrect guess ask if the guess <code>is_too_high</code> or too low. Either
+way, you can eliminate half the remaining possible guesses.</p>
+
+<blockquote><p><em>Hint</em>: Try using the <code>is_too_high</code> function to implement a faster
+strategy. <code>is_too_high</code> will return <code>True</code> if the guess is greater than the
+correct number.</p>
+
+<pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; result = is_too_high(<span class="hljs-number">5</span>)
+Is <span class="hljs-number">5</span> too high? [y/n] y
+<span class="hljs-meta">&gt;&gt;</span>&gt; result
+True</code></pre></blockquote>
+
+<!-- DO NOT DELETE: hack for separate blockquotes -->
+
+<blockquote><p><em>Hint</em>: You may want to update other variables besides <code>guess</code>.</p></blockquote>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">guess_binary</span><span class="hljs-params">()</span>:</span>
+    <span class="hljs-string">"""Return the number of attempted guesses. Implement a faster search
+    algorithm that asks the user whether a guess is less than or greater than
+    the correct number.
+
+    Hint: If you know the guess is greater than the correct number, then your
+    algorithm doesn't need to try numbers that are greater than guess.
+    """</span>
+    prompt_for_number(LOWER, UPPER)
+    num_guesses = <span class="hljs-number">1</span>
+    lower, upper = LOWER, UPPER
+    guess = (lower + upper) // <span class="hljs-number">2</span>
+<div class="alt solution-7">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-7">    <span class="hljs-keyword">while</span> <span class="hljs-keyword">not</span> is_correct(guess):
+        <span class="hljs-keyword">if</span> is_too_high(guess):
+            upper = guess - <span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            lower = guess + <span class="hljs-number">1</span>
+        guess = (lower + upper) // <span class="hljs-number">2</span>
+        num_guesses += <span class="hljs-number">1</span></div>    <span class="hljs-keyword">return</span> num_guesses</code></pre>
+
+
+        <button id="solution-7" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>If you choose a number between 1 and 10, this approach should need no more than
+4 guesses to find your number.</p>
+
+<p>The best way to test this function is by playing it interactively. Try to think
+of <em>edge cases</em> -- numbers that might cause your algorithm to do the wrong
+thing. If you edit the Python file while running it interactively, you will
+need to <code>exit()</code> and restart the interpreter in order for those changes to take
+effect.</p>
+
+<p>So far, your algorithms have only had to find a number between 1 and 10. What
+if we expanded the possible range of numbers to be between 1 and 100? How many
+guesses would each algorithm make if you picked 100 to be your number?</p>
+
+
+<h3 id="a-second-look">A Second Look</h3>
+
+
+<p>Let's try to visualize the two algorithms you've just written! We've provided
+code that will run each algorithm 1000 times and plot the number of guesses the
+algorithms had to make. The numbers are randomly chosen from between 1 and 100.</p>
+
+<pre><code class="hljs css"><span class="hljs-selector-tag">python3</span> <span class="hljs-selector-tag">guessing_game_graph</span><span class="hljs-selector-class">.py</span> <span class="hljs-selector-tag">guess_linear</span>
+<span class="hljs-selector-tag">python3</span> <span class="hljs-selector-tag">guessing_game_graph</span><span class="hljs-selector-class">.py</span> <span class="hljs-selector-tag">guess_binary</span></code></pre>
+
+<p>Each bar represents the number of guesses the algorithm took to find the
+correct number. The height of each bar represents the frequency of each number
+of guesses. Look carefully at the axes when comparing the two graphs! You
+should see that <code>guess_linear</code> sometimes took up to 100 guesses; what was the
+highest number of guesses that <code>guess_binary</code> took?</p>
+
+<p>You can see our plots for <a href="https://chart.googleapis.com/chart?cht=bvg&amp;chtt=guess_linear&amp;chxt=x,y,x,y&amp;chs=500x500&amp;chd=t:4,23,32,39,48,60,66,75,82,93,102,113,125,140,157,165,176,187,196,204,215,223,234,243,251,257,273,287,297,306,315,322,327,339,352,362,371,384,394,399,415,420,433,445,451,460,473,486,492,503,511,516,521,534,543,551,560,568,579,593,599,608,619,630,642,655,671,685,698,706,719,725,730,741,754,772,783,795,800,809,818,824,829,842,845,855,866,878,882,897,908,914,924,935,946,960,968,979,994,1000&amp;chxl=0:|0|10|20|30|40|50|60|70|80|90|100|2:|Max%20number%20of%20guesses|3:|Frequency|&amp;chxp=0,0|2,50|3,500&amp;chds=a&amp;chco=3072F3&amp;chbh=a&amp;chm=s,000000,0,-1,5|s,000000,1,-1,5&amp;chdlp=l">guess_linear</a> and <a href="https://chart.googleapis.com/chart?cht=bvg&amp;chtt=guess_binary&amp;chxt=x,y,x,y&amp;chs=500x500&amp;chd=t:10,27,79,176,329,644,1000&amp;chxl=0:|1|2|3|4|5|6|7|2:|Max%20number%20of%20guesses|3:|Frequency|&amp;chxp=0,8,22,36,50,64,78,92|2,50|3,500.0&amp;chds=a&amp;chco=3072F3&amp;chbh=a&amp;chm=s,000000,0,-1,5|s,000000,1,-1,5&amp;chdlp=l">guess_binary</a>. If
+your plots only have one bar, make sure your functions are returning the
+correct number of guesses!</p>
+
+  </div>
+
+  <div class="col-md-3 sticky">
+    <nav class="hidden-print hidden-sm hidden-xs sidebar">
+      <ul class="nav nav-stacked noselect">
+  <li><a href="https://cs61a.org/lab/lab01/#logistics">Logistics</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab01/#using-python">Using Python</a></li>
+    <li><a href="https://cs61a.org/lab/lab01/#using-ok">Using OK</a></li>
+  </ul>
+  <li><a href="https://cs61a.org/lab/lab01/#topics">Topics</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab01/#division">Division</a></li>
+    <li><a href="https://cs61a.org/lab/lab01/#boolean-operators">Boolean Operators</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab01/#short-circuiting">Short Circuiting</a></li>
+    </ul>
+    <li><a href="https://cs61a.org/lab/lab01/#return-and-print"><code>return</code> and <code>print</code></a></li>
+    <li><a href="https://cs61a.org/lab/lab01/#if-statements">If Statements</a></li>
+    <li><a href="https://cs61a.org/lab/lab01/#while-loops">While Loops</a></li>
+    <li><a href="https://cs61a.org/lab/lab01/#error-messages">Error Messages</a></li>
+  </ul>
+  <li><a href="https://cs61a.org/lab/lab01/#required-questions">Required Questions</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab01/#what-would-python-display-part-1">What Would Python Display (Part 1)?</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab01/#q1">Q1: WWPD: Veritasiness</a></li>
+      <li><a href="https://cs61a.org/lab/lab01/#q2">Q2: WWPD: Loops</a></li>
+    </ul>
+    <li><a href="https://cs61a.org/lab/lab01/#coding-practice">Coding Practice</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab01/#q3">Q3: Repeated</a></li>
+      <li><a href="https://cs61a.org/lab/lab01/#q4">Q4: Sum Digits</a></li>
+      <li><a href="https://cs61a.org/lab/lab01/#q5">Q5: Double Eights</a></li>
+    </ul>
+  </ul>
+  <li><a href="https://cs61a.org/lab/lab01/#optional-questions">Optional Questions</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab01/#what-would-python-display-part-2">What Would Python Display (Part 2)?</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab01/#q6">Q6: WWPD: Truthiness</a></li>
+      <li><a href="https://cs61a.org/lab/lab01/#q7">Q7: WWPD: What If?</a></li>
+    </ul>
+    <li><a href="https://cs61a.org/lab/lab01/#more-coding-practice">More Coding Practice</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab01/#q8">Q8: Fix the Bug</a></li>
+      <li><a href="https://cs61a.org/lab/lab01/#q9">Q9: Falling Factorial</a></li>
+      <li><a href="https://cs61a.org/lab/lab01/#i-want-to-play-a-game">I Want to Play a Game</a></li>
+      <li><a href="https://cs61a.org/lab/lab01/#q10">Q10: Guess Linear</a></li>
+      <li><a href="https://cs61a.org/lab/lab01/#q11">Q11: Guess Binary</a></li>
+      <li><a href="https://cs61a.org/lab/lab01/#a-second-look">A Second Look</a></li>
+    </ul>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/resources.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/studying.html">Studying Guide</a></li>
+            <li><a href="https://cs61a.org/articles/debugging.html">Debugging Guide</a></li>
+            <li><a href="https://cs61a.org/articles/composition.html">Composition Guide</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/articles/about.html">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/about.html#assignments">Assignments</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#exams">Exams</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    
+
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+</script>
+
+
+<script>
+  $(function() {
+    var staging_domains = ['staging.cs61a.org', 'localhost', '127.0.0.1'];
+
+    var staging = staging_domains.indexOf(window.location.hostname) != -1;
+    var after_due_date = new Date("09/02/2017") < new Date();
+    var release_solutions = staging || after_due_date;
+
+    if (release_solutions) {
+      $('.toggle').css('display', 'inline-block');
+      $('.toggle').click(function() {
+        var solution_id = $(this).attr('id');
+        $('div.' + solution_id).slideToggle(600);
+      });
+    }
+  });
+</script>
+
+
+  
+</body></html>

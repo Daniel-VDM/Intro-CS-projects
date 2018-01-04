@@ -1,0 +1,47 @@
+def check_status_effect():
+    hive, layout = Hive(AssaultPlan()), dry_layout
+    dimensions = (1, 9)
+    colony = AntColony(None, hive, ant_types(), layout, dimensions)
+    # Testing long effect stack
+    stun = StunThrower()
+    slow = SlowThrower()
+    bee = Bee(3)
+    colony.places["tunnel_0_0"].add_insect(stun)
+    colony.places["tunnel_0_1"].add_insect(slow)
+    colony.places["tunnel_0_4"].add_insect(bee)
+    for _ in range(3): # slow bee three times
+        slow.action(colony)
+    stun.action(colony) # stun bee once
+    print("bee effects:", bee.effects)
+    colony.time = 0
+    bee.action(colony) # stunned
+    print(bee.place.name)
+    print("Time:", colony.time, "bee effects:", bee.effects)
+    colony.time = 1
+    bee.action(colony) # slowed thrice
+    print(bee.place.name)
+    print("Time:", colony.time, "bee effects:", bee.effects)
+    colony.time = 2
+    bee.action(colony) # slowed thrice
+    print(bee.place.name)
+    print("Time:", colony.time, "bee effects:", bee.effects)
+    colony.time = 3
+    bee.action(colony) # slowed twice
+    print(bee.place.name)
+    print("Time:", colony.time, "bee effects:", bee.effects)
+    colony.time = 4
+    bee.action(colony) # slowed twice
+    print(bee.place.name)
+    print("Time:", colony.time, "bee effects:", bee.effects)
+    colony.time = 5
+    bee.action(colony) # slowed once
+    print(bee.place.name)
+    print("Time:", colony.time, "bee effects:", bee.effects)
+    colony.time = 6
+    bee.action(colony) # slowed once
+    print(bee.place.name)
+    print("Time:", colony.time, "bee effects:", bee.effects)
+    colony.time = 7
+    bee.action(colony) # status effects have worn off
+    print(slow.armor)
+    print("Time:", colony.time, "bee effects:", bee.effects)

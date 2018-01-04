@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<!-- saved from url=(0028)https://cs61a.org/lab/lab04/ -->
+<html lang="en" class="gr__cs61a_org"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="CS 61A: Structure and Interpretation of Computer Programs">
+    <meta name="keywords" content="CS 61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS">
+    <meta name="author" content="John DeNero, Paul Hilfinger">
+    
+    <meta name="viewport" content="width=device-width">
+
+    <script src="./Lab 4_ Lists and Data Abstraction _ CS 61A Fall 2017_files/jquery.min.js.download"></script>
+    <script src="./Lab 4_ Lists and Data Abstraction _ CS 61A Fall 2017_files/bootstrap.min.js.download"></script>
+    <script src="./Lab 4_ Lists and Data Abstraction _ CS 61A Fall 2017_files/highlight.min.js.download"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="./Lab 4_ Lists and Data Abstraction _ CS 61A Fall 2017_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./Lab 4_ Lists and Data Abstraction _ CS 61A Fall 2017_files/css">
+    <link rel="stylesheet" href="./Lab 4_ Lists and Data Abstraction _ CS 61A Fall 2017_files/style.css">
+    <link rel="stylesheet" href="./Lab 4_ Lists and Data Abstraction _ CS 61A Fall 2017_files/mono-blue.css">
+    <link rel="icon" href="https://cs61a.org/assets/images/favicon.ico">
+
+    
+
+    <title>
+Lab 4: Lists and Data Abstraction | CS 61A Fall 2017
+</title>
+  </head>
+
+  <body id="index" class="home" data-gr-c-s-loaded="true">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://cs61a.org/">CS 61A</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+            <li><a href="https://cs61a.org/resources.html">Resources</a></li>
+            <li><a href="https://cs61a.org/articles/about.html">Policies</a></li>
+            <li><a href="http://tutor.cs61a.org/">Tutor</a></li>
+            <li><a href="https://piazza.com/berkeley/fall2017/cs61a" target="_blank">Piazza</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class="row">
+  <div class="col-md-9">
+    <header>
+      <h1>
+        
+Lab 4: Lists and Data Abstraction
+
+        
+        <ul class="inline-block list-inline">
+          <li><a href="https://cs61a.org/lab/lab04/lab04.zip" class="label label-outline">lab04.zip</a></li>
+        </ul>
+        
+      </h1>
+    </header>
+    
+
+<p><i>Due at 11:59pm on Friday, 09/22/2017.</i></p>
+
+
+<h2 id="starter-files">Starter Files</h2>
+
+
+<p>Download <a href="https://cs61a.org/lab/lab04/lab04.zip">lab04.zip</a>.
+Inside the archive, you will find starter files for the questions in this lab,
+  along with a copy of the <a href="https://cs61a.org/lab/lab04/ok">Ok</a> autograder.</p>
+
+
+<h2 id="submission">Submission</h2>
+
+<p>By the end of this lab, you should have submitted the lab with
+<code>python3 ok --submit</code>. You may submit more than once before the
+deadline; only the final submission will be graded.
+Check that you have successfully submitted your code on
+<a href="https://okpy.org/">okpy.org</a>.</p>
+
+<ul>
+  <li>To receive credit for this lab, you must complete Questions 2-9
+  in <a href="https://cs61a.org/lab/lab04/lab04.py">lab04.py</a> and submit through OK.</li>
+  <li>Questions 10-14 are <strong>optional</strong>. It can be found in the
+  <a href="https://cs61a.org/lab/lab04/lab04_extra.py">lab04_extra.py</a> file. It is recommended that you complete
+  these problems on your own time.</li>
+</ul>
+
+
+
+    
+<h2 id="lists-warm-up">Lists Warm-up!</h2>
+
+
+<h3 class="question" id="q1">Q1: List Indexing</h3>
+
+<p>In each of following, what does the list indexing look like to get the number 7? For example, if <code>x = [7]</code>, then the answer would be <code>x[0]</code>. You can use the interpreter or Python Tutor to experiment with your answers.</p>
+
+<blockquote><p>Use Ok to test your knowledge with the following "List Indexing"
+questions:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q indexing -u</code></pre></blockquote>
+
+<pre><code class="hljs markdown">&gt;&gt;&gt; x = [1, 3, [5, 7], 9]
+<div class="alt prompt-1"><span class="hljs-strong">_____</span>_</div><div class="solution prompt-1">x[<span class="hljs-string">2</span>][<span class="hljs-symbol">1</span>]</div>
+&gt;&gt;&gt; x = [[7]]
+<div class="alt prompt-1"><span class="hljs-strong">_____</span>_</div><div class="solution prompt-1">x[<span class="hljs-string">0</span>][<span class="hljs-symbol">0</span>]</div>
+&gt;&gt;&gt; x = [1, [2, [3, [4, [5, [6, [7]]]]]]]
+<div class="alt prompt-1"><span class="hljs-strong">_____</span>_</div><div class="solution prompt-1">x[<span class="hljs-string">1</span>][<span class="hljs-symbol">1</span>][<span class="hljs-string">1</span>][<span class="hljs-symbol">1</span>][<span class="hljs-string">1</span>][<span class="hljs-symbol">1</span>][<span class="hljs-string">0</span>]</div></code></pre>
+        <button id="prompt-1" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>What would Python display? If you get stuck, try it out in the Python interpreter!</p>
+
+<pre><code class="hljs markdown">&gt;&gt;&gt; lst = [3, 2, 7, [84, 83, 82]]
+&gt;&gt;&gt; lst[4]
+<div class="alt prompt-2"><span class="hljs-strong">_____</span>_</div><div class="solution prompt-2">Error</div>
+&gt;&gt;&gt; lst = [3, 2, 7, [84, 83, 82]] # Write the code that indexes into lst to output the 82
+<div class="alt prompt-2"><span class="hljs-strong">_____</span>_</div><div class="solution prompt-2">lst[<span class="hljs-string">3</span>][<span class="hljs-symbol">2</span>]</div>
+&gt;&gt;&gt; lst[<span class="hljs-string">3</span>][<span class="hljs-symbol">0</span>]
+<div class="alt prompt-2"><span class="hljs-strong">_____</span>_</div><div class="solution prompt-2">84</div></code></pre>
+        <button id="prompt-2" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<h3 class="question" id="q2">Q2: If This Not That</h3>
+
+<p>Define <code>if_this_not_that</code>, which takes a list of integers <code>i_list</code> and an
+integer <code>this</code>, and for each element in <code>i_list</code>, if the element is larger than
+<code>this</code> then print the element, otherwise print <code>that</code>.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">if_this_not_that</span><span class="hljs-params">(i_list, this)</span>:</span>
+    <span class="hljs-string">"""Define a function which takes a list of integers `i_list` and an integer
+    `this`. For each element in `i_list`, print the element if it is larger
+    than `this`; otherwise, print the word "that".
+
+    &gt;&gt;&gt; original_list = [1, 2, 3, 4, 5]
+    &gt;&gt;&gt; if_this_not_that(original_list, 3)
+    that
+    that
+    that
+    4
+    5
+    """</span>
+<div class="alt solution-1">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-1">    <span class="hljs-keyword">for</span> elem <span class="hljs-keyword">in</span> i_list:
+        <span class="hljs-keyword">if</span> elem &lt;= this:
+            print(<span class="hljs-string">"that"</span>)
+        <span class="hljs-keyword">else</span>:
+            print(elem)
+
+<span class="hljs-comment"># List comprehension version</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">if_this_not_that</span><span class="hljs-params">(i_list, this)</span>:</span>
+    [print(i) <span class="hljs-keyword">if</span> i &gt; this <span class="hljs-keyword">else</span> print(<span class="hljs-string">'that'</span>) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> i_list]
+</div></code></pre>
+
+
+        <button id="solution-1" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q if_this_not_that</code></pre>
+
+
+<h2 id="list-comprehension">List Comprehension</h2>
+
+
+<p>List comprehensions are a compact and powerful way of creating new lists
+out of sequences. Let's work with them directly:</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; [i**2 <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> [1, 2, 3, 4] <span class="hljs-keyword">if</span> i%2 == 0]</span>
+[4, 16]</code></pre>
+
+<p>is equivalent to</p>
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>lst = []
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]:
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">if</span> i % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>:
+<span class="hljs-meta">... </span>        lst += [i**<span class="hljs-number">2</span>]
+<span class="hljs-meta">&gt;&gt;&gt; </span>lst
+[<span class="hljs-number">4</span>, <span class="hljs-number">16</span>]</code></pre>
+
+<p>The general syntax for a list comprehension is</p>
+
+<pre><code class="hljs xml">[<span class="hljs-tag">&lt;<span class="hljs-name">expression</span>&gt;</span> for <span class="hljs-tag">&lt;<span class="hljs-name">element</span>&gt;</span> in <span class="hljs-tag">&lt;<span class="hljs-name">sequence</span>&gt;</span> if <span class="hljs-tag">&lt;<span class="hljs-name">conditional</span>&gt;</span>]</code></pre>
+
+<p>The syntax is designed to read like English: "Compute the expression
+for each element in the sequence if the conditional is true."</p>
+
+<blockquote><p><em>Note</em>: The <code>if</code> clause in a list comprehension is optional.
+For example, you can just say:</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; [i**2 <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> [1, 2, 3, 4]]</span>
+[1, 4, 9, 16]</code></pre></blockquote>
+
+<h3 class="question" id="q3">Q3: WWPD: Lists?</h3>
+
+<p>What would Python display? Try to figure it out before
+you type it into the interpreter!</p>
+
+<blockquote><p>Use Ok to test your knowledge with the following "What Would Python Display?"
+questions:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q lists -u</code></pre></blockquote>
+
+<pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; [x*x <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> range(5)]</span>
+<div class="alt prompt-3">______</div><div class="solution prompt-3">[0, 1, 4, 9, 16]</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; [n <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> range(10) <span class="hljs-keyword">if</span> n % 2 == 0]</span>
+<div class="alt prompt-3">______</div><div class="solution prompt-3">[0, 2, 4, 6, 8]</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; ones = [1 <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> [<span class="hljs-string">"hi"</span>, <span class="hljs-string">"bye"</span>, <span class="hljs-string">"you"</span>]]</span>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; ones + [str(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> [6, 3, 8, 4]]</span>
+<div class="alt prompt-3">______</div><div class="solution prompt-3">[1, 1, 1, '6', '3', '8', '4']</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; [i+5 <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> [n <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> range(1,4)]]</span>
+<div class="alt prompt-3">______</div><div class="solution prompt-3">[6, 7, 8]</div></code></pre>
+        <button id="prompt-3" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>[i**<span class="hljs-number">2</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(<span class="hljs-number">10</span>) <span class="hljs-keyword">if</span> i &lt; <span class="hljs-number">3</span>]
+<div class="alt prompt-4">______</div><div class="solution prompt-4">[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>]</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>lst = [<span class="hljs-string">'hi'</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]]
+<span class="hljs-meta">&gt;&gt;&gt; </span>print(lst)
+<div class="alt prompt-4">______</div><div class="solution prompt-4">[<span class="hljs-string">'hi'</span>, <span class="hljs-string">'hi'</span>, <span class="hljs-string">'hi'</span>]</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>lst + [i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> [<span class="hljs-string">'1'</span>, <span class="hljs-string">'2'</span>, <span class="hljs-string">'3'</span>]]
+<div class="alt prompt-4">______</div><div class="solution prompt-4">[<span class="hljs-string">'hi'</span>, <span class="hljs-string">'hi'</span>, <span class="hljs-string">'hi'</span>, <span class="hljs-string">'1'</span>, <span class="hljs-string">'2'</span>, <span class="hljs-string">'3'</span>]</div></code></pre>
+        <button id="prompt-4" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+
+<h2 id="data-abstraction">Data Abstraction</h2>
+
+
+<p>Data abstraction is a powerful concept in computer science that
+allows programmers to treat code as objects --- for example,
+car objects, chair objects, people objects, etc. That way,
+programmers don't have to worry about <em>how</em> code is
+implemented --- they just have to know <em>what</em> it does.</p>
+
+<p>Data abstraction mimics how we think about the world. When you want to
+drive a car, you don't need to know how the
+engine was built or what kind of material the tires are made of.
+You just have to know how to turn the wheel and press the gas pedal.</p>
+
+<p>An abstract data type consists of two types of functions:</p>
+
+<ul>
+  <li>Constructors: functions that build the abstract data type.</li>
+  <li>Selectors: functions that retrieve information from the data type.</li>
+</ul>
+
+<p>Say we have an abstract data type called <code>city</code>.
+This <code>city</code> object will hold the <code>city</code>'s name, and
+its latitude and longitude. To create a <code>city</code> object,
+you'd use a constructor like</p>
+
+<pre><code class="hljs ini"><span class="hljs-attr">city</span> = make_city(name, lat, lon)</code></pre>
+
+<p>To extract the information of a <code>city</code> object, you would use the selectors like</p>
+
+<pre><code class="hljs">get_name(city)
+get_lat(city)
+get_lon(city)</code></pre>
+
+<p>Here is how we would use the <code>make_city</code> constructor to create a city object to represent Berkeley
+and the selectors to access its information.</p>
+
+<pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; berkeley = make_city(<span class="hljs-string">'Berkeley'</span>, <span class="hljs-number">122</span>, <span class="hljs-number">37</span>)
+<span class="hljs-meta">&gt;&gt;</span>&gt; get_name(berkeley)
+<span class="hljs-string">'Berkeley'</span>
+<span class="hljs-meta">&gt;&gt;</span>&gt; get_lat(berkeley)
+<span class="hljs-number">122</span>
+<span class="hljs-meta">&gt;&gt;</span>&gt; get_lon(berkeley)
+<span class="hljs-number">37</span></code></pre>
+
+<p>Notice that we don't need to know how these functions were implemented. We are
+assuming that someone else has defined them for us.</p>
+
+<p>It's okay if the end user doesn't know how functions were implemented. However,
+the functions still have to be defined by someone.</p>
+
+<h3 class="question" id="q4">Q4: Distance</h3>
+
+<p>We will now use those selectors to write <code>distance</code>, which computes the
+distance between two city objects. Recall that the distance between two
+coordinate pairs, <code>(x1, y1)</code> and <code>(x2, y2)</code> can be found by calculating
+the <code>sqrt</code> of <code>(x1 - x2)**2 + (y1 - y2)**2</code>. We have already imported
+<code>sqrt</code> for your convenience, so use that and the appropriate selectors
+to fill in the function.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-keyword">from</span> math <span class="hljs-keyword">import</span> sqrt
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">distance</span><span class="hljs-params">(city1, city2)</span>:</span>
+    <span class="hljs-string">"""
+    &gt;&gt;&gt; city1 = make_city('city1', 0, 1)
+    &gt;&gt;&gt; city2 = make_city('city2', 0, 2)
+    &gt;&gt;&gt; distance(city1, city2)
+    1.0
+    &gt;&gt;&gt; city3 = make_city('city3', 6.5, 12)
+    &gt;&gt;&gt; city4 = make_city('city4', 2.5, 15)
+    &gt;&gt;&gt; distance(city3, city4)
+    5.0
+    """</span>
+<div class="alt solution-2">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-2">    lat_1, lon_1 = get_lat(city1), get_lon(city1)
+    lat_2, lon_2 = get_lat(city2), get_lon(city2)
+    <span class="hljs-keyword">return</span> sqrt((lat_1 - lat_2)**<span class="hljs-number">2</span> + (lon_1 - lon_2)**<span class="hljs-number">2</span>)</div></code></pre>
+
+
+        <button id="solution-2" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q distance</code></pre>
+
+<h3 class="question" id="q5">Q5: Closer city</h3>
+
+<p>Implement <code>closer_city</code>, a function that takes a latitude,
+longitude, and two cities, and returns the name of the city that is
+closer to the provided latitude and longitude.</p>
+
+<p>You may only use selectors and constructors (introduced above) for
+this question. You should also use the <code>distance</code> function
+defined above. All of these functions can be found in lab file, if you
+are curious how they are implemented. However, the point of data abstraction,
+as we've said, is that we do not need to know how an abstract data type is
+implemented, but rather just how we can interact with and use the data type.</p>
+
+<p><em>Hint</em>: Try using the city constructor to make a temporary city!</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">closer_city</span><span class="hljs-params">(lat, lon, city1, city2)</span>:</span>
+    <span class="hljs-string">"""
+    Returns the name of either city1 or city2, whichever is closest to
+    coordinate (lat, lon).
+
+    &gt;&gt;&gt; berkeley = make_city('Berkeley', 37.87, 112.26)
+    &gt;&gt;&gt; stanford = make_city('Stanford', 34.05, 118.25)
+    &gt;&gt;&gt; closer_city(38.33, 121.44, berkeley, stanford)
+    'Stanford'
+    &gt;&gt;&gt; bucharest = make_city('Bucharest', 44.43, 26.10)
+    &gt;&gt;&gt; vienna = make_city('Vienna', 48.20, 16.37)
+    &gt;&gt;&gt; closer_city(41.29, 174.78, bucharest, vienna)
+    'Bucharest'
+    """</span>
+<div class="alt solution-3">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-3">    new_city = make_city(<span class="hljs-string">'arb'</span>, lat, lon)
+    dist1 = distance(city1, new_city)
+    dist2 = distance(city2, new_city)
+    <span class="hljs-keyword">if</span> dist1 &lt; dist2:
+         <span class="hljs-keyword">return</span> get_name(city1)
+    <span class="hljs-keyword">return</span> get_name(city2)</div></code></pre>
+
+
+        <button id="solution-3" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q closer_city</code></pre>
+
+
+<h2 id="connect-n">Connect N</h2>
+
+
+
+<h2 id="rules">Rules</h2>
+
+
+<p>By the end of this lab, you will have implemented your own Connect N game (most commonly Connect 4).
+As you might already know, Connect N is a two-player game where the players take turns dropping a piece
+from the top of a column in a grid. The piece ends at the last empty spot in this column - that is,
+as close to the bottom as possible. A player can only put pieces in columns with open spaces.</p>
+
+<p>The winner is the first player who gets N of their pieces next to each other - either horizontally,
+vertically or diagonally. The game ends at this point, or as soon as the board is full.</p>
+
+
+<h2 id="building-connect-n">Building Connect N</h2>
+
+
+<p>Let's build the combat field for players <code>'X'</code> and <code>'O'</code>.</p>
+
+<p>In this lab, we will represent the playing board as a list of lists. We call such a list two-dimensional
+because we can visualize it as a rectangle. For instance, the list</p>
+
+<pre><code class="hljs coffeescript">`<span class="javascript">[[<span class="hljs-string">'-'</span>, <span class="hljs-string">'-'</span>, <span class="hljs-string">'-'</span>, <span class="hljs-string">'-'</span>], [<span class="hljs-string">'O'</span>, <span class="hljs-string">'O'</span>, <span class="hljs-string">'O'</span>, <span class="hljs-string">'X'</span>], [<span class="hljs-string">'X'</span>, <span class="hljs-string">'X'</span>, <span class="hljs-string">'X'</span>, <span class="hljs-string">'O'</span>]]</span>`</code></pre>
+
+<p>would represent the following board:</p>
+
+<pre><code class="hljs diff"><span class="hljs-deletion">- - - -</span>
+O O O X
+X X X O</code></pre>
+
+<p>What does the number of nested lists represent? What about the number of elements in each nested list?
+When you have made up your mind, you are ready to build the board!</p>
+
+<p><strong>Notice that just like lists are zero-indexed, our board is zero-indexed.</strong>
+This means that the columns and rows in the above board would be numbered like this:</p>
+
+<pre><code class="hljs">0  - - - -
+1  O O O X
+2  X X X O
+   0 1 2 3</code></pre>
+
+<h3 class="question" id="q6">Q6: Creating an empty board</h3>
+We are going to use data abstraction as we build our game, so let's start by making the constructors.
+We will represent an empty spot by the string <code>'-'</code>. In <code>lab04.py</code>, fill out the <em>constructors</em>. Remember to use your abstraction. How should we make a new row inside <code>create_board</code>? By using the <code>create_row</code>
+function that you write first. Each function should consist of <strong>only a single line</strong>, so you might find list comprehensions handy - though not necessary.
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">create_row</span><span class="hljs-params">(size)</span>:</span>
+    <span class="hljs-string">"""Returns a single, empty row with the given size. Each empty spot is
+    represented by the string '-'.
+
+    &gt;&gt;&gt; create_row(5)
+    ['-', '-', '-', '-', '-']
+    """</span>
+<div class="alt solution-4">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+    <span class="hljs-keyword">return</span> _______
+</div><div class="solution solution-4">    <span class="hljs-keyword">return</span> [<span class="hljs-string">"-"</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(size)]</div></code></pre>
+
+
+        <button id="solution-4" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q create_row</code></pre>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">create_board</span><span class="hljs-params">(rows, columns)</span>:</span>
+    <span class="hljs-string">"""Returns a board with the given dimensions.
+
+    &gt;&gt;&gt; create_board(3, 5)
+    [['-', '-', '-', '-', '-'], ['-', '-', '-', '-', '-'], ['-', '-', '-', '-', '-']]
+    """</span>
+<div class="alt solution-5">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+    <span class="hljs-keyword">return</span> _______
+</div><div class="solution solution-5">    <span class="hljs-keyword">return</span> [create_row(columns) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(rows)]</div></code></pre>
+
+
+        <button id="solution-5" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q create_board</code></pre>
+
+<h3 class="question" id="q7">Q7: Updating the board</h3>
+
+<p>Over the course of a game, the board will change and we will need to keep our representation of the
+board up-to-date. To do so, we will be creating a new board that represents the new state of the
+game every time a piece is played. Implement <code>replace_elem</code>, which takes a list, an index, and an
+element to be placed at that index in the returned <strong>new list</strong>.</p>
+
+<p>This function should consist of a one-line return statement.</p>
+
+
+
+<pre><code class="hljs sql">def replace_elem(lst, index, elem):
+    """<span class="hljs-keyword">Create</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">return</span> a <span class="hljs-keyword">new</span> <span class="hljs-keyword">list</span> whose elements <span class="hljs-keyword">are</span> the same <span class="hljs-keyword">as</span> those <span class="hljs-keyword">in</span>
+    LST <span class="hljs-keyword">except</span> <span class="hljs-keyword">at</span> <span class="hljs-keyword">index</span> <span class="hljs-keyword">INDEX</span>, which should contain <span class="hljs-keyword">element</span> ELEM instead.
+
+    &gt;&gt;&gt; <span class="hljs-keyword">old</span> = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>]
+    &gt;&gt;&gt; <span class="hljs-keyword">new</span> = replace_elem(<span class="hljs-keyword">old</span>, <span class="hljs-number">2</span>, <span class="hljs-number">8</span>)
+    &gt;&gt;&gt; <span class="hljs-keyword">new</span>
+    [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">8</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>]
+    &gt;&gt;&gt; <span class="hljs-keyword">new</span> <span class="hljs-keyword">is</span> <span class="hljs-keyword">old</span>   # <span class="hljs-keyword">check</span> that replace_elem outputs a <span class="hljs-keyword">new</span> <span class="hljs-keyword">list</span>
+    <span class="hljs-literal">False</span>
+    <span class="hljs-string">"""
+    assert index &gt;= 0 and index &lt; len(lst), 'Index is out of bounds'
+</span><div class="alt solution-6"><span class="hljs-string">    "</span>*** YOUR CODE HERE ***<span class="hljs-string">"
+    return _______
+</span></div><div class="solution solution-6"><span class="hljs-string">    return lst[:index] + [elem] + lst[(index + 1):]</span></div></code></pre>
+
+
+        <button id="solution-6" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q replace_elem</code></pre>
+
+<h3 class="question" id="q8">Q8: Manipulating pieces</h3>
+
+<p>Now that we have the board ready, let's make a way to find out which
+piece (<code>'-'</code>, <code>'X'</code> or <code>'O'</code>) is at a given position. Implement <code>get_piece</code> so it does this.</p>
+
+<p><strong>Note</strong>: The <code>get_piece</code> function is what we call a <em>selector</em>, which is
+allowed to break through the data abstraction barrier in order to abstract away
+the inner implementation for all of the other functions that both the programmer
+and other users will use.</p>
+
+<p>This function should consist of a one-line return statement.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_piece</span><span class="hljs-params">(board, row, column)</span>:</span>
+    <span class="hljs-string">"""Returns the piece at location (row, column) in the board.
+
+    &gt;&gt;&gt; rows, columns = 2, 2
+    &gt;&gt;&gt; board = create_board(rows, columns)
+    &gt;&gt;&gt; board = put_piece(board, rows, 0, 'X')[1] # Puts piece "X" in column 0 of board and updates board
+    &gt;&gt;&gt; board = put_piece(board, rows, 0, 'O')[1] # Puts piece "O" in column 0 of board and updates board
+    &gt;&gt;&gt; get_piece(board, 1, 0)
+    'X'
+    &gt;&gt;&gt; get_piece(board, 1, 1)
+    '-'
+    """</span>
+<div class="alt solution-7">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+    <span class="hljs-keyword">return</span> _______
+</div><div class="solution solution-7">    <span class="hljs-keyword">return</span> board[row][column]</div></code></pre>
+
+
+        <button id="solution-7" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Right now, all spots in our board are empty, so the output of <code>get_piece</code> won't
+be very interesting - and neither will the game. Let's change that! Go ahead and
+implement <code>put_piece</code> which places the given player's piece in the given
+column. <code>put_piece</code> should return the 2-element tuple that contains (<code>row
+index</code>, <code>new_board</code>) where <code>row index</code> is the index of the row the piece ends up
+in, or -1 if the column is already full. The <code>new_board</code> is the new board after
+the piece has been placed. If the column was full then just return the original
+<code>board</code>.</p>
+
+<p>Assume that the given column is on the board. Remember that you can get pieces
+in the board by using <code>get_piece</code>. The argument <code>max_rows</code> may be helpful in
+determining which rows you should check for an empty slot to put the piece in.</p>
+
+<blockquote><p><em>Note</em>: You will probably need to use the <code>replace_elem</code> function you wrote
+above <em>twice</em> to create the new board.</p></blockquote>
+
+<!-- hack for separate blockquotes -->
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">put_piece</span><span class="hljs-params">(board, max_rows, column, player)</span>:</span>
+    <span class="hljs-string">"""Puts PLAYER's piece in the bottommost empty spot in the given column of
+    the board. Returns a tuple of two elements:
+
+        1. The index of the row the piece ends up in, or -1 if the column
+           is full.
+        2. The new board
+
+    &gt;&gt;&gt; rows, columns = 2, 2
+    &gt;&gt;&gt; board = create_board(rows, columns)
+    &gt;&gt;&gt; row, new_board = put_piece(board, rows, 0, 'X')
+    &gt;&gt;&gt; row
+    1
+    &gt;&gt;&gt; row, new_board = put_piece(new_board, rows, 0, 'O')
+    &gt;&gt;&gt; row
+    0
+    &gt;&gt;&gt; row, new_board = put_piece(new_board, rows, 0, 'X')
+    &gt;&gt;&gt; row
+    -1
+    """</span>
+<div class="alt solution-8">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-8">    curr_row_index = max_rows - <span class="hljs-number">1</span>
+    <span class="hljs-keyword">while</span> curr_row_index &gt;= <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> get_piece(board, curr_row_index, column) != <span class="hljs-string">"-"</span>:
+        curr_row_index -= <span class="hljs-number">1</span>
+    <span class="hljs-keyword">if</span> curr_row_index &gt;= <span class="hljs-number">0</span>:
+        new_row = replace_elem(board[curr_row_index], column, player)
+        new_board = replace_elem(board, curr_row_index, new_row)
+        board = new_board
+    <span class="hljs-keyword">return</span> curr_row_index, board</div></code></pre>
+
+
+        <button id="solution-8" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q get_piece
+python3 ok -q put_piece</code></pre>
+
+
+<h2 id="you-are-now-crossing-the-abstraction-barrier">You are now crossing the abstraction barrier!!!</h2>
+
+
+<p>You have now implemented the <em>constructor</em> and <em>selectors</em> as well as ways to modify the attributes of your abstract data type, the board. From now on, you should never need to treat the board as if it were a list. Instead, trust your abstraction barrier and use the functions you have written so far.</p>
+
+<h3 class="question" id="q9">Q9: Making a move</h3>
+In our <code>put_piece</code> function, we assumed that the player gives a valid column number. This won't always be
+the case though. Implement <code>make_move</code> which checks that the given column is valid, and that the
+column isn't full. <code>make_move</code> returns a 2-element tuple (row index, board). If the move is valid,
+put a piece in the column and return the index of the row the piece ends up in (do you have a function
+that will help you do this?) as well as the new board. If the move is invalid, <code>make_move</code> should return
+-1 and the original board, unchanged.
+
+<p>The arguments <code>max_rows</code> and <code>max_cols</code> describe the dimensions of the board and may be useful in determining whether or not a move is valid.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">make_move</span><span class="hljs-params">(board, max_rows, max_cols, col, player)</span>:</span>
+    <span class="hljs-string">"""Put player's piece in column COL of the board, if it is a valid move.
+    Return a tuple of two values:
+
+        1. If the move is valid, make_move returns the index of the row the
+           piece is placed in. Otherwise, it returns -1.
+        2. The updated board
+
+    &gt;&gt;&gt; rows, columns = 2, 2
+    &gt;&gt;&gt; board = create_board(rows, columns)
+    &gt;&gt;&gt; row, board = make_move(board, rows, columns, 0, 'X')
+    &gt;&gt;&gt; row
+    1
+    &gt;&gt;&gt; get_piece(board, 1, 0)
+    'X'
+    &gt;&gt;&gt; row, board = make_move(board, rows, columns, 0, 'O')
+    &gt;&gt;&gt; row
+    0
+    &gt;&gt;&gt; row, board = make_move(board, rows, columns, 0, 'X')
+    &gt;&gt;&gt; row
+    -1
+    &gt;&gt;&gt; row, board = make_move(board, rows, columns, -4, '0')
+    &gt;&gt;&gt; row
+    -1
+    """</span>
+<div class="alt solution-9">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-9">    <span class="hljs-keyword">if</span> col &lt; <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> col &gt;= max_cols:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>, board
+    <span class="hljs-keyword">return</span> put_piece(board, max_rows, col, player)</div></code></pre>
+
+
+        <button id="solution-9" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q make_move</code></pre>
+
+
+<h2 id="optional-connect-n-questions">Optional Connect N Questions</h2>
+
+
+<blockquote><p>Questions in this section are not required for submission. However,
+we encourage you to try them out on your own time for extra practice.
+Plus, if you finish questions 10-12, you can play the full game yourself!</p></blockquote>
+
+<h3 class="question" id="q10">Q10: Printing and viewing the board</h3>
+Wouldn't it be great if we could actually see the board and the pieces on it? That is exactly what
+<code>print_board</code> is for.
+
+<p>In questions 1 and 2, we implemented the <em>constructors</em> and <em>selectors</em>, so let's use some of them now.
+Let's implement <code>print_board</code> as if we didn't know the board is a list of lists. This is called
+respecting the data abstraction barrier. You can do this by using your above functions (not necessarily all
+of them). The arguments <code>max_rows</code> and <code>max_cols</code> describe the dimensions of the board.</p>
+
+<p>We would like our board to look good, and for this, strings do a better job than lists. Thus, we would
+like the row <code>['X', 'X', 'O', '-']</code> to be printed as <code>'X X O -'</code> where the pieces are separated by a
+single blank space. Remember that <code>'hel' + 'lo' = 'hello'</code>.</p>
+
+<p><em>Hint</em>: You might find that you're failing doctests that seem to be correct. Chances are that you have an extra space character at the end of your rows in your board. A function that might come in handy is <code>strip()</code>, which removes leading and trailing whitespace from a string. For example:</p>
+
+<pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; s = <span class="hljs-string">'   hello '</span>
+<span class="hljs-meta">&gt;&gt;</span>&gt; s = s.strip()
+<span class="hljs-meta">&gt;&gt;</span>&gt; s
+<span class="hljs-string">'hello'</span></code></pre>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">print_board</span><span class="hljs-params">(board, max_rows, max_cols)</span>:</span>
+    <span class="hljs-string">"""Prints the board. Row 0 is at the top, and column 0 at the far left.
+
+    &gt;&gt;&gt; rows, columns = 2, 2
+    &gt;&gt;&gt; board = create_board(rows, columns)
+    &gt;&gt;&gt; print_board(board, rows, columns)
+    - -
+    - -
+    &gt;&gt;&gt; new_board = make_move(board, rows, columns, 0, 'X')[1]
+    &gt;&gt;&gt; print_board(new_board, rows, columns)
+    - -
+    X -
+    """</span>
+<div class="alt solution-10">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-10">    <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> range(max_rows):
+        row_str = <span class="hljs-string">''</span>
+        <span class="hljs-keyword">for</span> col <span class="hljs-keyword">in</span> range(max_cols):
+            piece = get_piece(board, row, col)
+            row_str += piece + <span class="hljs-string">" "</span>
+        print(row_str.strip())</div></code></pre>
+
+
+        <button id="solution-10" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q print_board</code></pre>
+
+<p>Now we can actually play the game! To try it out, run the following command in the terminal from your <code>lab04</code> directory:</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> python3 -i lab04.py</span>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; start_game()</span></code></pre>
+
+<h3 class="question" id="q11">Q11: Checking for victory</h3>
+Fun, right? At least if you don't care about winning...
+
+<p>The last thing we need for our Connect N game to be fully functioning is the ability to detect a win.
+Let's implement <code>check_win_row</code> and <code>check_win_col</code> that check for horizontal and vertical wins <em>for the given
+player</em>. Since we check for wins after each turn, and only the player who made the most recent move can have a
+win, <code>check_win_row</code> and <code>check_win_col</code> should only check for a win for the player that is passed as an
+argument. Also remember that <code>num_connect</code> tells you how many adjacent pieces are needed for a win. The
+arguments <code>max_rows</code> and <code>max_cols</code> describe the dimensions of the game board.</p>
+
+<p>As in <code>print_board</code>, use the data abstractions you just built.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">check_win_row</span><span class="hljs-params">(board, max_rows, max_cols, num_connect, row, player)</span>:</span>
+    <span class="hljs-string">""" Returns True if the given player has a horizontal win
+    in the given row, and otherwise False.
+
+    &gt;&gt;&gt; rows, columns, num_connect = 4, 4, 2
+    &gt;&gt;&gt; board = create_board(rows, columns)
+    &gt;&gt;&gt; board = make_move(board, rows, columns, 0, 'X')[1]
+    &gt;&gt;&gt; board = make_move(board, rows, columns, 0, 'O')[1]
+    &gt;&gt;&gt; check_win_row(board, rows, columns, num_connect, 3, 'O')
+    False
+    &gt;&gt;&gt; board = make_move(board, rows, columns, 2, 'X')[1]
+    &gt;&gt;&gt; board = make_move(board, rows, columns, 0, 'O')[1]
+    &gt;&gt;&gt; check_win_row(board, rows, columns, num_connect, 3, 'X')
+    False
+    &gt;&gt;&gt; board = make_move(board, rows, columns, 1, 'X')[1]
+    &gt;&gt;&gt; check_win_row(board, rows, columns, num_connect, 3, 'X')
+    True
+    &gt;&gt;&gt; check_win_row(board, rows, columns, 4, 3, 'X')    # A win depends on the value of num_connect
+    False
+    &gt;&gt;&gt; check_win_row(board, rows, columns, num_connect, 3, 'O')   # We only detect wins for the given player
+    False
+    """</span>
+<div class="alt solution-11">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-11">    adjacent = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> col <span class="hljs-keyword">in</span> range(max_cols):
+        piece = get_piece(board, row, col)
+        <span class="hljs-keyword">if</span> piece == player:
+            adjacent += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            adjacent = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">if</span> adjacent &gt;= num_connect:
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">True</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span></div></code></pre>
+
+
+        <button id="solution-11" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q check_win_row</code></pre>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">check_win_column</span><span class="hljs-params">(board, max_rows, max_cols, num_connect, col, player)</span>:</span>
+    <span class="hljs-string">""" Returns True if the given player has a vertical win in the given column,
+    and otherwise False.
+
+    &gt;&gt;&gt; rows, columns, num_connect = 5, 5, 2
+    &gt;&gt;&gt; board = create_board(rows, columns)
+    &gt;&gt;&gt; board = make_move(board, rows, columns, 0, 'X')[1]
+    &gt;&gt;&gt; board = make_move(board, rows, columns, 1, 'O')[1]
+    &gt;&gt;&gt; check_win_column(board, rows, columns, num_connect, 0, 'X')
+    False
+    &gt;&gt;&gt; board = make_move(board, rows, columns, 1, 'X')[1]
+    &gt;&gt;&gt; board = make_move(board, rows, columns, 1, 'O')[1]
+    &gt;&gt;&gt; check_win_column(board, rows, columns, num_connect, 1, 'O')
+    False
+    &gt;&gt;&gt; board = make_move(board, rows, columns, 2, 'X')[1]
+    &gt;&gt;&gt; board = make_move(board, rows, columns, 1, 'O')[1]
+    &gt;&gt;&gt; check_win_column(board, rows, columns, num_connect, 1, 'O')
+    True
+    &gt;&gt;&gt; check_win_column(board, rows, columns, 4, 1, 'O')
+    False
+    &gt;&gt;&gt; check_win_column(board, rows, columns, num_connect, 1, 'X')
+    False
+    """</span>
+<div class="alt solution-12">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-12">    adjacent = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> range(max_rows):
+        piece = get_piece(board, row, col)
+        <span class="hljs-keyword">if</span> piece == player:
+            adjacent += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            adjacent = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">if</span> adjacent &gt;= num_connect:
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">True</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span></div></code></pre>
+
+
+        <button id="solution-12" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q check_win_column</code></pre>
+
+<h3 class="question" id="q12">Q12: Winning!</h3>
+We're almost done with our Connect N game! The last thing we should do is to implement <code>check_win</code>.
+This function should return True if there is <em>any</em> win -  that is, horizontally, vertically or diagonally.
+We have provided the function <code>check_win_diagonal(board, max_rows, max_cols, num_connect, row, col, player)</code> which returns True, if the given player has a diagonal win passing the spot (row, column), and otherwise False.
+Try to write <code>check_win</code> in one line.
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">check_win</span><span class="hljs-params">(board, max_rows, max_cols, num_connect, row, col, player)</span>:</span>
+    <span class="hljs-string">"""Returns True if the given player has any kind of win after placing a
+    piece at (row, col), and False otherwise.
+
+    &gt;&gt;&gt; rows, columns, num_connect = 2, 2, 2
+    &gt;&gt;&gt; board = create_board(rows, columns)
+    &gt;&gt;&gt; board = make_move(board, rows, columns, 0, 'X')[1]
+    &gt;&gt;&gt; board = make_move(board, rows, columns, 1, 'O')[1]
+    &gt;&gt;&gt; board = make_move(board, rows, columns, 0, 'X')[1]
+    &gt;&gt;&gt; check_win(board, rows, columns, num_connect, 0, 0, 'O')
+    False
+    &gt;&gt;&gt; check_win(board, rows, columns, num_connect, 0, 0, 'X')
+    True
+
+    &gt;&gt;&gt; board = create_board(rows, columns)
+    &gt;&gt;&gt; board = make_move(board, rows, columns, 0, 'X')[1]
+    &gt;&gt;&gt; board = make_move(board, rows, columns, 0, 'O')[1]
+    &gt;&gt;&gt; board = make_move(board, rows, columns, 1, 'X')[1]
+    &gt;&gt;&gt; check_win(board, rows, columns, num_connect, 1, 0, 'X')
+    True
+    &gt;&gt;&gt; check_win(board, rows, columns, num_connect, 0, 0, 'X')
+    False
+
+    &gt;&gt;&gt; board = create_board(rows, columns)
+    &gt;&gt;&gt; board = make_move(board, rows, columns, 0, 'X')[1]
+    &gt;&gt;&gt; board = make_move(board, rows, columns, 1, 'O')[1]
+    &gt;&gt;&gt; board = make_move(board, rows, columns, 1, 'X')[1]
+    &gt;&gt;&gt; check_win(board, rows, columns, num_connect, 0, 0, 'X')
+    False
+    &gt;&gt;&gt; check_win(board, rows, columns, num_connect, 1, 0, 'X')
+    True
+    """</span>
+    diagonal_win = check_win_diagonal(board, max_rows, max_cols, num_connect,
+                                      row, col, player)
+<div class="alt solution-13">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+    <span class="hljs-keyword">return</span> _______
+</div><div class="solution solution-13">    <span class="hljs-keyword">return</span> check_win_row(board, max_rows, max_cols, num_connect, row, player) <span class="hljs-keyword">or</span> \
+             check_win_column(board, max_rows, max_cols, num_connect, col, player) <span class="hljs-keyword">or</span> \
+               diagonal_win</div></code></pre>
+
+
+        <button id="solution-13" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q check_win</code></pre>
+
+<p>Congratulations, you just built your own Connect N game! Don't you think the person next to you would be
+down for a game? As before, run the game by running the following command in your terminal:</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> python3 -i lab04.py</span>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; start_game()</span></code></pre>
+
+<p>We implemented the <code>play</code> function for you, but if you are curious, you should take a look at it.
+As you will see, thanks to the layers of data abstraction, the <code>play</code> function is actually very simple.
+Notice how we use your <code>make_move</code>, <code>print_board</code>, and <code>check_win</code> to play the game without even knowing
+how the board and pieces are implemented.</p>
+
+
+<h2 id="optional-list-questions">Optional List Questions</h2>
+
+
+<h3 class="question" id="q13">Q13: Flatten</h3>
+
+<p>Write a function <code>flatten</code> that takes a (possibly deep) list and "flattens" it.
+For example:</p>
+
+<pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; lst = [<span class="hljs-number">1</span>, [[<span class="hljs-number">2</span>], <span class="hljs-number">3</span>], <span class="hljs-number">4</span>, [<span class="hljs-number">5</span>, <span class="hljs-number">6</span>]]
+<span class="hljs-meta">&gt;&gt;</span>&gt; flatten(lst)
+[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]</code></pre>
+
+<p><em>Hint</em>: you can check if something is a list by using the built-in
+<code>type</code> function. For example,</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; <span class="hljs-built_in">type</span>(3) == list</span>
+False
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; <span class="hljs-built_in">type</span>([1, 2, 3]) == list</span>
+True</code></pre>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">flatten</span><span class="hljs-params">(lst)</span>:</span>
+    <span class="hljs-string">"""Returns a flattened version of lst.
+
+    &gt;&gt;&gt; flatten([1, 2, 3])     # normal list
+    [1, 2, 3]
+    &gt;&gt;&gt; x = [1, [2, 3], 4]      # deep list
+    &gt;&gt;&gt; flatten(x)
+    [1, 2, 3, 4]
+    &gt;&gt;&gt; x = [[1, [1, 1]], 1, [1, 1]] # deep list
+    &gt;&gt;&gt; flatten(x)
+    [1, 1, 1, 1, 1, 1]
+    """</span>
+<div class="alt solution-14">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-14">    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> lst:
+        <span class="hljs-keyword">return</span> []
+    <span class="hljs-keyword">elif</span> type(lst[<span class="hljs-number">0</span>]) == list:
+        <span class="hljs-keyword">return</span> flatten(lst[<span class="hljs-number">0</span>]) + flatten(lst[<span class="hljs-number">1</span>:])
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> [lst[<span class="hljs-number">0</span>]] + flatten(lst[<span class="hljs-number">1</span>:])</div></code></pre>
+
+
+        <button id="solution-14" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q flatten</code></pre>
+
+<h3 class="question" id="q14">Q14: Merge</h3>
+
+<p>Write a function <code>merge</code> that takes 2 <em>sorted</em> lists <code>lst1</code> and <code>lst2</code>,
+and returns a new list that contains all the elements in the two lists
+in sorted order.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">merge</span><span class="hljs-params">(lst1, lst2)</span>:</span>
+    <span class="hljs-string">"""Merges two sorted lists.
+
+    &gt;&gt;&gt; merge([1, 3, 5], [2, 4, 6])
+    [1, 2, 3, 4, 5, 6]
+    &gt;&gt;&gt; merge([], [2, 4, 6])
+    [2, 4, 6]
+    &gt;&gt;&gt; merge([1, 2, 3], [])
+    [1, 2, 3]
+    &gt;&gt;&gt; merge([5, 7], [2, 4, 6])
+    [2, 4, 5, 6, 7]
+    """</span>
+<div class="alt solution-15">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-15">    <span class="hljs-comment"># recursive</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> lst1 <span class="hljs-keyword">or</span> <span class="hljs-keyword">not</span> lst2:
+        <span class="hljs-keyword">return</span> lst1 + lst2
+    <span class="hljs-keyword">elif</span> lst1[<span class="hljs-number">0</span>] &lt; lst2[<span class="hljs-number">0</span>]:
+        <span class="hljs-keyword">return</span> [lst1[<span class="hljs-number">0</span>]] + merge(lst1[<span class="hljs-number">1</span>:], lst2)
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> [lst2[<span class="hljs-number">0</span>]] + merge(lst1, lst2[<span class="hljs-number">1</span>:])
+
+<span class="hljs-comment"># Iterative solution </span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">merge_iter</span><span class="hljs-params">(lst1, lst2)</span>:</span>
+    <span class="hljs-string">"""Merges two sorted lists.
+
+    &gt;&gt;&gt; merge_iter([1, 3, 5], [2, 4, 6])
+    [1, 2, 3, 4, 5, 6]
+    &gt;&gt;&gt; merge_iter([], [2, 4, 6])
+    [2, 4, 6]
+    &gt;&gt;&gt; merge_iter([1, 2, 3], [])
+    [1, 2, 3]
+    &gt;&gt;&gt; merge_iter([5, 7], [2, 4, 6])
+    [2, 4, 5, 6, 7]
+    """</span>
+    new = []
+    <span class="hljs-keyword">while</span> lst1 <span class="hljs-keyword">and</span> lst2:
+        <span class="hljs-keyword">if</span> lst1[<span class="hljs-number">0</span>] &lt; lst2[<span class="hljs-number">0</span>]:
+            new += [lst1[<span class="hljs-number">0</span>]]
+            lst1 = lst1[<span class="hljs-number">1</span>:]
+        <span class="hljs-keyword">else</span>:
+            new += [lst2[<span class="hljs-number">0</span>]]
+            lst2 = lst2[<span class="hljs-number">1</span>:]
+    <span class="hljs-keyword">if</span> lst1:
+        <span class="hljs-keyword">return</span> new + lst1
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> new + lst2</div></code></pre>
+
+
+        <button id="solution-15" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q merge</code></pre>
+
+  </div>
+
+  <div class="col-md-3 sticky">
+    <nav class="hidden-print hidden-sm hidden-xs sidebar">
+      <ul class="nav nav-stacked noselect">
+  <li><a href="https://cs61a.org/lab/lab04/#lists-warm-up">Lists Warm-up!</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab04/#q1">Q1: List Indexing</a></li>
+    <li><a href="https://cs61a.org/lab/lab04/#q2">Q2: If This Not That</a></li>
+  </ul>
+  <li><a href="https://cs61a.org/lab/lab04/#list-comprehension">List Comprehension</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab04/#q3">Q3: WWPD: Lists?</a></li>
+  </ul>
+  <li><a href="https://cs61a.org/lab/lab04/#data-abstraction">Data Abstraction</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab04/#q4">Q4: Distance</a></li>
+    <li><a href="https://cs61a.org/lab/lab04/#q5">Q5: Closer city</a></li>
+  </ul>
+  <li><a href="https://cs61a.org/lab/lab04/#connect-n">Connect N</a></li>
+  <li><a href="https://cs61a.org/lab/lab04/#rules">Rules</a></li>
+  <li><a href="https://cs61a.org/lab/lab04/#building-connect-n">Building Connect N</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab04/#q6">Q6: Creating an empty board</a></li>
+    <li><a href="https://cs61a.org/lab/lab04/#q7">Q7: Updating the board</a></li>
+    <li><a href="https://cs61a.org/lab/lab04/#q8">Q8: Manipulating pieces</a></li>
+  </ul>
+  <li><a href="https://cs61a.org/lab/lab04/#you-are-now-crossing-the-abstraction-barrier">You are now crossing the abstraction barrier!!!</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab04/#q9">Q9: Making a move</a></li>
+  </ul>
+  <li><a href="https://cs61a.org/lab/lab04/#optional-connect-n-questions">Optional Connect N Questions</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab04/#q10">Q10: Printing and viewing the board</a></li>
+    <li><a href="https://cs61a.org/lab/lab04/#q11">Q11: Checking for victory</a></li>
+    <li><a href="https://cs61a.org/lab/lab04/#q12">Q12: Winning!</a></li>
+  </ul>
+  <li><a href="https://cs61a.org/lab/lab04/#optional-list-questions">Optional List Questions</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab04/#q13">Q13: Flatten</a></li>
+    <li><a href="https://cs61a.org/lab/lab04/#q14">Q14: Merge</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/resources.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/studying.html">Studying Guide</a></li>
+            <li><a href="https://cs61a.org/articles/debugging.html">Debugging Guide</a></li>
+            <li><a href="https://cs61a.org/articles/composition.html">Composition Guide</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/articles/about.html">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/about.html#assignments">Assignments</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#exams">Exams</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    
+
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+</script>
+
+
+<script>
+  $(function() {
+    var staging_domains = ['staging.cs61a.org', 'localhost', '127.0.0.1'];
+
+    var staging = staging_domains.indexOf(window.location.hostname) != -1;
+    var after_due_date = new Date("09/23/2017") < new Date();
+    var release_solutions = staging || after_due_date;
+
+    if (release_solutions) {
+      $('.toggle').css('display', 'inline-block');
+      $('.toggle').click(function() {
+        var solution_id = $(this).attr('id');
+        $('div.' + solution_id).slideToggle(600);
+      });
+    }
+  });
+</script>
+
+
+  
+</body></html>

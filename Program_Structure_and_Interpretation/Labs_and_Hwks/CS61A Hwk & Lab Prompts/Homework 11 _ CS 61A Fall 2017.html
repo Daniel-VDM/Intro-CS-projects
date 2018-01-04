@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<!-- saved from url=(0026)https://cs61a.org/hw/hw11/ -->
+<html lang="en" class="gr__cs61a_org"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="CS 61A: Structure and Interpretation of Computer Programs">
+    <meta name="keywords" content="CS 61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS">
+    <meta name="author" content="John DeNero, Paul Hilfinger">
+    
+    <meta name="viewport" content="width=device-width">
+
+    <script src="./Homework 11 _ CS 61A Fall 2017_files/jquery.min.js.download"></script>
+    <script src="./Homework 11 _ CS 61A Fall 2017_files/bootstrap.min.js.download"></script>
+    <script src="./Homework 11 _ CS 61A Fall 2017_files/highlight.min.js.download"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="./Homework 11 _ CS 61A Fall 2017_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./Homework 11 _ CS 61A Fall 2017_files/css">
+    <link rel="stylesheet" href="./Homework 11 _ CS 61A Fall 2017_files/style.css">
+    <link rel="stylesheet" href="./Homework 11 _ CS 61A Fall 2017_files/mono-blue.css">
+    <link rel="icon" href="https://cs61a.org/assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="./Homework 11 _ CS 61A Fall 2017_files/hw.css">
+
+
+    <title>
+Homework 11 | CS 61A Fall 2017
+</title>
+  </head>
+
+  <body id="index" class="home" data-gr-c-s-loaded="true">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://cs61a.org/">CS 61A</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+            <li><a href="https://cs61a.org/resources.html">Resources</a></li>
+            <li><a href="https://cs61a.org/articles/about.html">Policies</a></li>
+            <li><a href="http://tutor.cs61a.org/">Tutor</a></li>
+            <li><a href="https://piazza.com/berkeley/fall2017/cs61a" target="_blank">Piazza</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class="row">
+  <div class="col-md-9">
+    <header>
+      <h1>
+        
+Homework 11
+
+        
+        <ul class="inline-block list-inline">
+          <li><a href="https://cs61a.org/hw/hw11/hw11.zip" class="label label-outline">hw11.zip</a></li>
+        </ul>
+        
+      </h1>
+    </header>
+    
+<p><em>Due by 11:59pm on Tuesday, 11/14</em></p>
+
+
+
+
+<h2>Instructions</h2>
+
+<p>Download <a href="https://cs61a.org/hw/hw11/hw11.zip">hw11.zip</a>.</p>
+
+<p><strong>Submission:</strong> When you are done, submit with
+<code>python3 ok --submit</code>.
+You may submit more than once before the deadline; only the final submission
+will be scored. Check that you have successfully submitted your code on
+<a href="https://okpy.org/">okpy.org</a>.
+See <a href="https://cs61a.org/lab/lab00#submit-the-assignment">Lab 0</a>
+for more instructions on submitting assignments.</p>
+
+<p><strong>Using Ok:</strong> If you have any questions about using Ok, please
+refer to <a href="https://cs61a.org/articles/using-ok.html">this guide.</a>
+
+
+  </p><p><strong>Readings:</strong> You might find the following references
+  useful:</p>
+  <ul>
+  <li><a href="http://composingprograms.com/pages/42-implicit-sequences.html">Section 4.2 - Implicit Sequences</a></li>
+</ul>
+
+
+
+
+    
+<h3 class="question" id="q1">Q1: Find</h3>
+
+<p>Define a function <code>find</code> which takes in as input a stream and a predicate, and
+returns the first element in the stream satisfying the predicate. If the item is
+not found, return <code>#f</code> (assume that a predicate will never match <code>#f</code>).</p>
+
+<blockquote><p><em>Extra note</em>: Is it always possible to correctly return <code>#f</code>? Can you think of
+a possible input <code>s</code> where we might run into issues (we won't test you on this
+case)?</p></blockquote>
+
+<solution>
+
+<pre><code class="hljs makefile">(<span class="hljs-keyword">define</span> (find s predicate)
+  'YOUR-CODE-HERE
+)</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q find</code></pre>
+
+
+
+<h3 class="question" id="q2">Q2: Scale Stream</h3>
+
+<p>Implement the function <code>scale-stream</code>, which takes a stream <code>s</code> and a number
+<code>k</code>, and returns a stream where each element is the corresponding element of <code>s</code>
+scaled by <code>k</code>. Your solution should work even if <code>s</code> has an infinite number of
+items.</p>
+
+<solution>
+
+<pre><code class="hljs makefile">(<span class="hljs-keyword">define</span> (scale-stream s k)
+  'YOUR-CODE-HERE
+)</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q scale-stream</code></pre>
+
+
+
+<h3 class="question" id="q3">Q3: Cycles</h3>
+
+<p>In Scheme, it's possible to have a stream with cycles. That is, a stream may
+contain itself as part of the stream definition.</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> (define s (cons-stream 1 (cons-stream 2 s)))</span>
+<span class="hljs-meta">scm&gt;</span><span class="bash"> (car s)</span>
+1
+<span class="hljs-meta">scm&gt;</span><span class="bash"> (car (cdr-stream (cdr-stream s)))</span>
+1</code></pre>
+
+<p>Implement <code>has-cycle</code>, that returns whether a stream contains a cycle.</p>
+
+<blockquote><p><strong>Note:</strong> You may assume that the input is either a stream of some unknown
+finite length, or contains a cycle.</p></blockquote>
+
+<solution>
+
+<pre><code class="hljs makefile">(<span class="hljs-keyword">define</span> (has-cycle s)
+  'YOUR-CODE-HERE
+)
+</code></pre>
+
+</solution>
+
+<blockquote><p><strong>Hint:</strong> <code>eq?</code> may be used to check if two items are the same stream
+instance.</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">  scm&gt;</span><span class="bash"> (define s (cons-stream 1 s))</span>
+<span class="hljs-meta">  scm&gt;</span><span class="bash"> (eq? s (cdr-stream s))</span>
+  True</code></pre>
+
+<p>It may be helpful to keep track of already seen stream instances.</p></blockquote>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q has-cycle</code></pre>
+
+
+
+<p><strong>Extra question</strong>: <em>This question is not worth extra credit and is entirely
+optional (i.e. there are no test cases that check if you use constant space). It
+is designed to challenge you to think creatively!</em></p>
+
+<p>Implement <code>has-cycle-constant</code> with only <a href="http://composingprograms.com/pages/28-efficiency.html#growth-categories">constant space</a>. The solution is
+short (fewer than 20 lines of code), but requires a clever idea. Try to discover
+the solution yourself before asking around:</p>
+
+<solution>
+
+<pre><code class="hljs makefile">(<span class="hljs-keyword">define</span> (has-cycle-constant s)
+  'YOUR-CODE-HERE
+)
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q has-cycle-constant</code></pre>
+
+
+
+  </div>
+
+  <div class="col-md-3 sticky">
+    <nav class="hidden-print hidden-sm hidden-xs sidebar">
+      <ul class="nav nav-stacked noselect">
+  <li><a href="https://cs61a.org/hw/hw11/#q1">Q1: Find</a></li>
+  <li><a href="https://cs61a.org/hw/hw11/#q2">Q2: Scale Stream</a></li>
+  <li><a href="https://cs61a.org/hw/hw11/#q3">Q3: Cycles</a></li>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/resources.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/studying.html">Studying Guide</a></li>
+            <li><a href="https://cs61a.org/articles/debugging.html">Debugging Guide</a></li>
+            <li><a href="https://cs61a.org/articles/composition.html">Composition Guide</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/articles/about.html">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/about.html#assignments">Assignments</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#exams">Exams</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+</script>
+
+  
+</body></html>

@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<!-- saved from url=(0028)https://cs61a.org/lab/lab10/ -->
+<html lang="en" class="gr__cs61a_org"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="CS 61A: Structure and Interpretation of Computer Programs">
+    <meta name="keywords" content="CS 61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS">
+    <meta name="author" content="John DeNero, Paul Hilfinger">
+    
+    <meta name="viewport" content="width=device-width">
+
+    <script src="./Lab 10_ Interpreters _ CS 61A Fall 2017_files/jquery.min.js.download"></script>
+    <script src="./Lab 10_ Interpreters _ CS 61A Fall 2017_files/bootstrap.min.js.download"></script>
+    <script src="./Lab 10_ Interpreters _ CS 61A Fall 2017_files/highlight.min.js.download"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="./Lab 10_ Interpreters _ CS 61A Fall 2017_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./Lab 10_ Interpreters _ CS 61A Fall 2017_files/css">
+    <link rel="stylesheet" href="./Lab 10_ Interpreters _ CS 61A Fall 2017_files/style.css">
+    <link rel="stylesheet" href="./Lab 10_ Interpreters _ CS 61A Fall 2017_files/mono-blue.css">
+    <link rel="icon" href="https://cs61a.org/assets/images/favicon.ico">
+
+    
+
+    <title>
+Lab 10: Interpreters | CS 61A Fall 2017
+</title>
+  </head>
+
+  <body id="index" class="home" data-gr-c-s-loaded="true">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://cs61a.org/">CS 61A</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+            <li><a href="https://cs61a.org/resources.html">Resources</a></li>
+            <li><a href="https://cs61a.org/articles/about.html">Policies</a></li>
+            <li><a href="http://tutor.cs61a.org/">Tutor</a></li>
+            <li><a href="https://piazza.com/berkeley/fall2017/cs61a" target="_blank">Piazza</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class="row">
+  <div class="col-md-9">
+    <header>
+      <h1>
+        
+Lab 10: Interpreters
+
+        
+        <ul class="inline-block list-inline">
+          <li><a href="https://cs61a.org/lab/lab10/lab10.zip" class="label label-outline">lab10.zip</a></li>
+        </ul>
+        
+      </h1>
+    </header>
+    
+
+<p><i>Due at 11:59pm on Friday, 11/03/2017.</i></p>
+
+
+<h2 id="starter-files">Starter Files</h2>
+
+
+<p>Download <a href="https://cs61a.org/lab/lab10/lab10.zip">lab10.zip</a>.
+Inside the archive, you will find starter files for the questions in this lab,
+  along with a copy of the <a href="https://cs61a.org/lab/lab10/ok">Ok</a> autograder.</p>
+
+
+<h2 id="submission">Submission</h2>
+
+<p>By the end of this lab, you should have submitted the lab with
+<code>python3 ok --submit</code>. You may submit more than once before the
+deadline; only the final submission will be graded.
+Check that you have successfully submitted your code on
+<a href="https://okpy.org/">okpy.org</a>.</p>
+
+<ul>
+  <li>Questions 1, 2, and 3 must be completed in order to receive credit for this lab.</li>
+  <li>Questions 4 and 5 are <strong>optional</strong>. <em>It is recommended that you complete these 
+  problems on your own time.</em></li>
+</ul>
+
+
+
+    
+<h1 id="topics">Topics</h1>
+
+
+<p>Consult this section if you need a refresher on the material for this lab. It's
+okay to skip directly to <a href="https://cs61a.org/lab/lab10/#required-questions">the questions</a> and refer back
+here should you get stuck.</p>
+
+
+<h2 id="interpreters">Interpreters</h2>
+
+
+<p>An interpreter is a program that allows you to interact
+with the computer in a certain language. It understands the
+expressions that you type in through that language, and perform
+the corresponding actions in some way, usually using an underlying
+language.</p>
+
+<p>In Project 4, you will use Python to implement an interpreter for
+Scheme. The Python interpreter that you've been using all semester is written
+(mostly) in the C programming language. The computer itself uses hardware to
+interpret machine code (a series of ones and zeros that represent basic
+operations like adding numbers, loading information from memory, etc).</p>
+
+<p>When you talk about an interpreter, there are two languages at work:</p>
+
+<ol>
+  <li><strong>The language being interpreted/implemented.</strong> In this lab, you will
+  implement the PyCombinator language.</li>
+  <li><strong>The underlying implementation language.</strong> In this lab, you will use Python
+  to implement the PyCombinator language.</li>
+</ol>
+
+<p>Note that the underlying language need not be different from the implemented
+language. In fact, in this lab we are going to implement a smaller version of
+Python (PyCombinator) using Python! This idea is called Metacircular Evaluation.</p>
+
+<p>Many interpreters use a Read-Eval-Print Loop (REPL), which you can find in
+<code>repl.py</code>. This loop waits for user input, and then processes it in three steps:</p>
+
+<ul>
+  <li><p><strong>Read:</strong> The interpreter takes the user input (a string) and passes it
+  through a lexer and parser.</p>
+
+  <ul>
+    <li>The <strong><em>lexer</em></strong> turns the user input string into atomic pieces (tokens) that
+    are like "words" of the implemented language.</li>
+    <li>The <strong><em>parser</em></strong> takes the tokens and organizes them into data structures
+    that the underlying language can understand.</li>
+  </ul></li>
+  <li><p><strong>Eval:</strong> Mutual recursion between eval and apply evaluate the expression to
+  obtain a value.</p>
+
+  <ul>
+    <li><strong><em>Eval</em></strong> takes an expression and evaluates it according to the rules of the
+    language. Evaluating a call expression involves calling <code>apply</code> to apply
+    an evaluated operator to its evaluated operands.</li>
+    <li><strong><em>Apply</em></strong> takes an evaluated operator, i.e., a function, and applies it to
+    the call expression's arguments. Apply may call <code>eval</code> to do more work in
+    the body of the function, so <code>eval</code> and <code>apply</code> are <em>mutually recursive</em>.</li>
+  </ul></li>
+  <li><strong>Print:</strong> Display the result of evaluating the user input.</li>
+</ul>
+
+<p>Here's how all the pieces fit together:</p>
+
+<pre><code class="hljs ruby">         +-------------------------------------------------+
+         <span class="hljs-params">|                                                 |</span>
+         <span class="hljs-params">|  +-------+   +--------+   +-------+   +-------+ |</span>
+Input ---+-&gt;<span class="hljs-params">| Lexer |</span>--&gt;<span class="hljs-params">| Parser |</span>--&gt;<span class="hljs-params">| Eval  |</span>--&gt;<span class="hljs-params">| Print |</span>-+--&gt; Output
+         <span class="hljs-params">|  +-------+   +--------+   +-------+   +-------+ |</span>
+         <span class="hljs-params">|                              ^  |</span>               <span class="hljs-params">|
+         |</span>                              <span class="hljs-params">|  v               |</span>
+         ^                           +-------+             v
+         <span class="hljs-params">|                           |</span> Apply <span class="hljs-params">|             |</span>
+         <span class="hljs-params">|    REPL                   +-------+             |</span>
+         +-------------------------------------------------+</code></pre>
+
+
+<h1 id="pycombinator-interpreter">PyCombinator Interpreter</h1>
+
+
+<p>Today we will build <strong>PyCombinator</strong>, our own basic Python interpreter. By the
+end of this lab, you will be able to use a bunch of primitives such as <code>add</code>,
+<code>mul</code>, and <code>sub</code> (you can see the entire list at the bottom of <code>expr.py</code>), and
+even more excitingly, we will be able to create and call lambda functions -- all
+through your own homemade interpreter!</p>
+
+<p>You will implement some of the key parts that will allow us to
+evaluate the following commands and more:</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash"> add(3, 4)</span>
+7
+<span class="hljs-meta">&gt;</span><span class="bash"> mul(4, 5)</span>
+20
+<span class="hljs-meta">&gt;</span><span class="bash"> sub(2, 3)</span>
+-1
+<span class="hljs-meta">&gt;</span><span class="bash"> (lambda: 4)()</span>
+4
+<span class="hljs-meta">&gt;</span><span class="bash"> (lambda x, y: add(y, x))(3, 5)</span>
+8
+<span class="hljs-meta">&gt;</span><span class="bash"> (lambda x: lambda y: mul(x, y))(3)(4)</span>
+12
+<span class="hljs-meta">&gt;</span><span class="bash"> (lambda f: f(0))(lambda x: pow(2, x))</span>
+1</code></pre>
+
+<p>Here is an overview of each of the REPL components in our interpreter.</p>
+
+<ul>
+  <li><p><strong>Read:</strong> The function <code>read</code> in <code>reader.py</code> calls the following two functions
+  to parse user input.</p>
+
+  <ul>
+    <li>The <strong><em>lexer</em></strong> is the function <code>tokenize</code> in <code>reader.py</code> which splits the
+    user input string into tokens.</li>
+    <li>The <strong><em>parser</em></strong> is the function <code>read_expr</code> in <code>reader.py</code> which parses the
+    tokens and turns expressions into instances of subclasses of the class
+    <code>Expr</code> in <code>expr.py</code>, e.g. <code>CallExpr</code>.</li>
+  </ul></li>
+  <li><p><strong>Eval:</strong> Expressions (represented as <code>Expr</code> objects) are evaluated to obtain
+  values (represented as <code>Value</code> objects, also in <code>expr.py</code>).</p>
+
+  <ul>
+    <li><strong><em>Eval</em></strong>: Each type of expression has its own <code>eval</code> method which is
+    called to evaluate it.</li>
+    <li><strong><em>Apply</em></strong>: Call expressions are evaluated by calling the operator's <code>apply</code>
+    method on the arguments. For lambda procedures, <code>apply</code> calls <code>eval</code> to
+    evaluate the body of the function.</li>
+  </ul></li>
+  <li><strong>Print:</strong> The <code>__str__</code> representation of the obtained value is printed.</li>
+</ul>
+
+<p>In this lab, you will only be implementing the <strong><em>Eval</em></strong> and <strong><em>Apply</em></strong> steps in
+<code>expr.py</code>.</p>
+
+<p>If you want a better idea of how user input is read, you can use the following
+command to try out some expressions:</p>
+
+<pre><code class="hljs python">$ python3 repl.py --read
+&gt; <span class="hljs-keyword">lambda</span> x: mul(x, x)
+LambdaExpr([<span class="hljs-string">'x'</span>], CallExpr(Name(<span class="hljs-string">'mul'</span>), [Name(<span class="hljs-string">'x'</span>), Name(<span class="hljs-string">'x'</span>)]))
+&gt; <span class="hljs-keyword">lambda</span> f: f(<span class="hljs-number">0</span>)
+LambdaExpr([<span class="hljs-string">'f'</span>], CallExpr(Name(<span class="hljs-string">'f'</span>), [Literal(<span class="hljs-number">0</span>)]))</code></pre>
+
+<p>To exit the interpreter, type Ctrl-C or Ctrl-D.</p>
+
+
+<h2 id="required-questions">Required Questions</h2>
+
+
+<h3 class="question" id="q1">Q1: Prologue</h3>
+
+<p>Remember, <code>expr.py</code> contains our interpreter's representation of expressions and
+values. Read through the provided code and docstrings in this file.</p>
+
+<blockquote><p>Use Ok to test your knowledge with the following questions:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q prologue -u</code></pre></blockquote>
+
+<p>You can open your interpreter using the command:</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> python3 repl.py</span></code></pre>
+
+<p>If you try to type in some commands, you will see that we don't really get any
+interesting output. Let's fix that now!</p>
+
+<h3 class="question" id="q2">Q2: Evaluating Names</h3>
+
+<p>The first type of expression that we want to evaluate are <code>Name</code>s. As we know from
+our environment diagrams, it is important which environment (sequence of frames)
+we are in when we evaluate a name. Therefore, <code>Name.eval</code> takes an <em>environment</em>
+as an argument. In our implementation, an environment is represented by a
+dictionary that maps variable names (strings) to their values (instances of the
+<code>Value</code> class).</p>
+
+<p>Each instance of the Name class has a <code>string</code> instance attribute which is the
+name of the variable -- e.g. <code>"x"</code>. We want <code>Name.eval</code> to return the right
+value bound to this name if it exists in the current environment.</p>
+
+<p>If the name does not exist in the current environment, we want to elegantly handle
+this by outputting an error message similar to the ones you've seen in regular
+Python. As you've seen in lecture, we can <code>raise</code> errors. In <code>Name.eval</code>, raise a
+<code>NameError</code> with an appropriate error message if the name you are evaluating does
+not exist in <code>env</code>:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">raise</span> NameError(<span class="hljs-string">'your error message here (a string)'</span>)</code></pre>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">eval</span><span class="hljs-params">(self, env)</span>:</span>
+    <span class="hljs-string">"""
+    &gt;&gt;&gt; env = {
+    ...     'a': Number(1),
+    ...     'b': LambdaFunction([], Literal(0), {})
+    ... }
+    &gt;&gt;&gt; Name('a').eval(env)
+    Number(1)
+    &gt;&gt;&gt; Name('b').eval(env)
+    LambdaFunction([], Literal(0), {})
+    &gt;&gt;&gt; try:
+    ...     print(Name('c').eval(env))
+    ... except NameError:
+    ...     print('Exception raised!')
+    Exception raised!
+    """</span>
+<div class="alt solution-1">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-1">    <span class="hljs-keyword">if</span> self.string <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> env:
+        <span class="hljs-keyword">raise</span> NameError(<span class="hljs-string">"name '{}' is not defined"</span>.format(self.string))
+    <span class="hljs-keyword">return</span> env[self.string]</div></code></pre>
+
+
+        <button id="solution-1" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q Name.eval</code></pre>
+
+<h3 class="question" id="q3">Q3: Evaluating Call Expressions</h3>
+
+<p>Now, let's implement <code>CallExpr.eval</code>. Remember that a call expression consists
+of an operator and 0 or more operands. Notice that each instance of the <code>CallExpr</code>
+class has a <code>self.operator</code> and a <code>self.operands</code> instance attribute.
+<code>self.operator</code> is an <code>Expr</code>, and, since there might be multiple operands -- e.g.
+<code>lambda x, y: add(x,y)</code> -- <code>self.operands</code> is a list of <code>Expr</code>s.</p>
+
+<p>For example, for <code>add(3, 4)</code>:</p>
+
+<ul>
+  <li><code>self.operator</code> would be <code>Name('add')</code> since this is the operator
+  we want to apply to the operands.</li>
+  <li><code>self.operands</code> would be <code>[Literal(3), Literal(4)]</code></li>
+</ul>
+
+<p>There are three steps to evaluating call expressions:</p>
+
+<ol>
+  <li>Evaluate the <em>operator</em> in the current environment.</li>
+  <li>Evaluate the <em>operand(s)</em> in the current environment.</li>
+  <li>Apply the value of the operator, a function, to the value(s) of the operand(s).
+  You can apply a function by calling its <code>apply</code> method.</li>
+</ol>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">eval</span><span class="hljs-params">(self, env)</span>:</span>
+    <span class="hljs-string">"""
+    &gt;&gt;&gt; from reader import read
+    &gt;&gt;&gt; new_env = global_env.copy()
+    &gt;&gt;&gt; new_env.update({'a': Number(1), 'b': Number(2)})
+    &gt;&gt;&gt; add = CallExpr(Name('add'), [Literal(3), Name('a')])
+    &gt;&gt;&gt; add.eval(new_env)
+    Number(4)
+    &gt;&gt;&gt; new_env['a'] = Number(5)
+    &gt;&gt;&gt; add.eval(new_env)
+    Number(8)
+    &gt;&gt;&gt; read('max(b, a, 4, -1)').eval(new_env)
+    Number(5)
+    &gt;&gt;&gt; read('add(mul(3, 4), b)').eval(new_env)
+    Number(14)
+    """</span>
+<div class="alt solution-2">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-2">    function = self.operator.eval(env)
+    arguments = [operand.eval(env) <span class="hljs-keyword">for</span> operand <span class="hljs-keyword">in</span> self.operands]
+    <span class="hljs-keyword">return</span> function.apply(arguments)</div></code></pre>
+
+
+        <button id="solution-2" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q CallExpr.eval</code></pre>
+
+<p>Now that you have implemented the evaluation of call expressions, we can use our
+interpreter for simple expressions like <code>sub(3, 4)</code> and <code>add(mul(4, 5), 4)</code>. You can see a
+full list of primitive math operators at the bottom of <code>expr.py</code> in the
+<code>global_env</code> dictionary. Open your interpreter to do some cool math:</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> python3 repl.py</span></code></pre>
+
+
+<h2 id="optional-questions">Optional Questions</h2>
+
+
+<h3 class="question" id="q4">Q4: Applying Lambda Functions</h3>
+
+<p>We can do some basic math now, but it would be a bit more fun if we could also
+define our own functions. So let's make sure that we can do that!</p>
+
+<p>A lambda function is represented as an instance of the <code>LambdaFunction</code> class.
+If you look in <code>LambdaFunction.__init__</code>, you will see that each lambda function
+has three instance attributes: <code>parameters</code>, <code>body</code> and <code>parent</code>. As an example,
+consider the lambda function <code>lambda f, x: f(x)</code>. For the corresponding
+<code>LambdaFunction</code> instance, we would have the following attributes:</p>
+
+<ul>
+  <li><code>parameters</code> -- a list of strings, e.g. <code>['f', 'x']</code></li>
+  <li><code>body</code> -- an <code>Expr</code>, e.g. <code>CallExpr(Name('f'), [Name('x')])</code></li>
+  <li><code>parent</code> -- the parent environment in which we want to look up our variables.
+  Notice that this is the environment the lambda function was defined in.
+  <code>LambdaFunction</code>s are created in the <code>LambdaExpr.eval</code> method, and the current
+  environment then becomes this <code>LambdaFunction</code>'s parent environment.</li>
+</ul>
+
+<p>You are now going to implement the <code>LambdaFunction.apply</code> method. This function
+takes a list <code>arguments</code> which is -- not surprisingly -- a list of the argument
+<code>Value</code>s that are passed to the function. When evaluating the lambda function, you
+will want to make sure that the lambda function's formal parameters are correctly
+bound to the arguments it is passed. To do this, you will have to modify the
+environment you evaluate the function body in.</p>
+
+<p>There are three steps to applying a <code>LambdaFunction</code>:</p>
+
+<ol>
+  <li>Make a copy of the parent environment. You can make a copy of a dictionary <code>d</code>
+  with <code>d.copy()</code>.</li>
+  <li>Update the copy with the <code>parameters</code> of the <code>LambdaFunction</code> and the
+  <code>arguments</code> passed into the method.</li>
+  <li>Evaluate the <code>body</code> using the newly created environment.</li>
+</ol>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">apply</span><span class="hljs-params">(self, arguments)</span>:</span>
+    <span class="hljs-string">"""
+    &gt;&gt;&gt; from reader import read
+    &gt;&gt;&gt; add_lambda = read('lambda x, y: add(x, y)').eval(global_env)
+    &gt;&gt;&gt; add_lambda.apply([Number(1), Number(2)])
+    Number(3)
+    &gt;&gt;&gt; add_lambda.apply([Number(3), Number(4)])
+    Number(7)
+    &gt;&gt;&gt; sub_lambda = read('lambda add: sub(10, add)').eval(global_env)
+    &gt;&gt;&gt; sub_lambda.apply([Number(8)])
+    Number(2)
+    &gt;&gt;&gt; add_lambda.apply([Number(8), Number(10)]) # Make sure you made a copy of env
+    Number(18)
+    &gt;&gt;&gt; read('(lambda x: lambda y: add(x, y))(3)(4)').eval(global_env)
+    Number(7)
+    &gt;&gt;&gt; read('(lambda x: x(x))(lambda y: 4)').eval(global_env)
+    Number(4)
+    """</span>
+    <span class="hljs-keyword">if</span> len(self.parameters) != len(arguments):
+        <span class="hljs-keyword">raise</span> TypeError(<span class="hljs-string">"Cannot match parameters {} to arguments {}"</span>.format(
+            comma_separated(self.parameters), comma_separated(arguments)))
+<div class="alt solution-3">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-3">    env = self.parent.copy()
+    <span class="hljs-keyword">for</span> parameter, argument <span class="hljs-keyword">in</span> zip(self.parameters, arguments):
+        env[parameter] = argument
+    <span class="hljs-keyword">return</span> self.body.eval(env)</div></code></pre>
+
+
+        <button id="solution-3" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q LambdaFunction.apply</code></pre>
+
+<p>You should try out your new feature! Open your interpreter using</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">$</span><span class="bash"> python3 repl.py</span></code></pre>
+
+<p>and create your own lambda functions.</p>
+
+<h3 class="question" id="q5">Q5: Handling Exceptions</h3>
+
+<p>The interpreter we have so far is pretty cool. It seems to be working, right?
+Actually, there is one case we haven't covered. Can you think of a very simple
+calculation that is undefined (maybe involving division)? Try to see what happens
+if you try to compute it using your interpreter. It's pretty ugly, right? We get
+a long error message and exit our interpreter -- but really, we want to handle
+this elegantly.</p>
+
+<p>Try opening up the interpreter again and see what happens if you do something
+ill defined like <code>add(3, x)</code>. We just get a nice error message saying that <code>x</code>
+is not defined, and we can then continue using our interpreter. This is because
+our code handles the <code>NameError</code> exception, preventing it from crashing our
+program. Let's talk about how to handle exceptions:</p>
+
+<p>In lecture, you learned how to raise exceptions. But it's also important to
+catch exceptions when necessary. Instead of letting the exception propagate back
+to the user and crash the program, we can catch it using a <code>try/except</code> block
+and allow the program to continue.</p>
+
+<pre><code class="hljs python"><span class="hljs-keyword">try</span>:
+    &lt;<span class="hljs-keyword">try</span> suite&gt;
+<span class="hljs-keyword">except</span> &lt;ExceptionType <span class="hljs-number">0</span>&gt; <span class="hljs-keyword">as</span> e:
+    &lt;<span class="hljs-keyword">except</span> suite <span class="hljs-number">0</span>&gt;
+<span class="hljs-keyword">except</span> &lt;ExceptionType <span class="hljs-number">1</span>&gt; <span class="hljs-keyword">as</span> e:
+    &lt;<span class="hljs-keyword">except</span> suite <span class="hljs-number">1</span>&gt;
+...</code></pre>
+
+<p>We put the code that might raise an exception in the <code>&lt;try suite&gt;</code>. If an
+exception is raised, then the program will look at what type of exception was
+raised and look for a corresponding <code>&lt;except suite&gt;</code>. You can have as many
+except suites as you want.</p>
+
+<pre><code class="hljs python"><span class="hljs-keyword">try</span>:
+    <span class="hljs-number">1</span> + <span class="hljs-string">'hello'</span>
+<span class="hljs-keyword">except</span> NameError <span class="hljs-keyword">as</span> e:
+    print(<span class="hljs-string">'hi'</span>)  <span class="hljs-comment"># NameError except suite</span>
+<span class="hljs-keyword">except</span> TypeError <span class="hljs-keyword">as</span> e:
+    print(<span class="hljs-string">'bye'</span>) <span class="hljs-comment"># TypeError except suite</span></code></pre>
+
+<p>In the example above, adding <code>1</code> and <code>'hello'</code> will raise a <code>TypeError</code>. Python
+will look for an except suite that handles <code>TypeError</code>s -- the second except
+suite. Generally, we want to specify exactly which exceptions we want to handle,
+such as <code>OverflowError</code> or <code>ZeroDivisionError</code> (or both!), rather than handling
+all exceptions.</p>
+
+<p>Notice that we can define the exception <code>as e</code>. This assigns the exception
+object to the variable <code>e</code>. This can be helpful when we want to use information
+about the exception that was raised.</p>
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">try</span>:
+<span class="hljs-meta">... </span>    x = int(<span class="hljs-string">"cs61a rocks!"</span>)
+<span class="hljs-meta">... </span><span class="hljs-keyword">except</span> ValueError <span class="hljs-keyword">as</span> e:
+<span class="hljs-meta">... </span>    print(<span class="hljs-string">'Oops! That was no valid number.'</span>)
+<span class="hljs-meta">... </span>    print(<span class="hljs-string">'Error message:'</span>, e)</code></pre>
+
+<p>You can see how we handle exceptions in your interpreter in <code>repl.py</code>. This might
+also be a really good place to handle the exception you triggered with your
+ill-defined arithmetic. Go ahead and try it out!</p>
+
+  </div>
+
+  <div class="col-md-3 sticky">
+    <nav class="hidden-print hidden-sm hidden-xs sidebar">
+      <ul class="nav nav-stacked noselect">
+  <li><a href="https://cs61a.org/lab/lab10/#topics">Topics</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab10/#interpreters">Interpreters</a></li>
+  </ul>
+  <li><a href="https://cs61a.org/lab/lab10/#pycombinator-interpreter">PyCombinator Interpreter</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab10/#required-questions">Required Questions</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab10/#q1">Q1: Prologue</a></li>
+      <li><a href="https://cs61a.org/lab/lab10/#q2">Q2: Evaluating Names</a></li>
+      <li><a href="https://cs61a.org/lab/lab10/#q3">Q3: Evaluating Call Expressions</a></li>
+    </ul>
+    <li><a href="https://cs61a.org/lab/lab10/#optional-questions">Optional Questions</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab10/#q4">Q4: Applying Lambda Functions</a></li>
+      <li><a href="https://cs61a.org/lab/lab10/#q5">Q5: Handling Exceptions</a></li>
+    </ul>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/resources.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/studying.html">Studying Guide</a></li>
+            <li><a href="https://cs61a.org/articles/debugging.html">Debugging Guide</a></li>
+            <li><a href="https://cs61a.org/articles/composition.html">Composition Guide</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/articles/about.html">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/about.html#assignments">Assignments</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#exams">Exams</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    
+
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+</script>
+
+
+<script>
+  $(function() {
+    var staging_domains = ['staging.cs61a.org', 'localhost', '127.0.0.1'];
+
+    var staging = staging_domains.indexOf(window.location.hostname) != -1;
+    var after_due_date = new Date("11/04/2017") < new Date();
+    var release_solutions = staging || after_due_date;
+
+    if (release_solutions) {
+      $('.toggle').css('display', 'inline-block');
+      $('.toggle').click(function() {
+        var solution_id = $(this).attr('id');
+        $('div.' + solution_id).slideToggle(600);
+      });
+    }
+  });
+</script>
+
+
+  
+</body></html>

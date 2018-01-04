@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<!-- saved from url=(0030)https://cs61a.org/proj/scheme/ -->
+<html lang="en" class="gr__cs61a_org"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="CS 61A: Structure and Interpretation of Computer Programs">
+    <meta name="keywords" content="CS 61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS">
+    <meta name="author" content="John DeNero, Paul Hilfinger">
+    
+    <meta name="viewport" content="width=device-width">
+
+    <script src="./Project 4_ The Scheme Interpreter _ CS 61A Fall 2017_files/jquery.min.js.download"></script>
+    <script src="./Project 4_ The Scheme Interpreter _ CS 61A Fall 2017_files/bootstrap.min.js.download"></script>
+    <script src="./Project 4_ The Scheme Interpreter _ CS 61A Fall 2017_files/highlight.min.js.download"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="./Project 4_ The Scheme Interpreter _ CS 61A Fall 2017_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./Project 4_ The Scheme Interpreter _ CS 61A Fall 2017_files/css">
+    <link rel="stylesheet" href="./Project 4_ The Scheme Interpreter _ CS 61A Fall 2017_files/style.css">
+    <link rel="stylesheet" href="./Project 4_ The Scheme Interpreter _ CS 61A Fall 2017_files/mono-blue.css">
+    <link rel="icon" href="https://cs61a.org/assets/images/favicon.ico">
+
+    
+
+<link href="./Project 4_ The Scheme Interpreter _ CS 61A Fall 2017_files/project.css" rel="stylesheet" type="text/css">
+
+
+    <title>
+Project 4: The Scheme Interpreter | CS 61A Fall 2017
+</title>
+  </head>
+
+  <body id="index" class="home" data-gr-c-s-loaded="true">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://cs61a.org/">CS 61A</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+            <li><a href="https://cs61a.org/resources.html">Resources</a></li>
+            <li><a href="https://cs61a.org/articles/about.html">Policies</a></li>
+            <li><a href="http://tutor.cs61a.org/">Tutor</a></li>
+            <li><a href="https://piazza.com/berkeley/fall2017/cs61a" target="_blank">Piazza</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class="row">
+  <div class="col-md-9">
+    <header>
+      <h1>
+        
+Project 4: The Scheme Interpreter
+
+        
+        <ul class="inline-block list-inline">
+          <li><a href="https://cs61a.org/proj/scheme/scheme.zip" class="label label-outline">scheme.zip</a></li>
+        </ul>
+        
+      </h1>
+    </header>
+    
+<div class="haiku">
+  <blockquote><p><img class="img-responsive center-block" src="./Project 4_ The Scheme Interpreter _ CS 61A Fall 2017_files/money_tree.png" alt="Money Tree"></p>
+
+<cite>
+  Eval calls apply,<br>
+  which just calls eval again!<br>
+  When does it all end?
+</cite></blockquote>
+</div>
+
+    
+<h2>Introduction</h2>
+<blockquote><p><strong>Important submission note:</strong> For full credit:</p>
+
+<ul>
+  <li>submit with Part I complete by <strong>Thursday 11/9</strong> (worth 1 pt),</li>
+  <li>submit again with Part II complete by <strong>Tuesday 11/14</strong> (worth 1 pt), and</li>
+  <li>submit the entire project by <strong>Thursday 11/16</strong>.
+  You will get an extra credit point for submitting the entire project by
+  Wednesday 11/15.</li>
+</ul>
+
+<p>The Scheme project involves writing an interpreter for the Scheme language
+which is no small task! Start working on the project <em>now</em>! There are many
+parts and students often get stuck throughout the project so It's best to
+solve these problems early while there's still plenty of time. Remember that
+you can ask questions about the project in lab and office hours too!</p>
+
+<p>We've also written a <a href="https://cs61a.org/articles/scheme-spec.html">language specification</a> and <a href="https://cs61a.org/articles/scheme-primitives.html">primitive procedure
+reference</a> for the CS 61A subset of Scheme that you'll be building
+in this project. Reading the entirety of either of these documents should not
+be necessary, but we'll point out useful sections from the documentation in
+each part of the project.</p></blockquote>
+
+<p>In this project, you will develop an interpreter for a subset of the Scheme
+language. As you proceed, think about the issues that arise in the design of a
+programming language; many quirks of languages are byproducts of implementation
+decisions in interpreters and compilers. The subset of the language used in this
+project is described in the <a href="http://composingprograms.com/pages/32-functional-programming.html">functional programming</a> section of Composing
+Programs. Since we only include a subset of the language, your interpreter will
+not exactly match the behavior of other interpreters.</p>
+
+<p>You will also implement some small programs in Scheme. Scheme is a simple but
+powerful functional language. You should find that much of what you have learned
+about Python transfers cleanly to Scheme as well as to other programming
+languages.</p>
+
+<p>The project concludes with an open-ended graphics contest that challenges you to
+produce recursive images in only a few lines of Scheme. As an example, the
+picture above abstractly depicts all the ways of making change for $0.50 using
+U.S. currency. All flowers appear at the end of a branch with length 50. Small
+angles in a branch indicate an additional coin, while large angles indicate a
+new currency denomination. In the contest, you too will have the chance to
+unleash your inner recursive artist.</p>
+
+<p>This project includes several files, but all of your changes will be made to the
+first four: <code>scheme.py</code>, <code>scheme_reader.py</code>, <code>questions.scm</code>, and
+<code>tests.scm</code>. You can download all of the project code as a
+<a href="https://cs61a.org/proj/scheme/scheme.zip">zip archive</a>, which contains the following files:</p>
+
+<ul>
+  <li><code>scheme.py</code>: the Scheme evaluator</li>
+  <li><code>scheme_reader.py</code>: the Scheme syntactic analyzer</li>
+  <li><code>questions.scm</code>: a collection of functions written in Scheme</li>
+  <li><code>tests.scm</code>: a collection of test cases written in Scheme</li>
+  <li><code>scheme_tokens.py</code>: a tokenizer for Scheme</li>
+  <li><code>scheme_primitives.py</code>: definitions for primitive Scheme procedures</li>
+  <li><code>buffer.py</code>: a Buffer implementation, used in <code>scheme_reader.py</code></li>
+  <li><code>ucb.py</code>: utility functions for 61A</li>
+  <li><code>ok</code>: the autograder</li>
+  <li><code>tests</code>: a directory of tests used by <code>ok</code></li>
+  <li><code>mytests.rst</code>: A space for you to add your custom tests in Python; see section
+  on <a href="https://cs61a.org/proj/scheme/#your-own-test-cases">adding your own tests</a></li>
+</ul>
+
+<p>In Parts I and II, you will develop the interpreter in several stages:</p>
+
+<ul>
+  <li>Reading Scheme expressions</li>
+  <li>Symbol evaluation</li>
+  <li>Calling built-in procedures</li>
+  <li>Definitions</li>
+  <li>Lambda expressions and procedure definition</li>
+  <li>Calling user-defined procedures</li>
+  <li>Evaluation of special forms</li>
+</ul>
+
+<p>In Part III, you will implement Scheme procedures.</p>
+
+<h2>Logistics</h2>
+
+
+<p>This is a 18-day project. You may work with one other partner.
+You should not share your code with students who are not your partner or copy
+from anyone else's solutions. In the end, you will submit one project for both
+partners.</p>
+
+
+<p>Remember that you can earn an additional bonus point by submitting the
+project at least 24 hours before the deadline.</p>
+
+<p>The project is worth 31 points. 29 points are
+assigned for correctness, and 2 points for the overall <a href="https://cs61a.org/articles/composition.html">composition</a> of your program.</p>
+
+<p>You will turn in the following files:</p>
+
+<ul>
+  <li><code>scheme_reader.py</code></li>
+  <li><code>scheme.py</code></li>
+  <li><code>questions.scm</code></li>
+  <li><code>tests.scm</code></li>
+</ul>
+
+<p>You do not need to modify or turn in any other files to complete the
+project. To submit the project, run the following command:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok --submit</code></pre>
+
+<p>You will be able to view your submissions on the <a href="http://ok.cs61a.org/">Ok dashboard</a>.</p>
+
+<p>For the functions that we ask you to complete, there may be some
+initial code that we provide. If you would rather not use that code,
+feel free to delete it and start from scratch. You may also add new
+function definitions as you see fit.</p>
+
+<p>However, please do <b>not</b> modify any other functions.  Doing so may
+result in your code failing our autograder tests. Also, please do not
+change any function signatures (names, argument order, or number of
+arguments).</p>
+
+<h2>Testing</h2>
+
+<p>Throughout this project, you should be testing the correctness of your code.
+It is good practice to test often, so that it is easy to isolate any problems.
+However, you should not be testing <i>too</i> often, to allow yourself time to
+think through problems.</p>
+
+<p>We have provided an <b>autograder</b> called <code>ok</code> to help you
+with testing your code and tracking your progress. The first time you run the
+autograder, you will be asked to <b>log in with your Ok account using your web
+browser</b>. Please do so. Each time you run <code>ok</code>, it will back up
+your work and progress on our servers.</p>
+
+<p>The primary purpose of <code>ok</code> is to test your implementations, but
+there are two things you should be aware of.</p>
+
+<p>First, some of the test cases are <i>locked</i>. To unlock tests, run the
+following command from your terminal:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -u</code></pre>
+
+<p>This command will start an interactive prompt that looks like:</p>
+
+<pre>=====================================================================
+Assignment: The Scheme Interpreter
+Ok, version ...
+=====================================================================
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Unlocking tests
+
+At each "? ", type what you would expect the output to be.
+Type exit() to quit
+
+---------------------------------------------------------------------
+Question 0 &gt; Suite 1 &gt; Case 1
+(cases remaining: 1)
+
+&gt;&gt;&gt; Code here
+?
+</pre>
+
+<p>At the <code>?</code>, you can type what you expect the output to be. If you
+are correct, then this test case will be available the next time you run the
+autograder.</p>
+
+<p>The idea is to understand <i>conceptually</i> what your program should do
+first, before you start writing any code.</p>
+
+<p>Once you have unlocked some tests and written some code, you can check the
+correctness of your program using the tests that you have unlocked:</p>
+
+<pre>python3 ok</pre>
+
+<p>Most of the time, you will want to focus on a particular question. Use the
+<code>-q</code> option as directed in the problems below.</p>
+
+<!-- <p>Second, there may be some test cases that are <i>hidden</i>. These test cases are
+<b>not</b> run by the command:</p> -->
+
+<!--<pre>python3 ok</pre>-->
+
+<!-- <p>They are only run when you submit:</p> -->
+
+<!-- <pre>python3 ok --submit</pre> -->
+
+<!-- <p> We keep test cases hidden to ensure that you write your code with the intention
+of solving the question at hand, not purely to pass the given tests. The hidden
+tests will be run when you submit your project. You will receive an email with part of
+the autograder results after submitting. However, the autograder has a 15 minute
+cooldown period. If you submit before 15 minutes have passed, the autograder will
+not run.</p> -->
+
+<p>We recommend that you submit <b>after you finish each
+problem</b>. Only your last submission will be graded. It is also useful for us
+to have more backups of your code in case you run into a submission issue.</p>
+
+<!--<p>After you run this command, you will receive an email (to the address-->
+<!--that you used to sign up for Ok) that has the output from all <i>failed</i>-->
+<!--unlocked tests, including hidden tests, along with your score at the bottom. You-->
+<!--can continue submitting until you pass all the tests. However, you will receive-->
+<!--<b>at most one email every half hour</b>.</p>-->
+
+<!--<p>This buffer period is meant for you and your partner to try and understand-->
+<!--where your error comes from, and take some time to think through your code. We-->
+<!--encourage you to do this for all projects.</p>-->
+
+<!---
+<p>If you are trying to debug a test failure, you can launch an interactive session
+after the test is run with:</p>
+
+<pre><code>python3 ok &#x2d;q 05 &#x2d;i</code></pre>
+
+<p>This will run the tests and launch an interactive session if a test does not
+pass.</p>
+
+<pre><code>=====================================================================
+Assignment: Project 1: Hog
+Ok, version ....
+=====================================================================
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Running tests
+
+&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;&#x2d;
+Question ... &gt; Suite ... &gt; Case ...
+
+&gt;&gt;&gt; the_test()
+"expected value"
+
+# Error: expected
+#     "expected value"
+# but got
+#     None
+
+# Interactive console. Type exit() to quit
+&gt;&gt;&gt;</code></pre>
+-->
+
+
+<p>The <code>tests</code> folder is used to store autograder tests, so
+<b>do not modify it</b>. You may lose all your unlocking progress if you
+do. If you need to get a fresh copy, you can download the
+<a href="https://cs61a.org/proj/scheme/scheme.zip">zip archive</a> and copy it over, but you
+will need to start unlocking from scratch.</p>
+
+<p>If you do not want us to record a backup of your work or information about
+your progress, use the <code>--local</code> option when invoking
+<code>ok</code>.  With this option, no information will be sent to our course
+servers.
+
+</p><h2 id="details-of-scheme">Details of Scheme</h2>
+
+
+<p><strong>Read-Eval-Print.</strong> The interpreter reads Scheme expressions, evaluates them,
+and displays the results.</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> 2</span>
+2
+<span class="hljs-meta">scm&gt;</span><span class="bash"> (+ 2 3)</span>
+5
+<span class="hljs-meta">scm&gt;</span><span class="bash"> (((lambda (f) (lambda (x) (f f x)))</span>
+       (lambda (f k) (if (zero? k) 1 (* k (f f (- k 1)))))) 5)
+120</code></pre>
+
+<p>The starter code for your Scheme interpreter in <code>scheme.py</code> can successfully
+evaluate the first expression above, since it consists of a single number. The
+second (a primitive call) and the third (a computation of 5 factorial) will not
+work just yet.</p>
+
+<p><strong>Load.</strong> Our <code>load</code> procedure differs from standard Scheme in that we use a
+symbol for the file name. For example, to load <code>tests.scm</code>, evaluate the
+following call expression.</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> (load <span class="hljs-string">'tests)</span></span></code></pre>
+
+<p><strong>Symbols.</strong> Various dialects of Scheme are more or less permissive
+about identifiers (which serve as symbols and variable names).</p>
+
+<p>Our rule is that:</p>
+
+<blockquote><p>An identifier is a sequence of letters (a-z and A-Z), digits, and characters
+in <code>!$%&amp;*/:&lt;=&gt;?@^_~-+.</code> that do not form a valid integer or floating-point
+numeral.</p></blockquote>
+
+<p>Our version of Scheme is case-insensitive: two identifiers are considered
+identical if they match except possibly in the capitalization of letters.
+They are internally represented and printed in lower case:</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> <span class="hljs-string">'Hello</span></span>
+hello</code></pre>
+
+<p><strong>Turtle Graphics.</strong> In addition to standard Scheme procedures, we include
+procedure calls to the Python <code>turtle</code> package. This will come in handy
+for the contest.</p>
+
+<p>You can read the <a href="http://docs.python.org/py3k/library/turtle.html">turtle module
+documentation</a> online.</p>
+
+<p><em>Note</em>: The <code>turtle</code> Python module may not be installed by default on your
+personal computer. However, the <code>turtle</code> module is installed on the
+instructional machines. So, if you wish to create turtle graphics for this
+project (i.e. for the contest), then you'll either need to setup <code>turtle</code> on
+your personal computer or use university computers.</p>
+
+
+<h2 id="testing-your-scheme-interpreter">Testing Your Scheme Interpreter</h2>
+
+
+<blockquote><p>To receive full composition credit, you are <strong>required</strong> to add and submit
+your own <strong>Scheme</strong> tests for the interpreter in <code>tests.scm</code>. This is
+different from the optional tests in <code>mytests.rst</code>.</p></blockquote>
+
+<p><strong>Testing.</strong> The <code>tests.scm</code> file contains a long list of sample Scheme
+expressions and their expected values. Many of these examples are from Chapters
+1 and 2 of <a href="https://cs61a.org/proj/scheme/">Structure and Interpretation of Computer Programs</a>, the
+textbook that Composing Programs is adapted from.</p>
+
+<pre><code class="hljs">(+ 1 2)
+; expect 3
+(/ 1 0)
+; expect Error</code></pre>
+
+<p>You can compare the output of your interpreter to the expected output by
+running:</p>
+
+<pre><code class="hljs css"><span class="hljs-selector-tag">python3</span> <span class="hljs-selector-tag">ok</span> <span class="hljs-selector-tag">-q</span> <span class="hljs-selector-tag">tests</span><span class="hljs-selector-class">.scm</span></code></pre>
+
+<p>For the example above, your Scheme interpreter will evaluate <code>(+ 1 2)</code> using
+your code in <code>scheme.py</code>, then output a test failure if <code>3</code> is not returned as
+the value. The second example tests for an error (but not the specific error
+message).</p>
+
+<p>Only a small subset of tests are designated to run by default because
+<code>tests.scm</code> contains an <code>(exit)</code> call near the beginning, which halts testing.
+<strong>As you complete more of the project, you should move or remove this call</strong>.
+However, your interpreter doesn't know how to <code>exit</code> until Problems 3 and 4 are
+completed; all tests will run until then.</p>
+
+<p><strong>Writing Tests.</strong> As you proceed in the project, add new tests to the top of
+<code>tests.scm</code> to verify the behavior of your implementation. Half of your
+composition score for this project depends on whether you have tested your
+implementation in ways that are different from the <code>ok</code> tests and other Scheme
+assignments you may have seen in class.</p>
+
+<p><strong>Exceptions.</strong> As you develop your Scheme interpreter, you may find that Python
+raises various uncaught exceptions when evaluating Scheme expressions. As a
+result, your Scheme interpreter will halt. Some of these may be the results of
+bugs in your program, and some may be useful indications of errors in user
+programs. The former should be fixed (of course!) and the latter should be
+handled, usually by raising a <code>SchemeError</code>. All <code>SchemeError</code> exceptions are
+handled and printed as error messages by the <code>read_eval_print_loop</code> function in
+<code>scheme.py</code>. Ideally, there should <em>never</em> be unhandled Python exceptions for
+any input to your interpreter.</p>
+
+
+<h2 id="your-own-test-cases">Your own test cases</h2>
+
+
+<blockquote><p>Adding your own <strong>Python</strong> tests is entirely optional, and you will not submit
+your <code>mytests.rst</code> file. This is different from the <strong>required</strong> tests in
+<code>tests.scm</code>.</p></blockquote>
+
+<p>While the Scheme tests in <code>tests.scm</code> will test the <em>correctness</em> of your
+interpreter, they may not be of much use while you're still implementing basic
+features. Moreover, directly testing the implementation of the interpreter can
+be very useful in fixing some bugs.</p>
+
+<p><strong>We highly recommend that you add your own tests as you work through the
+project.</strong> It's a really helpful way to speed up the debugging process and
+improve your understanding of the code.</p>
+
+<p>The course staff has also made an
+<a href="https://youtu.be/o1TD0K1xWXs">instructional video</a> summarizing the information
+below.</p>
+
+
+<h3 id="adding-tests">Adding tests</h3>
+
+
+<p><img class="img-responsive center-block" src="./Project 4_ The Scheme Interpreter _ CS 61A Fall 2017_files/custom_test.png" alt="Custom Test Example"></p>
+
+<p>Adding tests is easy. Directly edit the <code>mytests.rst</code> file included with the
+Scheme project. We provide a sample structure to start from, but the test format
+is actually quite flexible. Here are some simple rules to follow:</p>
+
+<ul>
+  <li>Follow standard Python doctest format. This is what we mostly use for the Ok
+  tests, so feel free to use those as examples.</li>
+  <li>For the most part, you may use whitespace as you'd like, but we recommend
+  keeping it organized for your own sake.</li>
+  <li>Generally, smaller, simpler tests will be more useful than larger, more
+  complex tests.</li>
+</ul>
+
+<p>You may also find our
+<a href="https://cs61a.org/articles/debugging.html#debugging-process">debugging guide</a> helpful. If you're
+stuck on a particularly tricky <code>Ok</code> test case, a good first step would be to
+break it up into small parts and test them out yourself in <code>mytests.rst</code>.</p>
+
+
+<h3 id="running-tests">Running tests</h3>
+
+
+<p>To run all your tests in <code>mytests.rst</code> with verbose results:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -t -v</code></pre>
+
+<p>If you put your tests in a different file or split your tests up into multiple
+files:</p>
+
+<pre><code class="hljs css"><span class="hljs-selector-tag">python3</span> <span class="hljs-selector-tag">ok</span> <span class="hljs-selector-tag">-t</span> <span class="hljs-selector-tag">your_new_filename</span><span class="hljs-selector-class">.rst</span></code></pre>
+
+<p>To run just the tests from suite 1 case 1 in <code>mytests.rst</code>:</p>
+
+<pre><code class="hljs bash">python3 ok -t --suite 1 --<span class="hljs-keyword">case</span> 1</code></pre>
+
+<p>You might have noticed that there's a "test coverage" percentage for your tests
+(note that coverage statistics are only returned when running all tests). This
+is a measure of your test's
+<a href="https://en.wikipedia.org/wiki/Code_coverage">code coverage</a>. If you're
+interested, you can find more information in our
+<a href="https://cs61a.org/articles/using-ok.html#running-your-own-tests">reference guide</a>.</p>
+
+
+<h2 id="running-your-scheme-interpreter">Running Your Scheme Interpreter</h2>
+
+
+<p>To start an interactive Scheme interpreter session, type:</p>
+
+<pre><code class="hljs css"><span class="hljs-selector-tag">python3</span> <span class="hljs-selector-tag">scheme</span><span class="hljs-selector-class">.py</span></code></pre>
+
+<p>You can use your Scheme interpreter to evaluate the expressions in an input file
+by passing the file name as a command-line argument to <code>scheme.py</code>:</p>
+
+<pre><code class="hljs css"><span class="hljs-selector-tag">python3</span> <span class="hljs-selector-tag">scheme</span><span class="hljs-selector-class">.py</span> <span class="hljs-selector-tag">tests</span><span class="hljs-selector-class">.scm</span></code></pre>
+
+<p>Currently, your Scheme interpreter can handle a few simple expressions, such as:</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> 1</span>
+1
+<span class="hljs-meta">scm&gt;</span><span class="bash"> 42</span>
+42
+<span class="hljs-meta">scm&gt;</span><span class="bash"> <span class="hljs-literal">true</span></span>
+True</code></pre>
+
+<p>To exit the Scheme interpreter, press <code>Ctrl-d</code> or evaluate the <code>exit</code> procedure
+(after completing problems 3 and 4):</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> (<span class="hljs-built_in">exit</span>)</span></code></pre>
+
+
+<h2 id="overview">Overview</h2>
+
+
+<p>Here is a brief overview of each of the Read-Eval-Print Loop components in our
+interpreter.</p>
+
+<ul>
+  <li><p><strong>Read</strong>: This step parses user input (a string of Scheme code) into our
+  interpreter's internal Python representation of Scheme expressions (e.g. Pairs).</p>
+
+  <ul>
+    <li><em>Lexical analysis</em> has already been implemented for you in the
+    <code>tokenize_lines</code> function in <code>scheme_tokens.py</code>. This function returns a
+    <code>Buffer</code> (from <code>buffer.py</code>) of tokens. You do not need to read or
+    understand the code for this step.</li>
+    <li><em>Syntactic analysis</em> happens in <code>scheme_reader.py</code>, in the <code>scheme_read</code>
+    and <code>read_tail</code> functions. Together, these mutually recursive functions
+    parse Scheme tokens into our interpreter's internal Python representation
+    of Scheme expressions. You will complete both functions.</li>
+  </ul></li>
+  <li><p><strong>Eval</strong>: This step evaluates Scheme expressions (represented in Python) to
+  obtain values. Code for this step is in the main <code>scheme.py</code> file.</p>
+
+  <ul>
+    <li><em>Eval</em> happens in the <code>scheme_eval</code> function. If the expression being
+    evaluated is a special form, the corresponding <code>do_XXX_form</code> function is
+    called. You will fill in part of <code>scheme_eval</code>, as well as several of the
+    <code>do_XXX_form</code> functions.</li>
+    <li><em>Apply</em> happens in the <code>scheme_apply</code> function. <code>scheme_apply</code> calls the
+    <code>apply</code> method of a <code>Procedure</code>, which is implemented in its subclasses
+    <code>PrimitiveProcedure</code> and <code>UserDefinedProcedure</code>. For user-defined
+    procedures, the <code>apply</code> method evaluates the procedure body, resulting in
+    a mutually recursive eval-apply loop.</li>
+  </ul></li>
+  <li><strong>Print</strong>: This step prints the <code>__str__</code> representation of the obtained
+  value.</li>
+  <li><strong>Loop</strong>: The step is handled by the <code>read_eval_print_loop</code> function in
+  <code>scheme.py</code>. You do not need to understand the entire implementation.</li>
+</ul>
+
+
+<h2 id="part-i-the-reader">Part I: The Reader</h2>
+
+
+<blockquote><p><strong>Important submission note:</strong> For full credit:</p>
+
+<ul>
+  <li>submit with Part I complete by <strong>Thursday 11/9</strong> (worth 1 pt),</li>
+  <li>submit again with Part II complete by <strong>Tuesday 11/14</strong> (worth 1 pt), and</li>
+  <li>submit the entire project by <strong>Thursday 11/16</strong>.
+  You will get an extra credit point for submitting the entire project by
+  Wednesday 11/15.</li>
+</ul>
+
+<p>The first part of this project deals with reading and parsing user input. All
+changes in this part should be made in <code>scheme_reader.py</code>.</p></blockquote>
+
+<p><code>scheme_read</code> and <code>read_tail</code> in <code>scheme_reader.py</code> are mutually recursive
+functions. Together they parse Scheme code into Python values with the
+following representation:</p>
+
+<table align="center" class="table table-bordered table-striped">
+  <tbody><tr>
+    <th>Input Example</th>
+    <th>Scheme Data Type</th>
+    <th>Our Internal Representation</th>
+  </tr>
+
+  <tr>
+    <td><code>scm&gt; 1</code>
+    </td><td>Numbers</td>
+    <td>Python's built-in <code>int</code> and <code>float</code> values</td>
+  </tr>
+
+  <tr>
+    <td><code>scm&gt; x</code>
+    </td><td>Symbols</td>
+    <td>Python's built-in <code>string</code> values</td>
+  </tr>
+
+  <tr>
+     <td><code>scm&gt; true</code>
+     </td><td>Booleans (<code>#t</code>, <code>#f</code>)</td>
+     <td>Python's built-in <code>True</code>, <code>False</code> values</td>
+  </tr>
+
+  <tr>
+     <td><code>scm&gt; (+ 2 3)</code>
+     </td><td>Pairs</td>
+     <td>Instances of the <code>Pair</code> class, defined in
+     <code>scheme_reader.py</code></td>
+  </tr>
+
+  <tr>
+     <td><code>scm&gt; nil</code>
+     </td><td><code>nil</code></td>
+     <td>The <code>nil</code> object, defined in
+     <code>scheme_reader.py</code></td>
+  </tr>
+</tbody></table>
+
+<p>Both <code>scheme_read</code> and <code>read_tail</code> take in a single parameter, <code>src</code>, which is
+an instance of <code>Buffer</code> (see <code>buffer.py</code>). A <code>Buffer</code> is a <em>mutable</em> object,
+which keeps a record of all tokens that haven't been processed yet. There are
+two methods you'll use to interact with <code>src</code>:</p>
+
+<ul>
+  <li><code>src.remove_front()</code>: mutates <code>src</code> by removing the <strong>first</strong> token in <code>src</code>
+  and returns it. For example, if <code>src</code> currently contains the tokens
+  <code>[4, '.', 3, ')']</code>, then <code>src.remove_front()</code> will return <code>4</code>, and <code>src</code> will
+  be left with <code>['.', 3, ')']</code>.</li>
+  <li><code>src.current()</code>: returns the <strong>first</strong> token in <code>src</code> without removing it.
+  For example, if <code>src</code> currently contains the tokens <code>[4, '.', 3, ')']</code>, then
+  <code>src.current()</code> will return <code>4</code> but <code>src</code> will remain the same.</li>
+</ul>
+
+
+<h3 id="problem-1-2-pt">Problem 1 (2 pt)</h3>
+
+
+<p>Implement the <code>scheme_read</code> and <code>read_tail</code> functions in <code>scheme_reader.py</code>.</p>
+
+<p>The behavior of <code>scheme_read</code> depends on the type of the first token currently
+in <code>src</code>:</p>
+
+<ul>
+  <li>If the token is the string <code>"nil"</code>, return the <code>nil</code> object.</li>
+  <li>If the token is <code>(</code>, recursively call <code>read_tail</code> and return its result.</li>
+  <li>If the next token is not a delimiter, then it must be self-evaluating. Return
+  it. <strong>(provided)</strong></li>
+  <li>If none of the above cases apply, raise an error. <strong>(provided)</strong></li>
+</ul>
+
+<p>The behavior of <code>read_tail</code> also depends on the type of the first token
+currently in <code>src</code>:</p>
+
+<ul>
+  <li>If there are no more tokens, raise an error. <strong>(provided)</strong></li>
+  <li>If the token is <code>)</code>, return the <code>nil</code> object.</li>
+  <li>If the token is <code>.</code>, it is a dotted list. Implement this in Problem 2.</li>
+  <li><p>If none of the above cases apply, the <code>src</code> is at the beginning of an
+  expression. Then:</p>
+
+  <ol>
+    <li>Read the next expression (Hint: Which function do we use to read an
+    expression?)</li>
+    <li>Recursively read the rest of the original expression until the matching
+    closing parenthesis.</li>
+    <li>Return the results as a <code>Pair</code> instance.</li>
+  </ol></li>
+</ul>
+
+<p>Some implementation tips:</p>
+
+<ul>
+  <li><code>scheme_read</code> should be called when a complete Scheme expression needs to be
+  extracted from <code>src</code>. It will remove enough tokens to form one expression and
+  return that expression in the correct internal representation.</li>
+  <li><code>read_tail</code> expects to read the rest of a list or dotted list, assuming the
+  open parenthesis of that list has already been removed by <code>scheme_read</code>. It
+  will read expressions (and thus remove tokens) until the matching closing
+  parenthesis <code>)</code> is seen. This list of expressions is returned in the correct
+  internal representation (i.e. instances of the <code>Pair</code> class).</li>
+</ul>
+
+<p>Test your understanding and implementation before moving on:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q <span class="hljs-number">01</span> -u
+python3 ok -q <span class="hljs-number">01</span></code></pre>
+
+
+<h3 id="problem-2-1-pt">Problem 2 (1 pt)</h3>
+
+
+<p>Complete the <code>read_tail</code> function by adding support for dotted lists.</p>
+
+<ul>
+  <li>An ordinary list denotes a linked sequence of Pairs in which the <code>second</code>
+  attribute of the final pair is <code>nil</code>.</li>
+  <li>A dotted list denotes a sequence of Pairs in which the <code>second</code> attribute of
+  the final pair may be any Scheme value.</li>
+</ul>
+
+<p>For example:</p>
+
+<blockquote><p><code>(1 2 . 3)</code> should be converted to <code>Pair(1, Pair(2, 3))</code></p></blockquote>
+
+<p>A dotted list must have exactly one item after the dot; anything else is a
+syntax error.</p>
+
+<p>Consider the case of calling <code>scheme_read</code> on input "<code>(1 2 . 3)</code>". The
+<code>read_tail</code> function will be called on the suffix "<code>1 2 . 3)</code>", which is</p>
+
+<ul>
+  <li>The pair consisting of the Scheme value <code>1</code> and the value of the tail "<code>2 .
+  3)</code>", which is</li>
+  <li>The pair consisting of the Scheme value <code>2</code> and the Scheme value <code>3</code>.</li>
+</ul>
+
+<p>Thus, <code>read_tail</code> would return <code>Pair(1, Pair(2, 3))</code>.</p>
+
+<blockquote><p><em>Hint</em>: In order to verify that only one element follows a dot, after
+encountering a <code>'.'</code>, read one additional expression and then check to see
+that a closing parenthesis follows.</p></blockquote>
+
+<p>Test your understanding and implementation before moving on:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q <span class="hljs-number">02</span> -u
+python3 ok -q <span class="hljs-number">02</span></code></pre>
+
+<p>You should also test your parser by:</p>
+
+<ul>
+  <li><p>Running the doctests for <code>scheme_reader.py</code></p>
+
+<pre><code class="hljs css"><span class="hljs-selector-tag">python3</span> <span class="hljs-selector-tag">-m</span> <span class="hljs-selector-tag">doctest</span> <span class="hljs-selector-tag">scheme_reader</span><span class="hljs-selector-class">.py</span> <span class="hljs-selector-tag">-v</span></code></pre></li>
+  <li><p>Testing interactively by running <code>python3 scheme_reader.py</code>. Every time you
+  type in a value into the prompt, both the <code>str</code> and <code>repr</code> values of the
+  parsed expression are printed. You can try the following inputs:</p>
+
+<pre><code class="hljs ruby">read&gt; <span class="hljs-number">42</span>
+str : <span class="hljs-number">42</span>
+<span class="hljs-symbol">repr:</span> <span class="hljs-number">42</span>
+read&gt; <span class="hljs-literal">nil</span>
+str : ()
+<span class="hljs-symbol">repr:</span> <span class="hljs-literal">nil</span>
+read&gt; (<span class="hljs-number">1</span> (<span class="hljs-number">2</span> <span class="hljs-number">3</span>) (<span class="hljs-number">4</span> (<span class="hljs-number">5</span>)))
+str : (<span class="hljs-number">1</span> (<span class="hljs-number">2</span> <span class="hljs-number">3</span>) (<span class="hljs-number">4</span> (<span class="hljs-number">5</span>)))
+<span class="hljs-symbol">repr:</span> Pair(<span class="hljs-number">1</span>, Pair(Pair(<span class="hljs-number">2</span>, Pair(<span class="hljs-number">3</span>, <span class="hljs-literal">nil</span>)), Pair(Pair(<span class="hljs-number">4</span>, Pair(Pair(<span class="hljs-number">5</span>, <span class="hljs-literal">nil</span>), <span class="hljs-literal">nil</span>)), <span class="hljs-literal">nil</span>)))
+read&gt; (<span class="hljs-number">1</span> (<span class="hljs-number">9</span> <span class="hljs-number">8</span>) . <span class="hljs-number">7</span>)
+str : (<span class="hljs-number">1</span> (<span class="hljs-number">9</span> <span class="hljs-number">8</span>) . <span class="hljs-number">7</span>)
+<span class="hljs-symbol">repr:</span> Pair(<span class="hljs-number">1</span>, Pair(Pair(<span class="hljs-number">9</span>, Pair(<span class="hljs-number">8</span>, <span class="hljs-literal">nil</span>)), <span class="hljs-number">7</span>))
+read&gt; (hi there . (cs . (student)))
+str : (hi there cs student)
+<span class="hljs-symbol">repr:</span> Pair(<span class="hljs-string">'hi'</span>, Pair(<span class="hljs-string">'there'</span>, Pair(<span class="hljs-string">'cs'</span>, Pair(<span class="hljs-string">'student'</span>, <span class="hljs-literal">nil</span>))))</code></pre></li>
+</ul>
+
+<p>One you have completed Part I, make sure you submit using OK to receive full
+credit for the first checkpoint.</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok --submit</code></pre>
+
+
+<h2 id="part-ii-the-evaluator">Part II: The Evaluator</h2>
+
+
+<blockquote><p><strong>Important submission note:</strong> For full credit:</p>
+
+<ul>
+  <li>submit with Part I complete by <strong>Thursday 11/9</strong> (worth 1 pt),</li>
+  <li>submit again with Part II complete by <strong>Tuesday 11/14</strong> (worth 1 pt), and</li>
+  <li>submit the entire project by <strong>Thursday 11/16</strong>.
+  You will get an extra credit point for submitting the entire project by
+  Wednesday 11/15.
+  All changes in this part should be made in <code>scheme.py</code>.</li>
+</ul></blockquote>
+
+<p>In the starter implementation given to you, the evaluator can only evaluate
+self-evaluating expressions: numbers, booleans, and <code>nil</code>.</p>
+
+<p>Read the first two sections of <code>scheme.py</code>, called Eval/Apply and Environments.</p>
+
+<ul>
+  <li>The <code>scheme_apply</code> function is complete, but part of <code>scheme_eval</code> and most
+  of the functions or methods they use are not yet implemented.</li>
+  <li>The <code>.apply</code> methods in subclasses of <code>Procedure</code> and the <code>make_call_frame</code>
+  function assist in applying built-in and user-defined procedures.</li>
+  <li>The <code>Frame</code> class implements an environment frame.</li>
+  <li>The <code>LambdaProcedure</code> class (in the Procedures section) represents
+  user-defined procedures.</li>
+</ul>
+
+<p>These are all of the essential components of the interpreter; the rest of
+<code>scheme.py</code> defines special forms and input/output behavior.</p>
+
+<p>Test your understanding of how these components fit together by unlocking the
+tests for <code>eval_apply</code>.</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q eval_apply -u</code></pre>
+
+
+<h3 id="some-core-functionality">Some Core Functionality</h3>
+
+
+
+<h4 id="problem-3-1-pt">Problem 3 (1 pt)</h4>
+
+
+<p>Implement both <code>define</code> and <code>lookup</code> methods of the <code>Frame</code> class.
+Each <code>Frame</code> object has the following instance attributes:</p>
+
+<ul>
+  <li><code>bindings</code> is a dictionary that maps Scheme symbol keys (represented as
+  Python strings) to Scheme values.</li>
+  <li><code>parent</code> is the parent <code>Frame</code> instance. The parent of the Global Frame is
+  <code>None</code>.</li>
+</ul>
+
+<p><code>define</code> takes a symbol (represented by a Python string) and value and binds the
+value to that symbol in the frame.</p>
+
+<p><code>lookup</code> takes a symbol and returns the value bound to that name in the first
+<code>Frame</code> of the environment in which that name is found. Your implementation
+should:</p>
+
+<ul>
+  <li>Return the value of the symbol in <code>self.bindings</code> if it exists.</li>
+  <li>Otherwise, <code>lookup</code> that symbol in the <code>parent</code> if the <code>parent</code> exists.</li>
+  <li>Otherwise, raise a <code>SchemeError</code>. <strong>(provided)</strong></li>
+</ul>
+
+<p>Test your understanding and implementation before moving on:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q <span class="hljs-number">03</span> -u
+python3 ok -q <span class="hljs-number">03</span></code></pre>
+
+<p>After you complete this problem, you can open your Scheme interpreter
+(with <code>python3 scheme.py</code>). You should be able to look up built-in
+procedure names:</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> +</span>
+<span class="hljs-meta">#</span><span class="bash">[+]</span>
+<span class="hljs-meta">scm&gt;</span><span class="bash"> odd?</span>
+<span class="hljs-meta">#</span><span class="bash">[odd?]</span>
+<span class="hljs-meta">scm&gt;</span><span class="bash"> display</span>
+<span class="hljs-meta">#</span><span class="bash">[display]</span></code></pre>
+
+<p>However, your Scheme interpreter will still not be able to apply these
+procedures. Let's fix that.</p>
+
+
+<h4 id="problem-4-1-pt">Problem 4 (1 pt)</h4>
+
+
+<p>Complete the <code>apply</code> method in the class <code>PrimitiveProcedure</code>, which is called
+by <code>scheme_apply</code>. Primitive procedures are applied by calling a corresponding
+Python function that implements the procedure. Instances of the
+<code>PrimitiveProcedure</code> class, defined in <code>scheme.py</code>, represent the values of
+Scheme primitive procedures. A <code>PrimitiveProcedure</code> has two instance attributes:</p>
+
+<ul>
+  <li><code>fn</code> is the <em>Python</em> function that implements the primitive Scheme
+  procedure.</li>
+  <li><code>use_env</code> is a Boolean flag that indicates whether or not this primitive
+  procedure will expect the current environment to be passed in as the last
+  argument. The environment is required, for instance, to implement the primitive
+  <code>eval</code> procedure.</li>
+</ul>
+
+<p>To see a list of all Scheme primitive procedures used in the project, look in
+the <code>scheme_primitives.py</code> file. Any function decorated with <code>@primitive</code> will
+be added to the globally-defined <code>PRIMITIVES</code> list.</p>
+
+<p>The <code>apply</code> method of <code>PrimitiveProcedure</code> takes a Scheme
+list of argument values, and the current environment. Your implementation
+should:</p>
+
+<ul>
+  <li>Convert the Scheme list to a Python list of arguments. <strong>(provided)</strong></li>
+  <li>If <code>self.use_env</code> is <code>True</code>, then add the current environment <code>env</code>
+  as the last argument to this Python list.</li>
+  <li>Call <code>self.fn</code> on all of those arguments (<em>Hint</em>: Use <code>*args</code> notation).</li>
+  <li>If calling the function results in a <code>TypeError</code> exception being raised, then
+  the wrong number of parameters were passed. Intercept the exception and raise
+  an appropriate <code>SchemeError</code> in its place.</li>
+</ul>
+
+<p>Test your understanding and implementation before moving on:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q <span class="hljs-number">04</span> -u
+python3 ok -q <span class="hljs-number">04</span></code></pre>
+
+
+<h4 id="problem-5-1-pt">Problem 5 (1 pt)</h4>
+
+
+<p><code>scheme_eval</code> evaluates a Scheme expression in a given environment. Most of
+<code>scheme_eval</code> has already been implemented for you. It currently looks up names
+in the current environment, returns self-evaluating expressions (like numbers)
+and evaluates special forms.</p>
+
+<p>Implement the missing part of <code>scheme_eval</code>, which evaluates a call expression.
+To evaluate a call expression, we do the following:</p>
+
+<ol>
+  <li>Evaluate the operator (which should evaluate to a Scheme procedure)</li>
+  <li>Evaluate the operands</li>
+  <li>Apply the procedure on the evaluated operands.</li>
+</ol>
+
+<p>The <code>check_procedure</code> function, which raises an error if the provided argument
+is not a Scheme procedure, may be useful to check that your operator is indeed
+a procedure. Once you have checked that it is, the rest of the operation (steps
+2 and 3 above) should be carried out in the <code>eval_call</code> method of
+the <code>Procedure</code> class, which you must also complete.</p>
+
+<p>The <code>map</code> method of <code>Pair</code> can apply a function to every item in
+a Scheme list. The <code>scheme_apply</code> function applies a Scheme procedure to some
+arguments.</p>
+
+<p>Test your understanding and implementation before moving on:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q <span class="hljs-number">05</span> -u
+python3 ok -q <span class="hljs-number">05</span></code></pre>
+
+<p>Your interpreter should now be able to evaluate primitive procedure calls,
+giving you the functionality of the Calculator language and more.</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> (+ 1 2)</span>
+3
+<span class="hljs-meta">scm&gt;</span><span class="bash"> (* 3 4 (- 5 2) 1)</span>
+36
+<span class="hljs-meta">scm&gt;</span><span class="bash"> (odd? 31)</span>
+True</code></pre>
+
+<blockquote><p>Now would be a good time to start adding tests to <code>tests.scm</code>. For each
+new problem you complete from now on, add a few tests to the top of
+<code>tests.scm</code> to verify the behavior of your implementation.</p></blockquote>
+
+
+<h4 id="problem-6-1-pt">Problem 6 (1 pt)</h4>
+
+
+<blockquote><p>Read the <a href="https://cs61a.org/articles/scheme-spec.html#define">Scheme Specifications</a> to understand the behavior of
+the <code>define</code> special form! This problem only provides the behavior for binding
+expressions, not procedures, to names.</p></blockquote>
+
+<p>There are two missing parts in the <code>do_define_form</code> function, which handles the
+<code>(define ...)</code> special forms. Implement <strong>just the first part</strong>, which binds
+names to values but does not create new procedures. <code>do_define_form</code> should
+return the name after performing the binding.</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> (define tau (* 2 3.1415926))</span>
+tau</code></pre>
+
+<p>Test your understanding and implementation before moving on:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q <span class="hljs-number">06</span> -u
+python3 ok -q <span class="hljs-number">06</span></code></pre>
+
+<p>You should now be able to give names to values and evaluate the resulting
+symbols. Note that <code>eval</code> takes a quoted expression and evaluates it (you can
+think of it as "removing" the quotes):</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> (<span class="hljs-built_in">eval</span> (define tau 6.28))</span>
+6.28
+<span class="hljs-meta">scm&gt;</span><span class="bash"> (<span class="hljs-built_in">eval</span> <span class="hljs-string">'tau)</span></span>
+6.28
+<span class="hljs-meta">scm&gt;</span><span class="bash"><span class="hljs-string"> tau</span></span>
+6.28
+<span class="hljs-meta">scm&gt;</span><span class="bash"><span class="hljs-string"> (define x 15)</span></span>
+x
+<span class="hljs-meta">scm&gt;</span><span class="bash"><span class="hljs-string"> (define y (* 2 x))</span></span>
+y
+<span class="hljs-meta">scm&gt;</span><span class="bash"><span class="hljs-string"> y</span></span>
+30
+<span class="hljs-meta">scm&gt;</span><span class="bash"><span class="hljs-string"> (+ y (* y 2) 1)</span></span>
+91
+<span class="hljs-meta">scm&gt;</span><span class="bash"><span class="hljs-string"> (define x 20)</span></span>
+x
+<span class="hljs-meta">scm&gt;</span><span class="bash"><span class="hljs-string"> x</span></span>
+20</code></pre>
+
+
+<h4 id="problem-7-1-pt">Problem 7 (1 pt)</h4>
+
+
+<blockquote><p>Read the <a href="https://cs61a.org/articles/scheme-spec.html#quote">Scheme Specifications</a> to understand the behavior of
+the <code>quote</code> special form.</p></blockquote>
+
+<p>First, implement the <code>do_quote_form</code> function, which evaluates the <code>quote</code>
+special form. The <code>quote</code> special form returns its operand
+expression without evaluating it.</p>
+
+<p>You should now be able to evaluate quoted expressions.</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> (quote hello)</span>
+hello
+<span class="hljs-meta">scm&gt;</span><span class="bash"> (quote (1 . 2))</span>
+(1 . 2)
+<span class="hljs-meta">scm&gt;</span><span class="bash"> (quote (1 (2 three . (4 . 5))))</span>
+(1 (2 three 4 . 5))
+<span class="hljs-meta">scm&gt;</span><span class="bash"> (car (quote (a b)))</span>
+a</code></pre>
+
+<p>Next, complete your implementation of <code>scheme_read</code> in <code>scheme_reader.py</code> by
+handling one last case:</p>
+
+<ul>
+  <li>If the token is a single quote (<code>'</code>), such as the first character of
+  <code>'bagel</code>, then return a <code>Pair</code> that wraps the Scheme expression after the
+  quote (which you can get by recursively calling <code>scheme_read</code>) in <code>quote</code>
+  (e.g. <code>Pair('quote', Pair('bagel', nil))</code>.</li>
+</ul>
+
+<p>After completing your <code>scheme_read</code> implementation, the following quoted
+expressions should now work as well.</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> <span class="hljs-string">'hello</span></span>
+hello
+<span class="hljs-meta">scm&gt;</span><span class="bash"><span class="hljs-string"> '</span>(1 . 2)</span>
+(1 . 2)
+<span class="hljs-meta">scm&gt;</span><span class="bash"> <span class="hljs-string">'(1 (2 three . (4 . 5)))</span></span>
+(1 (2 three 4 . 5))
+<span class="hljs-meta">scm&gt;</span><span class="bash"><span class="hljs-string"> (car '</span>(a b))</span>
+a
+<span class="hljs-meta">scm&gt;</span><span class="bash"> (<span class="hljs-built_in">eval</span> (cons <span class="hljs-string">'car '</span>(<span class="hljs-string">'(1 2))))</span></span>
+1</code></pre>
+
+<p>Test your understanding and implementation before moving on:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q <span class="hljs-number">07</span> -u
+python3 ok -q <span class="hljs-number">07</span></code></pre>
+
+<p>At this point in the project, your Scheme interpreter should support the
+following features:</p>
+
+<ul>
+  <li>Evaluate atoms, which include numbers, booleans, nil, and symbols,</li>
+  <li>Evaluate the <code>quote</code> special form,</li>
+  <li>Define symbols, and</li>
+  <li>Call primitive procedures, for example evaluating <code>(+ (- 4 2) 5)</code>.</li>
+</ul>
+
+
+<h3 id="user-defined-procedures">User-Defined Procedures</h3>
+
+
+<p>User-defined procedures are represented as instances of the <code>LambdaProcedure</code>
+class. A <code>LambdaProcedure</code> instance has three instance attributes:</p>
+
+<ul>
+  <li><code>formals</code> is a Scheme list of the formal parameters (symbols) that name the
+  arguments of the procedure.</li>
+  <li><code>body</code> is a Scheme list of expressions; the body of the procedure.</li>
+  <li><code>env</code> is the environment in which the procedure was <strong>defined</strong>.</li>
+</ul>
+
+
+<h4 id="problem-8-1-pt">Problem 8 (1 pt)</h4>
+
+
+<blockquote><p>Read the <a href="https://cs61a.org/articles/scheme-spec.html#begin">Scheme Specifications</a> to understand the behavior of
+the <code>begin</code> special form!</p></blockquote>
+
+<p>Implement the <code>eval_all</code> function (which is called from <code>do_begin_form</code>) to
+complete the implementation of the <code>begin</code> special form. A <code>begin</code>
+expression is evaluated by evaluating all sub-expressions in order. The value
+of the <code>begin</code> expression is the value of the final sub-expression.</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> (begin (+ 2 3) (+ 5 6))</span>
+11
+<span class="hljs-meta">scm&gt;</span><span class="bash"> (define x (begin (display 3) (newline) (+ 2 3)))</span>
+3
+x
+<span class="hljs-meta">scm&gt;</span><span class="bash"> (+ x 3)</span>
+8
+<span class="hljs-meta">scm&gt;</span><span class="bash"> (begin (<span class="hljs-built_in">print</span> 3) <span class="hljs-string">'(+ 2 3))</span></span>
+3
+(+ 2 3)</code></pre>
+
+<p>If <code>eval_all</code> is passed an empty list of expressions (<code>nil</code>), then it should
+return the Python value <code>None</code>, which represents an undefined Scheme value.</p>
+
+<p>Test your understanding and implementation before moving on:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q <span class="hljs-number">08</span> -u
+python3 ok -q <span class="hljs-number">08</span></code></pre>
+
+
+<h4 id="problem-9-1-pt">Problem 9 (1 pt)</h4>
+
+
+<blockquote><p>Read the <a href="https://cs61a.org/articles/scheme-spec.html#lambda">Scheme Specifications</a> to understand the behavior of
+the <code>lambda</code> special form!</p></blockquote>
+
+<p>Implement the <code>do_lambda_form</code> function, which creates <code>LambdaProcedure</code>
+instances. While you cannot call a user-defined procedure yet, you can verify
+that you have created the procedure correctly by typing a lambda expression into
+the interpreter prompt:</p>
+
+<pre><code class="hljs python">scm&gt; (<span class="hljs-keyword">lambda</span> (x y) (+ x y))
+(<span class="hljs-keyword">lambda</span> (x y) (+ x y))</code></pre>
+
+<p>In Scheme, it is legal to place more than one expression in the body of a
+procedure (there must be at least one expression). The <code>body</code> attribute
+of a <code>LambdaProcedure</code> instance is a Scheme list of body expressions.</p>
+
+<p>Test your understanding and implementation before moving on:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q <span class="hljs-number">09</span> -u
+python3 ok -q <span class="hljs-number">09</span></code></pre>
+
+
+<h4 id="problem-10-2-pt">Problem 10 (2 pt)</h4>
+
+
+<blockquote><p>Read the <a href="https://cs61a.org/articles/scheme-spec.html#define">Scheme Specifications</a> to understand the behavior of
+the <code>define</code> special form! In this problem, we'll finish defining the <code>define</code>
+form for procedures.</p></blockquote>
+
+<p>Currently, your Scheme interpreter is able to bind symbols to user-defined
+procedures in the following manner:</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> (define f (lambda (x) (* x 2)))</span>
+f</code></pre>
+
+<p>However, we'd like to be able to use the shorthand form of defining named
+procedures:</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> (define (f x) (* x 2))</span>
+f</code></pre>
+
+<p>Modify the <code>do_define_form</code> function so that it correctly handles the shorthand
+procedure definition form above. Make sure that it can handle multi-expression
+bodies.</p>
+
+<p>Test your understanding and implementation before moving on:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q <span class="hljs-number">10</span> -u
+python3 ok -q <span class="hljs-number">10</span></code></pre>
+
+<p>You should now find that defined procedures evaluate to <code>LambdaProcedure</code>
+instances.</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> (define (square x) (* x x))</span>
+square
+<span class="hljs-meta">scm&gt;</span><span class="bash"> square</span>
+(lambda (x) (* x x))</code></pre>
+
+
+<h4 id="problem-11">Problem 11 (2 pt)</h4>
+
+
+<p>Implement the <code>make_child_frame</code> method of the <code>Frame</code> class, which:</p>
+
+<ul>
+  <li>Creates a new <code>Frame</code> instance, the parent of which is <code>self</code>. <strong>(provided)</strong></li>
+  <li>If the number of argument values does not match with the number of formal
+  parameters, raises a <code>SchemeError</code>.</li>
+  <li>Binds formal parameters to their corresponding argument values in the newly
+  created frame.</li>
+</ul>
+
+<p>Test your understanding and implementation before moving on:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q <span class="hljs-number">11</span> -u
+python3 ok -q <span class="hljs-number">11</span></code></pre>
+
+
+<h4 id="problem-12-1-pt">Problem 12 (1 pt)</h4>
+
+
+<p>Implement the <code>make_call_frame</code> method in <code>LambdaProcedure</code>, which is
+needed by the <code>apply</code> method defined in <code>UserDefinedProcedure</code>.
+It should create a new <code>Frame</code> instance using the
+<code>make_child_frame</code> method of the appropriate parent frame, binding formal
+parameters to argument values.</p>
+
+<p>Since lambdas are lexically scoped, your new frame should be a child
+of the frame in which the lambda is defined. The <code>env</code> provided as an argument
+to <code>make_call_frame</code> is instead the frame in which the procedure is called,
+which will be useful when you implement a dynamically scoped procedure in
+problem 16.</p>
+
+<p>Test your understanding and implementation before moving on:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q <span class="hljs-number">12</span> -u
+python3 ok -q <span class="hljs-number">12</span></code></pre>
+
+<p>At this point in the project, your Scheme interpreter should support the
+following features:</p>
+
+<ul>
+  <li>Create procedures using <code>lambda</code> expressions,</li>
+  <li>Define named procedures using <code>define</code> expressions, and</li>
+  <li>Call user-defined procedures.</li>
+</ul>
+
+<blockquote><p>Now is an excellent time to revisit the tests in <code>tests.scm</code> and ensure that
+you pass the tests that involve definition (Sections 1.1.2 and 1.1.4). You
+should also add <strong>additional tests of your own at the top of <code>tests.scm</code></strong> to
+verify that your interpreter is behaving as you expect. This is <strong>required to
+earn full composition credit.</strong></p>
+
+<p>To run your tests, run the command:</p>
+
+<pre><code class="hljs css">  <span class="hljs-selector-tag">python3</span> <span class="hljs-selector-tag">ok</span> <span class="hljs-selector-tag">-q</span> <span class="hljs-selector-tag">tests</span><span class="hljs-selector-class">.scm</span></code></pre></blockquote>
+
+
+<h3 id="special-forms">Special Forms</h3>
+
+
+<p>Logical special forms include <code>if</code>, <code>and</code>, <code>or</code>, and <code>cond</code>. These expressions
+are special because not all of their sub-expressions may be evaluated.</p>
+
+<p>In Scheme, only <code>False</code> is a false value. All other values (including <code>0</code> and
+<code>nil</code>) are true values. You can test whether a value is a true or false value
+using the provided Python functions <code>scheme_truep</code> and <code>scheme_falsep</code>, defined
+in <code>scheme_primitives.py</code>.</p>
+
+<blockquote><p>Note: Scheme traditionally uses <code>#f</code> to indicate the false Boolean value. In
+our interpreter, that is equivalent to <code>false</code> or <code>False</code>. Similarly, <code>true</code>,
+<code>True</code>, and <code>#t</code> are all equivalent.</p></blockquote>
+
+<p>To get you started, we've provided an implementation of the <code>if</code> special form in
+the <code>do_if_form</code> function. Make sure you understand that implementation before
+starting the following questions.</p>
+
+
+<h4 id="problem-13-2-pt">Problem 13 (2 pt)</h4>
+
+
+<blockquote><p>Read the <a href="https://cs61a.org/articles/scheme-spec.html#and">Scheme Specifications</a> to understand the behavior of
+the <code>and</code> and <code>or</code> special forms!</p></blockquote>
+
+<p>Implement <code>do_and_form</code> and <code>do_or_form</code> so that <code>and</code> and <code>or</code> expressions are
+evaluated correctly.</p>
+
+<p>The logical forms <code>and</code> and <code>or</code> are <em>short-circuiting</em>. For <code>and</code>, your
+interpreter should evaluate each sub-expression from left to right, and if any
+of these evaluates to a false value, then <code>False</code> is returned. Otherwise,
+it should return the value of the last sub-expression. If there are no
+sub-expressions in an <code>and</code> expression, it evaluates to <code>True</code>.</p>
+
+<pre><code class="hljs php">scm&gt; (<span class="hljs-keyword">and</span>)
+<span class="hljs-keyword">True</span>
+scm&gt; (<span class="hljs-keyword">and</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span> <span class="hljs-number">6</span>)  ; all operands are <span class="hljs-keyword">true</span> values
+<span class="hljs-number">6</span>
+scm&gt; (<span class="hljs-keyword">and</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span> (+ <span class="hljs-number">3</span> <span class="hljs-number">3</span>))
+<span class="hljs-number">6</span>
+scm&gt; (<span class="hljs-keyword">and</span> <span class="hljs-keyword">True</span> <span class="hljs-keyword">False</span> <span class="hljs-number">42</span> (/ <span class="hljs-number">1</span> <span class="hljs-number">0</span>))  ; short-circuiting behavior of <span class="hljs-keyword">and</span>
+<span class="hljs-keyword">False</span></code></pre>
+
+<p>For <code>or</code>, evaluate each sub-expression from left to right. If any
+sub-expression evaluates to a true value, return that value. Otherwise, return
+<code>False</code>. If there are no sub-expressions in an <code>or</code> expression, it evaluates to
+<code>False</code>.</p>
+
+<pre><code class="hljs coffeescript">scm&gt; (<span class="hljs-keyword">or</span>)
+False
+scm&gt; (<span class="hljs-keyword">or</span> <span class="hljs-number">5</span> <span class="hljs-number">2</span> <span class="hljs-number">1</span>)  ; <span class="hljs-number">5</span> <span class="hljs-keyword">is</span> a <span class="hljs-literal">true</span> value
+<span class="hljs-number">5</span>
+scm&gt; (<span class="hljs-keyword">or</span> False (- <span class="hljs-number">1</span> <span class="hljs-number">1</span>) <span class="hljs-number">1</span>)  ; <span class="hljs-number">0</span> <span class="hljs-keyword">is</span> a <span class="hljs-literal">true</span> value <span class="hljs-keyword">in</span> Scheme
+<span class="hljs-number">0</span>
+scm&gt; (<span class="hljs-keyword">or</span> <span class="hljs-number">4</span> True (/ <span class="hljs-number">1</span> <span class="hljs-number">0</span>))  ; short-circuiting behavior <span class="hljs-keyword">of</span> <span class="hljs-keyword">or</span>
+<span class="hljs-number">4</span></code></pre>
+
+<p>Test your understanding and implementation before moving on:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q <span class="hljs-number">13</span> -u
+python3 ok -q <span class="hljs-number">13</span></code></pre>
+
+
+<h4 id="problem-14-2-pt">Problem 14 (2 pt)</h4>
+
+
+<blockquote><p>Read the <a href="https://cs61a.org/articles/scheme-spec.html#cond">Scheme Specifications</a> to understand the behavior of
+the <code>cond</code> special form!</p></blockquote>
+
+<p>Fill in the missing parts of <code>do_cond_form</code> so that it returns the value of the
+first result sub-expression corresponding to a true predicate, or the result
+sub-expression corresponding to <code>else</code>. Some special cases:</p>
+
+<ul>
+  <li>When the true predicate does not have a corresponding result sub-expression,
+  return the predicate value.</li>
+  <li>When a result sub-expression of a <code>cond</code> case has multiple expressions,
+  evaluate them all and return the value of the last expression. (<em>Hint</em>: Use
+  <code>eval_all</code>.)</li>
+</ul>
+
+<p>Your implementation should match the following examples and the additional tests
+in <code>tests.scm</code>.</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> (cond ((= 4 3) <span class="hljs-string">'nope)</span></span>
+           ((= 4 4) 'hi)
+           (else 'wait))
+hi
+<span class="hljs-meta">scm&gt;</span><span class="bash"><span class="hljs-string"> (cond ((= 4 3) '</span>wat)</span>
+           ((= 4 4))
+           (else 'hm))
+True
+<span class="hljs-meta">scm&gt;</span><span class="bash"> (cond ((= 4 4) <span class="hljs-string">'here (+ 40 2))</span></span>
+           (else 'wat 0))
+42</code></pre>
+
+<p>The value of a <code>cond</code> is undefined if there are no true predicates and no
+<code>else</code>. In such a case, <code>do_cond_form</code> should return <code>None</code>.</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> (cond (False 1) (False 2))</span>
+<span class="hljs-meta">scm&gt;</span><span class="bash"></span></code></pre>
+
+<p>Test your understanding and implementation before moving on:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q <span class="hljs-number">14</span> -u
+python3 ok -q <span class="hljs-number">14</span></code></pre>
+
+
+<h4 id="problem-15-2-pt">Problem 15 (2 pt)</h4>
+
+
+<blockquote><p>Read the <a href="https://cs61a.org/articles/scheme-spec.html#let">Scheme Specifications</a> to understand the behavior of
+the <code>let</code> special form!</p></blockquote>
+
+<p>The <code>let</code> special form binds symbols to values locally, giving them their
+initial values. For example:</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> (define x 5)</span>
+x
+<span class="hljs-meta">scm&gt;</span><span class="bash"> (define y <span class="hljs-string">'bye)</span></span>
+y
+<span class="hljs-meta">scm&gt;</span><span class="bash"><span class="hljs-string"> (let ((x 42)</span></span>
+           (y (* x 10)))  ; x refers to the global value of x, not 42
+       (list x y))
+(42 50)
+<span class="hljs-meta">scm&gt;</span><span class="bash"><span class="hljs-string"> (list x y)</span></span>
+(5 bye)</code></pre>
+
+<p>Implement <code>make_let_frame</code>, which returns a child frame of <code>env</code> that binds the
+symbol in each element of <code>bindings</code> to the value of its corresponding
+expression. The <code>bindings</code> scheme list contains pairs that each contain a
+symbol and a corresponding expression.</p>
+
+<p>You may find the following functions and methods useful:</p>
+
+<ul>
+  <li><code>check_form</code>: this function can be used to check the structure of each
+  binding.</li>
+  <li><code>check_formals</code>: this function checks that formal parameters are a Scheme list
+  of symbols for which each symbol is distinct.</li>
+  <li><code>make_child_frame</code>: this method (which you implemented in
+  <a href="https://cs61a.org/proj/scheme/#problem-11">Problem 11</a>) takes a <code>Pair</code> of formal parameters (symbols) and
+  a <code>Pair</code> of values, and returns a new frame with all the symbols bound to the
+  corresponding values.</li>
+</ul>
+
+<p>Test your understanding and implementation before moving on:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q <span class="hljs-number">15</span> -u
+python3 ok -q <span class="hljs-number">15</span></code></pre>
+
+
+<h4 id="problem-16-1-pt">Problem 16 (1 pt)</h4>
+
+
+<blockquote><p>Read the <a href="https://cs61a.org/articles/scheme-spec.html#mu">Scheme Specifications</a> to understand the behavior of
+the <code>mu</code> special form!</p></blockquote>
+
+<p>Implement <code>do_mu_form</code> to evaluate the <code>mu</code> special form, a non-standard Scheme
+expression type. A <code>mu</code> expression is similar to a <code>lambda</code> expression, but
+evaluates to a <code>MuProcedure</code> instance that is <strong>dynamically scoped</strong>. Most of the
+<code>MuProcedure</code> class has been provided for you.</p>
+
+<p>Complete the <code>MuProcedure</code> class so that when a call on such a
+procedure is executed, it is dynamically scoped. Calling a <code>LambdaProcedure</code>
+uses lexical scoping: the parent of the new call frame is the environment in
+which the procedure was <strong>defined</strong>. Calling a <code>MuProcedure</code> created by a <code>mu</code>
+expression uses dynamic scoping: the parent of the new call frame is the
+environment in which the call expression was <strong>evaluated</strong>. As a result, a
+<code>MuProcedure</code> does not need to store an environment as an instance attribute.
+It can refer to names in the environment from which it was called.</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> (define f (mu (x) (+ x y)))</span>
+f
+<span class="hljs-meta">scm&gt;</span><span class="bash"> (define g (lambda (x y) (f (+ x x))))</span>
+g
+<span class="hljs-meta">scm&gt;</span><span class="bash"> (g 3 7)</span>
+13</code></pre>
+
+<p>Looking at <code>LambdaProcedure</code> should give you a clue about what needs to be done
+to <code>MuProcedure</code> to complete it.
+Test your understanding and implementation before moving on:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q <span class="hljs-number">16</span> -u
+python3 ok -q <span class="hljs-number">16</span></code></pre>
+
+<p>Congratulations! Your Scheme interpreter implementation is now complete!</p>
+
+<blockquote><p>The autograder tests for the interpreter are <em>not</em> comprehensive, so you may
+have uncaught bugs in your implementation. You should have been adding tests
+to the top of <code>tests.scm</code> as you did each problem, which will help you
+discover bugs on your own. <strong>The tests that you have written tests will be
+evaluated as part of your composition score for the project.</strong></p>
+
+<p>To run your tests, run the command:</p>
+
+<pre><code class="hljs css">  <span class="hljs-selector-tag">python3</span> <span class="hljs-selector-tag">ok</span> <span class="hljs-selector-tag">-q</span> <span class="hljs-selector-tag">tests</span><span class="hljs-selector-class">.scm</span></code></pre>
+
+<p>Make sure to remove all of the <code>(exit)</code> commands, so that all the tests are
+run! We've provided 115 tests (not counting the extra credit tests), so if you
+don't see at least that many tests passed, you haven't removed all the
+<code>(exit)</code> commands. (Of course, you should have many more than that, since
+you've been writing your own as well.)</p></blockquote>
+
+<p>One you have completed Part II, make sure you submit using OK to receive full
+credit for the second checkpoint.</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok --submit</code></pre>
+
+
+<h2 id="part-iii-write-some-scheme">Part III: Write Some Scheme</h2>
+
+
+<blockquote><p>Not only is your Scheme interpreter itself a tree-recursive program, but it is
+flexible enough to evaluate <em>other</em> recursive programs. Implement the
+following procedures in Scheme in the <code>questions.scm</code> file.</p>
+
+<p>In addition, for this part of the project, you may find the <a href="https://cs61a.org/proj/scheme/">primitive
+procedure reference</a> very helpful if you ever have a question
+about the behavior of a built-in Scheme procedure, like the difference between
+<code>pair?</code> and <code>list?</code>.</p></blockquote>
+
+<p>The autograder tests for the interpreter are <em>not</em> comprehensive, so you may
+have uncaught bugs in your implementation. Therefore, you may find it useful to
+test your code for these questions in the staff interpreter or the
+<a href="http://scheme.cs61a.org/editor.html">web interpreter</a> and then try it in your own interpreter once you are
+confident your Scheme code is working.</p>
+
+
+<h3 id="problem-17-1-pt">Problem 17 (1 pt)</h3>
+
+
+<p>Implement the <code>enumerate</code> procedure, which takes in a list of values and returns
+a list of two-element lists, where the first element is the index of the value,
+and the second element is the value itself.</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> (enumerate <span class="hljs-string">'(3 4 5 6))</span></span>
+((0 3) (1 4) (2 5) (3 6))
+<span class="hljs-meta">scm&gt;</span><span class="bash"><span class="hljs-string"> (enumerate '</span>())</span>
+()</code></pre>
+
+<p>Test your implementation before moving on:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q <span class="hljs-number">17</span></code></pre>
+
+
+<h3 id="problem-18-2-pt">Problem 18 (2 pt)</h3>
+
+
+<p>Implement the <code>list-change</code> procedure, which lists all of the ways to make
+change for a positive integer <code>total</code> amount of money, using a list of currency
+denominations, which is sorted in descending order. The resulting list of ways
+of making change should also be returned in descending order.</p>
+
+<p>To make change for 10 with the denominations (25, 10, 5, 1), we get the
+possibliites:</p>
+
+<pre><code class="hljs">10
+5, 5
+5, 1, 1, 1, 1, 1
+1, 1, 1, 1, 1, 1, 1, 1, 1, 1</code></pre>
+
+<p>To make change for 5 with the denominations (4, 3, 2, 1), we get the
+possibilities:</p>
+
+<pre><code class="hljs">4, 1
+3, 2
+3, 1, 1
+2, 2, 1
+2, 1, 1, 1
+1, 1, 1, 1, 1</code></pre>
+
+<p>You may find that implementing a helper function, <code>cons-all</code>, will be useful for
+this problem. To implement <code>cons-all</code>, use the <a href="https://cs61a.org/articles/scheme-primitives.html#map">built-in map procedure</a>.
+<code>cons-all</code> takes in an element <code>first</code> and a
+list of lists <code>rests</code>, and adds <code>first</code> to the beginning of each list in
+<code>rests</code>:</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> (cons-all 1 <span class="hljs-string">'((2 3) (2 4) (3 5)))</span></span>
+((1 2 3) (1 2 4) (1 3 5))</code></pre>
+
+<p>You may also find the built-in <a href="https://cs61a.org/articles/scheme-primitives.html#append">append procedure</a> useful.</p>
+
+<p>Test your implementation before moving on:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q <span class="hljs-number">18</span></code></pre>
+
+
+<h3 id="problem-19-2-pt">Problem 19 (2 pt)</h3>
+
+
+<p>In Scheme, source code is data. Every non-primitive expression is a
+list, and we can write procedures that manipulate other programs just as we
+write procedures that manipulate lists.</p>
+
+<p>Rewriting programs can be useful: we can write an interpreter that only
+handles a small core of the language, and then write a procedure that
+converts other special forms into the core language before a program is passed
+to the interpreter.</p>
+
+<p>For example, the <code>let</code> special form is equivalent to a call expression that
+begins with a <code>lambda</code> expression. Both create a new frame extending the
+current environment and evaluate a body within that new environment.</p>
+
+<pre><code class="hljs bash">(<span class="hljs-built_in">let</span> ((x 42) (y 16)) (+ x y))
+;; Is equivalent to:
+((lambda (x y) (+ x y)) 42 16)</code></pre>
+
+<p>We can use this rule to rewrite all <code>let</code> special forms into <code>lambda</code>
+expressions. We prevent evaluation of a program by quoting it, and then pass it
+to a procedure called <code>let-to-lambda</code>:</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> (<span class="hljs-built_in">let</span>-to-lambda <span class="hljs-string">'(let ((a 1) (b 2)) (+ a b)))</span></span>
+((lambda (a b) (+ a b)) 1 2)
+<span class="hljs-meta">scm&gt;</span><span class="bash"><span class="hljs-string"> (let-to-lambda '</span>(<span class="hljs-built_in">let</span> ((a 1)) (<span class="hljs-built_in">let</span> ((b a)) b)))</span>
+((lambda (a) ((lambda (b) b) a)) 1)</code></pre>
+
+<p>In order to handle all programs, <code>let-to-lambda</code> must be aware of Scheme
+syntax. Since Scheme expressions are recursively nested, <code>let-to-lambda</code>
+must also be recursive. In fact, the structure of <code>let-to-lambda</code> is
+somewhat similar to that of <code>scheme_eval</code>--but in Scheme!</p>
+
+<pre><code class="hljs xml">(define (let-to-lambda expr)
+  (cond ((atom?   expr) <span class="hljs-tag">&lt;<span class="hljs-name">rewrite</span> <span class="hljs-attr">atoms</span>&gt;</span>)
+        ((quoted? expr) <span class="hljs-tag">&lt;<span class="hljs-name">rewrite</span> <span class="hljs-attr">quoted</span> <span class="hljs-attr">expressions</span>&gt;</span>)
+        ((lambda? expr) <span class="hljs-tag">&lt;<span class="hljs-name">rewrite</span> <span class="hljs-attr">lambda</span> <span class="hljs-attr">expressions</span>&gt;</span>)
+        ((define? expr) <span class="hljs-tag">&lt;<span class="hljs-name">rewrite</span> <span class="hljs-attr">define</span> <span class="hljs-attr">expressions</span>&gt;</span>)
+        ((let?    expr) <span class="hljs-tag">&lt;<span class="hljs-name">rewrite</span> <span class="hljs-attr">let</span> <span class="hljs-attr">expressions</span>&gt;</span>)
+        (else           <span class="hljs-tag">&lt;<span class="hljs-name">rewrite</span> <span class="hljs-attr">other</span> <span class="hljs-attr">expressions</span>&gt;</span>)))</code></pre>
+
+<p>Implement the <code>let-to-lambda</code> procedure, which takes in an expression and
+rewrites all of the <code>let</code> special forms in the expression into their
+equivalent <code>lambda</code> expressions. As a reminder, atoms include numbers, booleans,
+nil, and symbols.</p>
+
+<p><em>Hint</em>: You may want to implement <code>zip</code> at the top of <code>questions.scm</code> and also
+use the built-in <code>map</code> procedure.</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> (zip <span class="hljs-string">'((1 2) (3 4) (5 6)))</span></span>
+((1 3 5) (2 4 6))
+<span class="hljs-meta">scm&gt;</span><span class="bash"><span class="hljs-string"> (zip '</span>((1 2)))</span>
+((1) (2))
+<span class="hljs-meta">scm&gt;</span><span class="bash"> (zip <span class="hljs-string">'())</span></span>
+(() ())</code></pre>
+
+<p>Test your understanding and implementation before moving on:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q <span class="hljs-number">19</span> -u
+python3 ok -q <span class="hljs-number">19</span></code></pre>
+
+<blockquote><p><em>Note</em>: We used <code>let</code> while defining <code>let-to-lambda</code>. What if we want to run
+<code>let-to-lambda</code> on an interpreter that does not recognize <code>let</code>? We can pass
+<code>let-to-lambda</code> to itself to rewrite itself into an <em>equivalent program
+without</em> <code>let</code>:</p>
+
+<pre><code class="hljs sql">;; The let-to-lambda procedure
+(define (let-to-lambda expr)
+  ...)
+
+;; A list representing the let-to-lambda procedure
+(define let-to-lambda-code
+  '(define (let-to-lambda expr)
+     ...))
+
+;; An let-to-lambda procedure that does not <span class="hljs-keyword">use</span> <span class="hljs-string">'let'</span>!
+(<span class="hljs-keyword">define</span> let-<span class="hljs-keyword">to</span>-lambda-<span class="hljs-keyword">without</span>-let
+  (let-<span class="hljs-keyword">to</span>-lambda let-<span class="hljs-keyword">to</span>-lambda-code))</code></pre></blockquote>
+
+
+<h2 id="part-iv-extra-credit">Part IV: Extra Credit</h2>
+
+
+
+<h3 id="problem-20-2-pt">Problem 20 (2 pt)</h3>
+
+
+<p>Complete the function <code>scheme_optimized_eval</code> in <code>scheme.py</code>. This alternative
+to <code>scheme_eval</code> is properly tail recursive. That is, the interpreter will
+allow an unbounded number of active <a href="http://en.wikipedia.org/wiki/Tail_call">tail calls</a> in constant space.</p>
+
+<p>The <code>Thunk</code> class represents a <a href="http://en.wikipedia.org/wiki/Thunk">thunk</a>, an expression that needs to be
+evaluated in an environment. When <code>scheme_optimized_eval</code> receives an
+expression in a <code>tail</code> context, then it returns an <code>Thunk</code> instance. Otherwise,
+it repeatedly evaluates expressions within the body of a <code>while</code> statement,
+updating <code>result</code> in each iteration.</p>
+
+<p><strong>A successful implementation will require changes to several other functions,
+including some functions that we provided for you.</strong> All tail calls should call
+<code>scheme_eval</code> with <code>True</code> as a third argument, indicating a tail call. Think
+about what Scheme expressions are in a tail context!</p>
+
+<p>Once you finish, uncomment the following line in <code>scheme.py</code> to use your
+implementation:</p>
+
+<pre><code class="hljs ini"><span class="hljs-attr">scheme_eval</span> = scheme_optimized_eval</code></pre>
+
+<p>Test your understanding and implementation before moving on:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q <span class="hljs-number">20</span> -u
+python3 ok -q <span class="hljs-number">20</span></code></pre>
+
+
+<h3 id="problem-21-1-pt">Problem 21 (1 pt)</h3>
+
+
+<p>Macros allow the language itself to be extended by the user. Simple macros can
+be provided with the <code>define-macro</code> special form. This must be used like a
+function definition, and it creates a procedure just like <code>define</code>. However,
+this procedure has a special evaluation rule: it is applied to its arguments
+without first evaluating them. Then the result of this application is
+evaluated.</p>
+
+<p>This final evaluation step takes place in the caller's frame, as if the return
+value from the macro was literally pasted into the code in place of the macro.</p>
+
+<p>Here is a simple example:</p>
+
+<pre><code class="hljs shell"><span class="hljs-meta">scm&gt;</span><span class="bash"> (define (map f lst) (<span class="hljs-keyword">if</span> (null? lst) nil (cons (f (car lst)) (map f (cdr lst)))))</span>
+<span class="hljs-meta">scm&gt;</span><span class="bash"> (define-macro (<span class="hljs-keyword">for</span> formal iterable body)</span>
+....     (list 'map (list 'lambda (list formal) body) iterable))
+<span class="hljs-meta">scm&gt;</span><span class="bash"> (<span class="hljs-keyword">for</span> i <span class="hljs-string">'(1 2 3)</span></span>
+....     (print (* i i)))
+1
+4
+9
+(None None None)</code></pre>
+
+<p>The code above defines a macro <code>for</code> that acts as a <code>map</code> except that it doesn't
+need a lambda around the body.</p>
+
+<p>In order to implement <code>define-macro</code>, implement the <code>MacroProcedure</code> class by
+overriding the <code>eval_call</code> method so that it applies the procedure directly to
+the arguments without evaluating them first.  It should then evaluate and
+return the result.</p>
+
+<blockquote><p><em>Hint</em>: If you implemented Tail Recursion, you should use <code>complete_eval</code>!</p></blockquote>
+
+<p>Then, complete the implementation for <code>do_define_macro</code>, which should create a
+<code>MacroProcedure</code> and bind it to the given name as in <code>do_define_form</code>.</p>
+
+<p>Test your understanding and implementation before moving on:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q <span class="hljs-number">21</span> -u
+python3 ok -q <span class="hljs-number">21</span></code></pre>
+
+
+<h3 id="conclusion">Conclusion</h3>
+
+
+<p><strong>Congratulations!</strong> You have just implemented an interpreter for an entire
+language!</p>
+
+
+<h3 id="extra-challenge">Extra Challenge</h3>
+
+
+<p>We've implemented a significant subset of Scheme in this project, but your
+interpreter can be extended with even more features! If you enjoyed this
+project, we have some suggestions in the
+<a href="https://cs61a.org/proj/scheme/extensions.html">extension instructions</a>.</p>
+
+  </div>
+
+  <div class="col-md-3 sticky">
+    <nav class="hidden-print hidden-sm hidden-xs sidebar">
+      <ul class="nav nav-stacked noselect">
+  <li><a href="https://cs61a.org/proj/scheme/#details-of-scheme">Details of Scheme</a></li>
+  <li><a href="https://cs61a.org/proj/scheme/#testing-your-scheme-interpreter">Testing Your Scheme Interpreter</a></li>
+  <li><a href="https://cs61a.org/proj/scheme/#your-own-test-cases">Your own test cases</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/proj/scheme/#adding-tests">Adding tests</a></li>
+    <li><a href="https://cs61a.org/proj/scheme/#running-tests">Running tests</a></li>
+  </ul>
+  <li><a href="https://cs61a.org/proj/scheme/#running-your-scheme-interpreter">Running Your Scheme Interpreter</a></li>
+  <li><a href="https://cs61a.org/proj/scheme/#overview">Overview</a></li>
+  <li><a href="https://cs61a.org/proj/scheme/#part-i-the-reader">Part I: The Reader</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/proj/scheme/#problem-1-2-pt">Problem 1 (2 pt)</a></li>
+    <li><a href="https://cs61a.org/proj/scheme/#problem-2-1-pt">Problem 2 (1 pt)</a></li>
+  </ul>
+  <li><a href="https://cs61a.org/proj/scheme/#part-ii-the-evaluator">Part II: The Evaluator</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/proj/scheme/#some-core-functionality">Some Core Functionality</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/proj/scheme/#problem-3-1-pt">Problem 3 (1 pt)</a></li>
+      <li><a href="https://cs61a.org/proj/scheme/#problem-4-1-pt">Problem 4 (1 pt)</a></li>
+      <li><a href="https://cs61a.org/proj/scheme/#problem-5-1-pt">Problem 5 (1 pt)</a></li>
+      <li><a href="https://cs61a.org/proj/scheme/#problem-6-1-pt">Problem 6 (1 pt)</a></li>
+      <li><a href="https://cs61a.org/proj/scheme/#problem-7-1-pt">Problem 7 (1 pt)</a></li>
+    </ul>
+    <li><a href="https://cs61a.org/proj/scheme/#user-defined-procedures">User-Defined Procedures</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/proj/scheme/#problem-8-1-pt">Problem 8 (1 pt)</a></li>
+      <li><a href="https://cs61a.org/proj/scheme/#problem-9-1-pt">Problem 9 (1 pt)</a></li>
+      <li><a href="https://cs61a.org/proj/scheme/#problem-10-2-pt">Problem 10 (2 pt)</a></li>
+      <li><a href="https://cs61a.org/proj/scheme/#problem-11">Problem 11 (2 pt)</a></li>
+      <li><a href="https://cs61a.org/proj/scheme/#problem-12-1-pt">Problem 12 (1 pt)</a></li>
+    </ul>
+    <li><a href="https://cs61a.org/proj/scheme/#special-forms">Special Forms</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/proj/scheme/#problem-13-2-pt">Problem 13 (2 pt)</a></li>
+      <li><a href="https://cs61a.org/proj/scheme/#problem-14-2-pt">Problem 14 (2 pt)</a></li>
+      <li><a href="https://cs61a.org/proj/scheme/#problem-15-2-pt">Problem 15 (2 pt)</a></li>
+      <li><a href="https://cs61a.org/proj/scheme/#problem-16-1-pt">Problem 16 (1 pt)</a></li>
+    </ul>
+  </ul>
+  <li><a href="https://cs61a.org/proj/scheme/#part-iii-write-some-scheme">Part III: Write Some Scheme</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/proj/scheme/#problem-17-1-pt">Problem 17 (1 pt)</a></li>
+    <li><a href="https://cs61a.org/proj/scheme/#problem-18-2-pt">Problem 18 (2 pt)</a></li>
+    <li><a href="https://cs61a.org/proj/scheme/#problem-19-2-pt">Problem 19 (2 pt)</a></li>
+  </ul>
+  <li><a href="https://cs61a.org/proj/scheme/#part-iv-extra-credit">Part IV: Extra Credit</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/proj/scheme/#problem-20-2-pt">Problem 20 (2 pt)</a></li>
+    <li><a href="https://cs61a.org/proj/scheme/#problem-21-1-pt">Problem 21 (1 pt)</a></li>
+    <li><a href="https://cs61a.org/proj/scheme/#conclusion">Conclusion</a></li>
+    <li><a href="https://cs61a.org/proj/scheme/#extra-challenge">Extra Challenge</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/resources.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/studying.html">Studying Guide</a></li>
+            <li><a href="https://cs61a.org/articles/debugging.html">Debugging Guide</a></li>
+            <li><a href="https://cs61a.org/articles/composition.html">Composition Guide</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/articles/about.html">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/about.html#assignments">Assignments</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#exams">Exams</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+</script>
+
+  
+</body></html>

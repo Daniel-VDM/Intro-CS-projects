@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<!-- saved from url=(0028)https://cs61a.org/lab/lab02/ -->
+<html lang="en" class="gr__cs61a_org"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="CS 61A: Structure and Interpretation of Computer Programs">
+    <meta name="keywords" content="CS 61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS">
+    <meta name="author" content="John DeNero, Paul Hilfinger">
+    
+    <meta name="viewport" content="width=device-width">
+
+    <script src="./Lab 2_ Lambdas and Higher-Order Functions _ CS 61A Fall 2017_files/jquery.min.js.download"></script>
+    <script src="./Lab 2_ Lambdas and Higher-Order Functions _ CS 61A Fall 2017_files/bootstrap.min.js.download"></script>
+    <script src="./Lab 2_ Lambdas and Higher-Order Functions _ CS 61A Fall 2017_files/highlight.min.js.download"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="./Lab 2_ Lambdas and Higher-Order Functions _ CS 61A Fall 2017_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./Lab 2_ Lambdas and Higher-Order Functions _ CS 61A Fall 2017_files/css">
+    <link rel="stylesheet" href="./Lab 2_ Lambdas and Higher-Order Functions _ CS 61A Fall 2017_files/style.css">
+    <link rel="stylesheet" href="./Lab 2_ Lambdas and Higher-Order Functions _ CS 61A Fall 2017_files/mono-blue.css">
+    <link rel="icon" href="https://cs61a.org/assets/images/favicon.ico">
+
+    
+
+    <title>
+Lab 2: Lambdas and Higher-Order Functions | CS 61A Fall 2017
+</title>
+  </head>
+
+  <body id="index" class="home" data-gr-c-s-loaded="true">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://cs61a.org/">CS 61A</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+            <li><a href="https://cs61a.org/resources.html">Resources</a></li>
+            <li><a href="https://cs61a.org/articles/about.html">Policies</a></li>
+            <li><a href="http://tutor.cs61a.org/">Tutor</a></li>
+            <li><a href="https://piazza.com/berkeley/fall2017/cs61a" target="_blank">Piazza</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class="row">
+  <div class="col-md-9">
+    <header>
+      <h1>
+        
+Lab 2: Lambdas and Higher-Order Functions
+
+        
+        <ul class="inline-block list-inline">
+          <li><a href="https://cs61a.org/lab/lab02/lab02.zip" class="label label-outline">lab02.zip</a></li>
+        </ul>
+        
+      </h1>
+    </header>
+    
+
+<p><i>Due at 11:59pm on Friday, 09/08/2017.</i></p>
+
+
+<h2 id="starter-files">Starter Files</h2>
+
+
+<p>Download <a href="https://cs61a.org/lab/lab02/lab02.zip">lab02.zip</a>.
+Inside the archive, you will find starter files for the questions in this lab,
+  along with a copy of the <a href="https://cs61a.org/lab/lab02/ok">Ok</a> autograder.</p>
+
+
+<h2 id="submission">Submission</h2>
+
+<p>By the end of this lab, you should have submitted the lab with
+<code>python3 ok --submit</code>. You may submit more than once before the
+deadline; only the final submission will be graded.
+Check that you have successfully submitted your code on
+<a href="https://okpy.org/">okpy.org</a>.</p>
+
+<ul>
+  <li>Questions 1 - 4 must be completed in order to receive credit for
+  this lab. Starter code for questions 3 and 4 is in <a href="https://cs61a.org/lab/lab02/lab02.py">lab02.py</a>.</li>
+  <li>Questions 5 and 6 (Environment Diagrams) are <strong>optional</strong>. <em>It is recommended
+  that you work on these should you finish the required section early.</em></li>
+  <li>Questions 7 and 8 are also <strong>optional</strong>. <em>It is recommended that you complete
+  these problems on your own time.</em> Starter code for the questions are in
+  <a href="https://cs61a.org/lab/lab02/lab02_extra.py">lab02_extra.py</a>.</li>
+</ul>
+
+
+
+    
+<h1 id="topics">Topics</h1>
+
+
+<p>Consult this section if you need a refresher on the material for this lab. It's
+okay to skip directly to <a href="https://cs61a.org/lab/lab02/#required-questions">the questions</a> and refer back
+here should you get stuck.</p>
+
+
+<h2 id="lambdas">Lambdas</h2>
+
+
+<p>Lambda expressions are one-line functions that specify two things:
+the parameters and the return value.</p>
+
+<pre><code class="hljs cs">lambda &lt;parameters&gt;: &lt;<span class="hljs-keyword">return</span> <span class="hljs-keyword">value</span>&gt;</code></pre>
+
+<p>While both <code>lambda</code> and <code>def</code> statements are related to functions, there are some differences.</p>
+
+<!-- One difference between using the <code>def</code> keyword and <code>lambda</code>
+expressions is that <code>def</code> is a *statement*, while lambda is an
+*expression*. Evaluating a <code>def</code> statement will have a side effect;
+namely, it creates a new function binding in the current environment.
+On the other hand, evaluating a <code>lambda</code> expression will not change the
+environment unless we do something with this expression. For instance,
+we could assign it to a variable or pass it in as a function argument. -->
+
+<div class="table-responsive">
+  <table class="table table-bordered">
+      <tbody><tr>
+          <th></th>
+          <th>lambda</th>
+          <th>def</th>
+      </tr>
+      <tr>
+          <td>Type</td>
+          <td><code>lambda</code> is an <i>expression</i></td>
+          <td><code>def</code> is a <i>statement</i></td>
+      </tr>
+      <tr>
+          <td>Description</td>
+          <td>Evaluating a <code>lambda</code> expression does not create or modify any variables.
+          Lambda expressions just create new function objects without changing the current environment.</td>
+          <td>Executing a <code>def</code> statement will create a new function object and bind it to a variable in the current environment.</td>
+      </tr>
+      <tr>
+          <td>Example</td>
+          <td><pre><code class="hljs nginx"><span class="hljs-attribute">lambda</span> x: x * x
+           </code></pre></td>
+          <td><pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">square</span><span class="hljs-params">(x)</span>:</span>
+    <span class="hljs-keyword">return</span> x * x</code></pre></td>
+      </tr>
+  </tbody></table>
+</div>
+
+<p>A <code>lambda</code> expression by itself is not very interesting. As with any values
+such as numbers, Booleans, and strings, we usually:</p>
+
+<ul>
+  <li>assign lambdas to variables (<code>foo = lambda x: x</code>)</li>
+  <li>pass them in to other functions (<code>bar(lambda x: x)</code>)</li>
+</ul>
+
+
+<h2 id="higher-order-functions">Higher Order Functions</h2>
+
+
+<p>A higher order function is a function that manipulates other functions by taking
+in functions as arguments, returning a function, or both. We will be exploring
+many applications of higher order functions.</p>
+
+
+<h1 id="required-questions">Required Questions</h1>
+
+
+
+<h2 id="what-would-python-display">What Would Python Display?</h2>
+
+
+<h3 class="question" id="q1">Q1: WWPD: Lambda the Free</h3>
+
+<blockquote><p>Use Ok to test your knowledge with the following "What Would Python Display?"
+questions:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q lambda -u</code></pre>
+
+<p>Hint: Remember for all WWPD questions, input <code>Function</code> if you believe the
+answer is <code>&lt;function...&gt;</code>, <code>Error</code> if it errors, and <code>Nothing</code> if nothing
+is displayed.</p></blockquote>
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">lambda</span> x: x
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&lt;function &lt;<span class="hljs-keyword">lambda</span>&gt; at ...&gt;</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>a = <span class="hljs-keyword">lambda</span> x: x
+<span class="hljs-meta">&gt;&gt;&gt; </span>a(<span class="hljs-number">5</span>)  <span class="hljs-comment"># x is the parameter for the lambda function</span>
+<div class="alt prompt-1">______</div><div class="solution prompt-1">5</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>b = <span class="hljs-keyword">lambda</span>: <span class="hljs-number">3</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>b()
+<div class="alt prompt-1">______</div><div class="solution prompt-1">3</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>c = <span class="hljs-keyword">lambda</span> x: <span class="hljs-keyword">lambda</span>: print(<span class="hljs-string">'123'</span>)
+<span class="hljs-meta">&gt;&gt;&gt; </span>c(<span class="hljs-number">88</span>)
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&lt;function &lt;<span class="hljs-keyword">lambda</span>&gt; at ...&gt;</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>c(<span class="hljs-number">88</span>)()
+<div class="alt prompt-1">______</div><div class="solution prompt-1">123</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>d = <span class="hljs-keyword">lambda</span> f: f(<span class="hljs-number">4</span>)  <span class="hljs-comment"># They can have functions as arguments as well.</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">square</span><span class="hljs-params">(x)</span>:</span>
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">return</span> x * x
+<span class="hljs-meta">&gt;&gt;&gt; </span>d(square)
+<div class="alt prompt-1">______</div><div class="solution prompt-1">16</div></code></pre>
+        <button id="prompt-1" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; t = lambda f: lambda x: f(f(f(x)))</span>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; s = lambda x: x + 1</span>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; t(s)(0)</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2">3</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; bar = lambda y: lambda x: pow(x, y)</span>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; bar()(15)</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2">TypeError: &lt;lambda&gt;() missing 1 required positional argument: 'y'</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; foo = lambda: 32</span>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; foobar = lambda x, y: x // y</span>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; a = lambda x: foobar(foo(), bar(4)(x))</span>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; a(2)</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2">2</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; b = lambda x, y: <span class="hljs-built_in">print</span>(<span class="hljs-string">'summer'</span>)</span>
+<div class="alt prompt-2"><span class="hljs-meta">______</span></div><div class="solution prompt-2"><span class="hljs-meta">#</span><span class="bash"> Nothing gets printed by the interpreter</span></div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; c = b(4, <span class="hljs-string">'dog'</span>)</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2">summer</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; <span class="hljs-built_in">print</span>(c)</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2">None</div></code></pre>
+        <button id="prompt-2" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>a = <span class="hljs-keyword">lambda</span> b: b * <span class="hljs-number">2</span>
+<div class="alt prompt-3">______</div><div class="solution prompt-3"><span class="hljs-comment"># Nothing gets printed by the interpreter</span></div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>a
+<div class="alt prompt-3">______</div><div class="solution prompt-3">Function</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>a(a(a(<span class="hljs-number">2</span>)))
+<div class="alt prompt-3">______</div><div class="solution prompt-3">16</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>a(a(a()))
+<div class="alt prompt-3">______</div><div class="solution prompt-3">TypeError: &lt;<span class="hljs-keyword">lambda</span>&gt;() missing <span class="hljs-number">1</span> required positional argument: <span class="hljs-string">'b'</span></div>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">d</span><span class="hljs-params">()</span>:</span>
+<span class="hljs-meta">... </span>    print(<span class="hljs-keyword">None</span>)
+<span class="hljs-meta">... </span>    print(<span class="hljs-string">'whoo'</span>)
+<span class="hljs-meta">&gt;&gt;&gt; </span>b = d()
+<div class="alt prompt-3">______</div><div class="solution prompt-3">None
+whoo</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>b
+<div class="alt prompt-3">______</div><div class="solution prompt-3"><span class="hljs-comment"># Nothing gets printed by the interpreter</span></div></code></pre>
+        <button id="prompt-3" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; x, y, z = <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>
+<span class="hljs-meta">&gt;&gt;</span>&gt; a = lambda <span class="hljs-symbol">b:</span> x + y + z
+<span class="hljs-meta">&gt;&gt;</span>&gt; x += y
+<span class="hljs-meta">&gt;&gt;</span>&gt; y -= z
+<span class="hljs-meta">&gt;&gt;</span>&gt; a(<span class="hljs-string">'b'</span>)
+<div class="alt prompt-4">______</div><div class="solution prompt-4">5</div></code></pre>
+        <button id="prompt-4" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>z = <span class="hljs-number">3</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>e = <span class="hljs-keyword">lambda</span> x: <span class="hljs-keyword">lambda</span> y: <span class="hljs-keyword">lambda</span>: x + y + z
+<span class="hljs-meta">&gt;&gt;&gt; </span>e(<span class="hljs-number">0</span>)(<span class="hljs-number">1</span>)()
+<div class="alt prompt-5">______</div><div class="solution prompt-5">4</div></code></pre>
+        <button id="prompt-5" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<h3 class="question" id="q2">Q2: WWPD: Higher Order Functions</h3>
+
+<blockquote><p>Use Ok to test your knowledge with the following "What Would Python Display?"
+questions:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q hof -u</code></pre>
+
+<p>Hint: Remember for all WWPD questions, input <code>Function</code> if you believe the
+answer is <code>&lt;function...&gt;</code>, <code>Error</code> if it errors, and <code>Nothing</code> if nothing
+is displayed.</p></blockquote>
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">even</span><span class="hljs-params">(f)</span>:</span>
+<span class="hljs-meta">... </span>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">odd</span><span class="hljs-params">(x)</span>:</span>
+<span class="hljs-meta">... </span>        <span class="hljs-keyword">if</span> x &lt; <span class="hljs-number">0</span>:
+<span class="hljs-meta">... </span>            <span class="hljs-keyword">return</span> f(-x)
+<span class="hljs-meta">... </span>        <span class="hljs-keyword">return</span> f(x)
+<span class="hljs-meta">... </span>    <span class="hljs-keyword">return</span> odd
+<span class="hljs-meta">&gt;&gt;&gt; </span>stevphen = <span class="hljs-keyword">lambda</span> x: x
+<span class="hljs-meta">&gt;&gt;&gt; </span>stewart = even(stevphen)
+<span class="hljs-meta">&gt;&gt;&gt; </span>stewart
+<div class="alt prompt-6">______</div><div class="solution prompt-6">&lt;function ...&gt; </div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>stewart(<span class="hljs-number">61</span>)
+<div class="alt prompt-6">______</div><div class="solution prompt-6">61</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>stewart(<span class="hljs-number">-4</span>)
+<div class="alt prompt-6">______</div><div class="solution prompt-6">4</div></code></pre>
+        <button id="prompt-6" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">cake</span><span class="hljs-params">()</span>:</span>
+<span class="hljs-meta">... </span>   print(<span class="hljs-string">'beets'</span>)
+<span class="hljs-meta">... </span>   <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">pie</span><span class="hljs-params">()</span>:</span>
+<span class="hljs-meta">... </span>       print(<span class="hljs-string">'sweets'</span>)
+<span class="hljs-meta">... </span>       <span class="hljs-keyword">return</span> <span class="hljs-string">'cake'</span>
+<span class="hljs-meta">... </span>   <span class="hljs-keyword">return</span> pie
+<span class="hljs-meta">&gt;&gt;&gt; </span>a = cake()
+<div class="alt prompt-7">______</div><div class="solution prompt-7">beets</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>a
+<div class="alt prompt-7">______</div><div class="solution prompt-7">Function</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>a()
+<div class="alt prompt-7">______</div><div class="solution prompt-7">sweets
+<span class="hljs-string">'cake'</span></div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>x, b = a(), cake
+<div class="alt prompt-7">______</div><div class="solution prompt-7">sweets</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">snake</span><span class="hljs-params">(x)</span>:</span>
+<span class="hljs-meta">... </span>   <span class="hljs-keyword">if</span> cake == b:
+<span class="hljs-meta">... </span>       x += <span class="hljs-number">3</span>
+<span class="hljs-meta">... </span>       <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> y: y + x
+<span class="hljs-meta">... </span>   <span class="hljs-keyword">else</span>:
+<span class="hljs-meta">... </span>       <span class="hljs-keyword">return</span> y - x
+<span class="hljs-meta">&gt;&gt;&gt; </span>snake(<span class="hljs-number">24</span>)(<span class="hljs-number">23</span>)
+<div class="alt prompt-7">______</div><div class="solution prompt-7">50</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>cake = <span class="hljs-number">2</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>snake(<span class="hljs-number">26</span>)
+<div class="alt prompt-7">______</div><div class="solution prompt-7">Error</div>
+<span class="hljs-meta">&gt;&gt;&gt; </span>y = <span class="hljs-number">50</span>
+<span class="hljs-meta">&gt;&gt;&gt; </span>snake(<span class="hljs-number">26</span>)
+<div class="alt prompt-7">______</div><div class="solution prompt-7">24</div></code></pre>
+        <button id="prompt-7" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+
+<h2 id="coding-practice">Coding Practice</h2>
+
+
+<h3 class="question" id="q3">Q3: Lambdas and Currying</h3>
+
+<p>We can transform multiple-argument functions into a chain of
+single-argument, higher order functions by taking advantage of lambda
+expressions. This is useful when dealing with functions that take only
+single-argument functions. We will see some examples of these later
+on.</p>
+
+<p>Write a function <code>lambda_curry2</code> that will curry any two argument function using
+lambdas. See the doctest or refer to the
+<a href="http://composingprograms.com/pages/16-higher-order-functions.html#currying">textbook</a>
+if you're not sure what this means.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">lambda_curry2</span><span class="hljs-params">(func)</span>:</span>
+    <span class="hljs-string">"""
+    Returns a Curried version of a two-argument function FUNC.
+    &gt;&gt;&gt; from operator import add
+    &gt;&gt;&gt; curried_add = lambda_curry2(add)
+    &gt;&gt;&gt; add_three = curried_add(3)
+    &gt;&gt;&gt; add_three(5)
+    8
+    """</span>
+<div class="alt solution-1">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+    <span class="hljs-keyword">return</span> ______
+</div><div class="solution solution-1">    <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> arg1: <span class="hljs-keyword">lambda</span> arg2: func(arg1, arg2)</div></code></pre>
+
+
+        <button id="solution-1" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q lambda_curry2</code></pre>
+
+<h3 class="question" id="q4">Q4: Composite Identity Function</h3>
+
+<p>Write a function that takes in two single-argument functions, <code>f</code> and <code>g</code>, and
+returns another <strong>function</strong> that has a single parameter <code>x</code>. The returned
+function should return <code>True</code> if <code>f(g(x))</code> is equal to <code>g(f(x))</code>. You can
+assume the output of <code>g(x)</code> is a valid input for <code>f</code> and vice versa.
+You may use the <code>compose1</code> function defined below.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">compose1</span><span class="hljs-params">(f, g)</span>:</span>
+    <span class="hljs-string">"""Return the composition function which given x, computes f(g(x)).
+
+    &gt;&gt;&gt; add_one = lambda x: x + 1        # adds one to x
+    &gt;&gt;&gt; square = lambda x: x**2
+    &gt;&gt;&gt; a1 = compose1(square, add_one)   # (x + 1)^2
+    &gt;&gt;&gt; a1(4)
+    25
+    &gt;&gt;&gt; mul_three = lambda x: x * 3      # multiplies 3 to x
+    &gt;&gt;&gt; a2 = compose1(mul_three, a1)    # ((x + 1)^2) * 3
+    &gt;&gt;&gt; a2(4)
+    75
+    &gt;&gt;&gt; a2(5)
+    108
+    """</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> x: f(g(x))
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">composite_identity</span><span class="hljs-params">(f, g)</span>:</span>
+    <span class="hljs-string">"""
+    Return a function with one parameter x that returns True if f(g(x)) is
+    equal to g(f(x)). You can assume the result of g(x) is a valid input for f
+    and vice versa.
+
+    &gt;&gt;&gt; add_one = lambda x: x + 1        # adds one to x
+    &gt;&gt;&gt; square = lambda x: x**2
+    &gt;&gt;&gt; b1 = composite_identity(square, add_one)
+    &gt;&gt;&gt; b1(0)                            # (0 + 1)^2 == 0^2 + 1
+    True
+    &gt;&gt;&gt; b1(4)                            # (4 + 1)^2 != 4^2 + 1
+    False
+    """</span>
+<div class="alt solution-2">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-2">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">identity</span><span class="hljs-params">(x)</span>:</span>
+        <span class="hljs-keyword">return</span> compose1(f, g)(x) == compose1(g, f)(x)
+    <span class="hljs-keyword">return</span> identity
+
+    <span class="hljs-comment"># Alternative solution</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">lambda</span> x: f(g(x)) == g(f(x))</div></code></pre>
+
+
+        <button id="solution-2" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q composite_identity</code></pre>
+
+
+<h1 id="optional-questions">Optional Questions</h1>
+
+
+
+<h2 id="environment-diagrams">Environment Diagrams</h2>
+
+
+<h3 class="question" id="q5">Q5: Lambda the Environment Diagram</h3>
+
+<p>Try drawing an environment diagram for the following code and predict what
+Python will output.</p>
+
+<p><strong>You do not need to submit or unlock this question through Ok.</strong>
+Instead, you can check your work with the <a href="http://tutor.cs61a.org/">Online Python
+Tutor</a>, but try drawing it yourself first!</p>
+
+<pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; a = lambda <span class="hljs-symbol">x:</span> x * <span class="hljs-number">2</span> + <span class="hljs-number">1</span>
+<span class="hljs-meta">&gt;&gt;</span>&gt; <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">b</span><span class="hljs-params">(b, x)</span></span>:
+...     return b(x + a(x))
+<span class="hljs-meta">&gt;&gt;</span>&gt; x = <span class="hljs-number">3</span>
+<span class="hljs-meta">&gt;&gt;</span>&gt; b(a, x)
+<div class="alt prompt-8">______</div><div class="solution prompt-8">21</div></code></pre>
+        <button id="prompt-8" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<h3 class="question" id="q6">Q6: Make Adder</h3>
+
+<p>Draw the environment diagram for the following code:</p>
+
+<pre><code class="hljs makefile">n = 9
+def make_adder(n):
+    return lambda k: k + n
+add_ten = make_adder(n+1)
+result = add_ten(n)</code></pre>
+
+<p>There are 3 frames total (including the Global frame). In addition, consider
+the following questions:</p>
+
+<ol>
+  <li>In the Global frame, the name <code>add_ten</code> points to a function object. What is
+  the intrinsic name of that function object, and what frame is its parent?</li>
+  <li>In frame <code>f2</code>, what name is the frame labeled with (<code>add_ten</code> or λ)?
+  Which frame is the parent of <code>f2</code>?</li>
+  <li>What value is the variable <code>result</code> bound to in the Global frame?</li>
+</ol>
+
+<div class="solution solution-3">
+
+<p>You can try out the environment diagram at <a href="http://tutor.cs61a.org/">tutor.cs61a.org</a>.</p>
+
+<ol>
+  <li>The intrinsic name of the function object that <code>add_ten</code> points to is
+  λ (specifically, the lambda whose parameter is <code>k</code>). The parent frame
+  of this lambda is <code>f1</code>.</li>
+  <li><code>f2</code> is labeled with the name λ the parent frame of <code>f2</code> is <code>f1</code>,
+  since that is where λ is defined.</li>
+  <li>The variable <code>result</code> is bound to 19.</li>
+</ol>
+
+</div>
+        <button id="solution-3" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+
+<h2 id="more-coding-practice">More Coding Practice</h2>
+
+
+<blockquote><p><strong>Note</strong>: The following questions are in <a href="https://cs61a.org/lab/lab02/lab02_extra.py">lab02_extra.py</a>.</p></blockquote>
+
+<h3 class="question" id="q7">Q7: Count van Count</h3>
+
+<p>Consider the following implementations of <code>count_factors</code> and <code>count_primes</code>:</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">count_factors</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-string">"""Return the number of positive factors that n has."""</span>
+    i, count = <span class="hljs-number">1</span>, <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> i &lt;= n:
+        <span class="hljs-keyword">if</span> n % i == <span class="hljs-number">0</span>:
+            count += <span class="hljs-number">1</span>
+        i += <span class="hljs-number">1</span>
+    <span class="hljs-keyword">return</span> count
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">count_primes</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-string">"""Return the number of prime numbers up to and including n."""</span>
+    i, count = <span class="hljs-number">1</span>, <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> i &lt;= n:
+        <span class="hljs-keyword">if</span> is_prime(i):
+            count += <span class="hljs-number">1</span>
+        i += <span class="hljs-number">1</span>
+    <span class="hljs-keyword">return</span> count
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">is_prime</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-keyword">return</span> count_factors(n) == <span class="hljs-number">2</span> <span class="hljs-comment"># only factors are 1 and n</span></code></pre>
+
+<p>The implementations look quite similar! Generalize this logic by writing a
+function <code>count_cond</code>, which takes in a two-argument predicate function <code>condition(n,
+i)</code>. <code>count_cond</code> returns a one-argument function that counts all the numbers
+from 1 to <code>n</code> that satisfy <code>condition</code>.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">count_cond</span><span class="hljs-params">(condition)</span>:</span>
+    <span class="hljs-string">"""Returns a function with one parameter N that counts all the numbers from
+    1 to N that satisfy the two-argument predicate function CONDITION.
+
+    &gt;&gt;&gt; count_factors = count_cond(lambda n, i: n % i == 0)
+    &gt;&gt;&gt; count_factors(2)   # 1, 2
+    2
+    &gt;&gt;&gt; count_factors(4)   # 1, 2, 4
+    3
+    &gt;&gt;&gt; count_factors(12)  # 1, 2, 3, 4, 6, 12
+    6
+
+    &gt;&gt;&gt; is_prime = lambda n, i: count_factors(i) == 2
+    &gt;&gt;&gt; count_primes = count_cond(is_prime)
+    &gt;&gt;&gt; count_primes(2)    # 2
+    1
+    &gt;&gt;&gt; count_primes(3)    # 2, 3
+    2
+    &gt;&gt;&gt; count_primes(4)    # 2, 3
+    2
+    &gt;&gt;&gt; count_primes(5)    # 2, 3, 5
+    3
+    &gt;&gt;&gt; count_primes(20)   # 2, 3, 5, 7, 11, 13, 17, 19
+    8
+    """</span>
+<div class="alt solution-4">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-4">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">counter</span><span class="hljs-params">(n)</span>:</span>
+        i, count = <span class="hljs-number">1</span>, <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> i &lt;= n:
+            <span class="hljs-keyword">if</span> condition(n, i):
+                count += <span class="hljs-number">1</span>
+            i += <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> count
+    <span class="hljs-keyword">return</span> counter</div></code></pre>
+
+
+        <button id="solution-4" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q count_cond</code></pre>
+
+<h3 class="question" id="q8">Q8: I Heard You Liked Functions...</h3>
+
+<p>Define a function <code>cycle</code> that takes in three functions <code>f1</code>, <code>f2</code>,
+<code>f3</code>, as arguments. <code>cycle</code> will return another function that should
+take in an integer argument <code>n</code> and return another function.  That
+final function should take in an argument <code>x</code> and cycle through
+applying <code>f1</code>, <code>f2</code>, and <code>f3</code> to <code>x</code>, depending on what <code>n</code>
+was. Here's what the final function should do to <code>x</code> for a few
+values of <code>n</code>:</p>
+
+<ul>
+  <li><code>n = 0</code>, return <code>x</code></li>
+  <li><code>n = 1</code>, apply <code>f1</code> to <code>x</code>, or return <code>f1(x)</code></li>
+  <li><code>n = 2</code>, apply <code>f1</code> to <code>x</code> and then <code>f2</code> to the result of that, or
+  return <code>f2(f1(x))</code></li>
+  <li><code>n = 3</code>, apply <code>f1</code> to <code>x</code>, <code>f2</code> to the result of applying <code>f1</code>,
+  and then <code>f3</code> to the result of applying <code>f2</code>, or <code>f3(f2(f1(x)))</code></li>
+  <li><code>n = 4</code>, start the cycle again applying <code>f1</code>, then <code>f2</code>, then <code>f3</code>,
+  then <code>f1</code> again, or <code>f1(f3(f2(f1(x))))</code></li>
+  <li>And so forth.</li>
+</ul>
+
+<p><em>Hint</em>: most of the work goes inside the most nested function.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">cycle</span><span class="hljs-params">(f1, f2, f3)</span>:</span>
+    <span class="hljs-string">"""Returns a function that is itself a higher-order function.
+
+    &gt;&gt;&gt; def add1(x):
+    ...     return x + 1
+    &gt;&gt;&gt; def times2(x):
+    ...     return x * 2
+    &gt;&gt;&gt; def add3(x):
+    ...     return x + 3
+    &gt;&gt;&gt; my_cycle = cycle(add1, times2, add3)
+    &gt;&gt;&gt; identity = my_cycle(0)
+    &gt;&gt;&gt; identity(5)
+    5
+    &gt;&gt;&gt; add_one_then_double = my_cycle(2)
+    &gt;&gt;&gt; add_one_then_double(1)
+    4
+    &gt;&gt;&gt; do_all_functions = my_cycle(3)
+    &gt;&gt;&gt; do_all_functions(2)
+    9
+    &gt;&gt;&gt; do_more_than_a_cycle = my_cycle(4)
+    &gt;&gt;&gt; do_more_than_a_cycle(2)
+    10
+    &gt;&gt;&gt; do_two_cycles = my_cycle(6)
+    &gt;&gt;&gt; do_two_cycles(1)
+    19
+    """</span>
+<div class="alt solution-5">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-5">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">ret_fn</span><span class="hljs-params">(n)</span>:</span>
+        <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">ret</span><span class="hljs-params">(x)</span>:</span>
+            i = <span class="hljs-number">0</span>
+            <span class="hljs-keyword">while</span> i &lt; n:
+                <span class="hljs-keyword">if</span> i % <span class="hljs-number">3</span> == <span class="hljs-number">0</span>:
+                    x = f1(x)
+                <span class="hljs-keyword">elif</span> i % <span class="hljs-number">3</span> == <span class="hljs-number">1</span>:
+                    x = f2(x)
+                <span class="hljs-keyword">else</span>:
+                    x = f3(x)
+                i += <span class="hljs-number">1</span>
+            <span class="hljs-keyword">return</span> x
+        <span class="hljs-keyword">return</span> ret
+    <span class="hljs-keyword">return</span> ret_fn</div></code></pre>
+
+
+        <button id="solution-5" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q cycle</code></pre>
+
+  </div>
+
+  <div class="col-md-3 sticky">
+    <nav class="hidden-print hidden-sm hidden-xs sidebar">
+      <ul class="nav nav-stacked noselect">
+  <li><a href="https://cs61a.org/lab/lab02/#topics">Topics</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab02/#lambdas">Lambdas</a></li>
+    <li><a href="https://cs61a.org/lab/lab02/#higher-order-functions">Higher Order Functions</a></li>
+  </ul>
+  <li><a href="https://cs61a.org/lab/lab02/#required-questions">Required Questions</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab02/#what-would-python-display">What Would Python Display?</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab02/#q1">Q1: WWPD: Lambda the Free</a></li>
+      <li><a href="https://cs61a.org/lab/lab02/#q2">Q2: WWPD: Higher Order Functions</a></li>
+    </ul>
+    <li><a href="https://cs61a.org/lab/lab02/#coding-practice">Coding Practice</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab02/#q3">Q3: Lambdas and Currying</a></li>
+      <li><a href="https://cs61a.org/lab/lab02/#q4">Q4: Composite Identity Function</a></li>
+    </ul>
+  </ul>
+  <li><a href="https://cs61a.org/lab/lab02/#optional-questions">Optional Questions</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab02/#environment-diagrams">Environment Diagrams</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab02/#q5">Q5: Lambda the Environment Diagram</a></li>
+      <li><a href="https://cs61a.org/lab/lab02/#q6">Q6: Make Adder</a></li>
+    </ul>
+    <li><a href="https://cs61a.org/lab/lab02/#more-coding-practice">More Coding Practice</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab02/#q7">Q7: Count van Count</a></li>
+      <li><a href="https://cs61a.org/lab/lab02/#q8">Q8: I Heard You Liked Functions...</a></li>
+    </ul>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/resources.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/studying.html">Studying Guide</a></li>
+            <li><a href="https://cs61a.org/articles/debugging.html">Debugging Guide</a></li>
+            <li><a href="https://cs61a.org/articles/composition.html">Composition Guide</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/articles/about.html">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/about.html#assignments">Assignments</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#exams">Exams</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    
+
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+</script>
+
+
+<script>
+  $(function() {
+    var staging_domains = ['staging.cs61a.org', 'localhost', '127.0.0.1'];
+
+    var staging = staging_domains.indexOf(window.location.hostname) != -1;
+    var after_due_date = new Date("09/09/2017") < new Date();
+    var release_solutions = staging || after_due_date;
+
+    if (release_solutions) {
+      $('.toggle').css('display', 'inline-block');
+      $('.toggle').click(function() {
+        var solution_id = $(this).attr('id');
+        $('div.' + solution_id).slideToggle(600);
+      });
+    }
+  });
+</script>
+
+
+  
+</body></html>

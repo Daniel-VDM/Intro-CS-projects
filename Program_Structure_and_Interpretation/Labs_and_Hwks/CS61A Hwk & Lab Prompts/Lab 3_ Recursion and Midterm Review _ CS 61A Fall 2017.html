@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<!-- saved from url=(0028)https://cs61a.org/lab/lab03/ -->
+<html lang="en" class="gr__cs61a_org"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="CS 61A: Structure and Interpretation of Computer Programs">
+    <meta name="keywords" content="CS 61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS">
+    <meta name="author" content="John DeNero, Paul Hilfinger">
+    
+    <meta name="viewport" content="width=device-width">
+
+    <script src="./Lab 3_ Recursion and Midterm Review _ CS 61A Fall 2017_files/jquery.min.js.download"></script>
+    <script src="./Lab 3_ Recursion and Midterm Review _ CS 61A Fall 2017_files/bootstrap.min.js.download"></script>
+    <script src="./Lab 3_ Recursion and Midterm Review _ CS 61A Fall 2017_files/highlight.min.js.download"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="./Lab 3_ Recursion and Midterm Review _ CS 61A Fall 2017_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./Lab 3_ Recursion and Midterm Review _ CS 61A Fall 2017_files/css">
+    <link rel="stylesheet" href="./Lab 3_ Recursion and Midterm Review _ CS 61A Fall 2017_files/style.css">
+    <link rel="stylesheet" href="./Lab 3_ Recursion and Midterm Review _ CS 61A Fall 2017_files/mono-blue.css">
+    <link rel="icon" href="https://cs61a.org/assets/images/favicon.ico">
+
+    
+
+    <title>
+Lab 3: Recursion and Midterm Review | CS 61A Fall 2017
+</title>
+  </head>
+
+  <body id="index" class="home" data-gr-c-s-loaded="true">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://cs61a.org/">CS 61A</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+            <li><a href="https://cs61a.org/resources.html">Resources</a></li>
+            <li><a href="https://cs61a.org/articles/about.html">Policies</a></li>
+            <li><a href="http://tutor.cs61a.org/">Tutor</a></li>
+            <li><a href="https://piazza.com/berkeley/fall2017/cs61a" target="_blank">Piazza</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class="row">
+  <div class="col-md-9">
+    <header>
+      <h1>
+        
+Lab 3: Recursion and Midterm Review
+
+        
+        <ul class="inline-block list-inline">
+          <li><a href="https://cs61a.org/lab/lab03/lab03.zip" class="label label-outline">lab03.zip</a></li>
+        </ul>
+        
+      </h1>
+    </header>
+    
+
+<p><i>Due at 11:59pm on Friday, 09/15/2017.</i></p>
+
+
+<h2 id="starter-files">Starter Files</h2>
+
+
+<p>Download <a href="https://cs61a.org/lab/lab03/lab03.zip">lab03.zip</a>.
+Inside the archive, you will find starter files for the questions in this lab,
+  along with a copy of the <a href="https://cs61a.org/lab/lab03/ok">Ok</a> autograder.</p>
+
+
+<h2 id="submission">Submission</h2>
+
+<p>By the end of this lab, you should have submitted the lab with
+<code>python3 ok --submit</code>. You may submit more than once before the
+deadline; only the final submission will be graded.
+Check that you have successfully submitted your code on
+<a href="https://okpy.org/">okpy.org</a>.</p>
+
+<ul>
+  <li>Questions 1 through 3 must be completed in order to receive credit for this
+  lab. Starter code for these questions is in <a href="https://cs61a.org/lab/lab03/lab03.py">lab03.py</a>.</li>
+  <li>Questions 4 through 10 are <strong>optional</strong>. <em>It is recommended that you complete
+  these problems on your own time.</em> Starter code for these questions is in the
+  <a href="https://cs61a.org/lab/lab03/lab03_extra.py">lab03_extra.py</a> file.</li>
+</ul>
+
+<p><strong>Note</strong>: When you submit, the autograder will run tests for all questions,
+including the optional questions. As long as you pass the tests for the
+<em>required</em> questions, you will receive credit.</p>
+
+
+
+    
+<h1 id="topics">Topics</h1>
+
+
+<p>Consult this section if you need a refresher on the material for this lab. It's
+okay to skip directly to <a href="https://cs61a.org/lab/lab03/#required-questions">the questions</a> and refer back
+here should you get stuck.</p>
+
+
+<h2 id="recursion">Recursion</h2>
+
+
+<p>A recursive function is a function that calls itself in its body,
+either directly or indirectly. Recursive functions have three important
+components:</p>
+
+<ol>
+  <li>Base case(s), the simplest possible form of the problem you're trying to solve.</li>
+  <li>Recursive case(s), where the function calls itself with a <em>simpler
+  argument</em> as part of the computation.</li>
+  <li>Using the recursive calls to solve the full problem.</li>
+</ol>
+
+<p>Let's look at the canonical example, <code>factorial</code>:</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">factorial</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-keyword">if</span> n == <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>
+    <span class="hljs-keyword">return</span> n * factorial(n - <span class="hljs-number">1</span>)</code></pre>
+
+<p>We know by its definition that 0! is 1. So we choose <code>n == 0</code> as our base case.
+The recursive step also follows from the definition of factorial, i.e., <code>n</code>! =
+<code>n</code> * (<code>n</code>-1)!.</p>
+
+<p>The next few questions in lab will have you writing recursive
+functions.  Here are some general tips:</p>
+
+<ul>
+  <li>Consider how you can solve the current problem using the solution to
+  a simpler version of the problem. Remember to <em>trust the recursion</em>:
+  assume that your solution to the simpler problem works correctly
+  without worrying about how.</li>
+  <li>Think about what the answer would be in the simplest possible
+  case(s). These will be your base cases - the stopping points for your
+  recursive calls. Make sure to consider the possibility that you're
+  missing base cases (this is a common way recursive solutions fail).</li>
+  <li>It may help to write the iterative version first.</li>
+</ul>
+
+<!-- <table class='table table-bordered'>
+
+<pre><code>&lt;tr&gt;
+    &lt;th&gt;Function Type:&lt;/th&gt;
+    &lt;th&gt;Recusive&lt;/th&gt;
+    &lt;th&gt;Iterative&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Function&lt;/td&gt;
+    &lt;td&gt;&lt;pre&gt; def factorial(n):
+    if n == 0:
+        return 1
+    return n * factorial(n &#x2d; 1)&lt;pre&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;pre&gt; def factorial(n):
+    total = 1
+    while n &gt; 0:
+        total *= n
+        n &#x2d;= 1
+    return total
+    &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Ends calculations&lt;/td&gt;
+    &lt;td&gt;When it hits the base case&lt;/td&gt;
+    &lt;td&gt;When n !&gt; 0, it will end.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Means of traversal&lt;/td&gt;
+    &lt;td&gt;&lt;code&gt;factorial(&lt;strong&gt;n &#x2d; 1&lt;/strong&gt;&lt;/code&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;code&gt;&lt;strong&gt;n &#x2d;= 1&lt;/strong&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt; 
+&lt;/tr&gt;</code></pre>
+
+</table> -->
+
+
+<h1 id="required-questions">Required Questions</h1>
+
+
+<h3 class="question" id="q1">Q1: AB+C</h3>
+
+<p>Implement <code>ab_plus_c</code>, a function that takes arguments <code>a</code>, <code>b</code>, and
+<code>c</code> and computes <code>a * b + c</code>.  You can assume a and b are both non-negative
+integers. However, you can't use the <code>*</code> operator. Use recursion!</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">ab_plus_c</span><span class="hljs-params">(a, b, c)</span>:</span>
+    <span class="hljs-string">"""Computes a * b + c.
+
+    &gt;&gt;&gt; ab_plus_c(2, 4, 3)  # 2 * 4 + 3
+    11
+    &gt;&gt;&gt; ab_plus_c(0, 3, 2)  # 0 * 3 + 2
+    2
+    &gt;&gt;&gt; ab_plus_c(3, 0, 2)  # 3 * 0 + 2
+    2
+    """</span>
+<div class="alt solution-1">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-1">    <span class="hljs-keyword">if</span> b == <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">return</span> c
+    <span class="hljs-keyword">return</span> a + ab_plus_c(a, b - <span class="hljs-number">1</span>, c)</div></code></pre>
+
+
+        <button id="solution-1" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q ab_plus_c</code></pre>
+
+<h3 class="question" id="q2">Q2: GCD</h3>
+
+<p>The greatest common divisor of two positive integers <code>a</code> and <code>b</code> is the
+largest integer which evenly divides both numbers (with no remainder).
+Euclid, a Greek mathematician in 300 B.C., realized that the greatest
+common divisor of <code>a</code> and <code>b</code> is one of the following:</p>
+
+<ul>
+  <li>the smaller value if it evenly divides the larger value, or</li>
+  <li>the greatest common divisor of the smaller value and the remainder of
+  the larger value divided by the smaller value</li>
+</ul>
+
+<p>In other words, if <code>a</code> is greater than <code>b</code> and <code>a</code> is not divisible by
+<code>b</code>, then</p>
+
+<pre><code class="hljs">gcd(a, b) = gcd(b, a % b)</code></pre>
+
+<p>Write the <code>gcd</code> function recursively using Euclid's algorithm.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gcd</span><span class="hljs-params">(a, b)</span>:</span>
+    <span class="hljs-string">"""Returns the greatest common divisor of a and b.
+    Should be implemented using recursion.
+
+    &gt;&gt;&gt; gcd(34, 19)
+    1
+    &gt;&gt;&gt; gcd(39, 91)
+    13
+    &gt;&gt;&gt; gcd(20, 30)
+    10
+    &gt;&gt;&gt; gcd(40, 40)
+    40
+    """</span>
+<div class="alt solution-2">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-2">    a, b = max(a, b), min(a, b)
+    <span class="hljs-keyword">if</span> a % b == <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">return</span> b
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> gcd(b, a % b)
+
+<span class="hljs-comment"># Iterative solution, if you're curious</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">gcd_iter</span><span class="hljs-params">(a, b)</span>:</span>
+    <span class="hljs-string">"""Returns the greatest common divisor of a and b, using iteration.
+
+    &gt;&gt;&gt; gcd_iter(34, 19)
+    1
+    &gt;&gt;&gt; gcd_iter(39, 91)
+    13
+    &gt;&gt;&gt; gcd_iter(20, 30)
+    10
+    &gt;&gt;&gt; gcd_iter(40, 40)
+    40
+    """</span>
+    <span class="hljs-keyword">if</span> a &lt; b:
+        <span class="hljs-keyword">return</span> gcd_iter(b, a)
+    <span class="hljs-keyword">while</span> a &gt; b <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> a % b == <span class="hljs-number">0</span>:
+        a, b = b, a % b
+    <span class="hljs-keyword">return</span> b</div></code></pre>
+
+
+        <button id="solution-2" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q gcd</code></pre>
+
+<h3 class="question" id="q3">Q3: Hailstone</h3>
+
+<p>For the <code>hailstone</code> function from <a href="https://cs61a.org/hw/hw01/#q5">homework 1</a>, you pick a positive
+integer <code>n</code> as the start. If <code>n</code> is even, divide it by 2. If <code>n</code> is odd,
+multiply it by 3 and add 1. Repeat this process until <code>n</code> is 1.  Write a
+recursive version of hailstone that prints out the values of the sequence and
+returns the number of steps.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hailstone</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-string">"""Print out the hailstone sequence starting at n, and return the
+    number of elements in the sequence.
+
+    &gt;&gt;&gt; a = hailstone(10)
+    10
+    5
+    16
+    8
+    4
+    2
+    1
+    &gt;&gt;&gt; a
+    7
+    """</span>
+<div class="alt solution-3">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-3">    print(n)
+    <span class="hljs-keyword">if</span> n == <span class="hljs-number">1</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>
+    <span class="hljs-keyword">elif</span> n % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> + hailstone(n // <span class="hljs-number">2</span>)
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> + hailstone(<span class="hljs-number">3</span> * n + <span class="hljs-number">1</span>)
+
+<span class="hljs-comment"># Alternate solution with helper function</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hailstone2</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">hail_helper</span><span class="hljs-params">(n, count)</span>:</span>
+	print(n)
+	<span class="hljs-keyword">if</span> n == <span class="hljs-number">1</span>:
+	    <span class="hljs-keyword">return</span> count
+	<span class="hljs-keyword">else</span>:
+	    <span class="hljs-keyword">if</span> n % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>:
+		<span class="hljs-keyword">return</span> hail_helper(n // <span class="hljs-number">2</span>, count + <span class="hljs-number">1</span>)
+	    <span class="hljs-keyword">else</span>:
+		<span class="hljs-keyword">return</span> hail_helper(<span class="hljs-number">3</span> * n + <span class="hljs-number">1</span>, count + <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">return</span> hail_helper(n, <span class="hljs-number">1</span>)</div></code></pre>
+
+
+        <button id="solution-3" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q hailstone</code></pre>
+
+
+<h1 id="optional-questions">Optional Questions</h1>
+
+
+<p><strong>Note</strong>: The following questions are in <a href="https://cs61a.org/lab/lab03/lab03_extra.py">lab03_extra.py</a>.</p>
+
+
+<h2 id="midterm-review">Midterm Review</h2>
+
+
+<h3 class="question" id="q4">Q4: Doge</h3>
+
+<p>Draw the environment diagram for the following code.</p>
+
+<pre><code class="hljs python">wow = <span class="hljs-number">6</span>
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">much</span><span class="hljs-params">(wow)</span>:</span>
+    <span class="hljs-keyword">if</span> much == wow:
+        such = <span class="hljs-keyword">lambda</span> wow: <span class="hljs-number">5</span>
+        <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">wow</span><span class="hljs-params">()</span>:</span>
+            <span class="hljs-keyword">return</span> such
+        <span class="hljs-keyword">return</span> wow
+    such = <span class="hljs-keyword">lambda</span> wow: <span class="hljs-number">4</span>
+    <span class="hljs-keyword">return</span> wow()
+
+wow = much(much(much))(wow)</code></pre>
+
+<p>Verify your solution with <a href="https://goo.gl/rLDpDe">Python Tutor</a>.</p>
+
+<h3 class="question" id="q5">Q5: Palindrome</h3>
+
+<p>A number is considered a palindrome if it reads the same forwards
+and backwards. Fill in the blanks '<strong></strong>_' to help determine if
+a number is a palindrome. In the spirit of exam style questions, please
+do not edit any parts of the function other than the blanks.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">is_palindrome</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-string">"""
+    Fill in the blanks '_____' to check if a number
+    is a palindrome.
+
+    &gt;&gt;&gt; is_palindrome(12321)
+    True
+    &gt;&gt;&gt; is_palindrome(42)
+    False
+    &gt;&gt;&gt; is_palindrome(2015)
+    False
+    &gt;&gt;&gt; is_palindrome(55)
+    True
+    """</span>
+    x, y = n, <span class="hljs-number">0</span>
+<div class="alt solution-4">    f = <span class="hljs-keyword">lambda</span>: _____
+</div><div class="solution solution-4">    f = <span class="hljs-keyword">lambda</span>: y * <span class="hljs-number">10</span> + x % <span class="hljs-number">10</span></div>    <span class="hljs-keyword">while</span> x &gt; <span class="hljs-number">0</span>:
+<div class="alt solution-4">        x, y = _____, f()
+</div><div class="solution solution-4">        x, y = x // <span class="hljs-number">10</span>, f()</div>    <span class="hljs-keyword">return</span> y == n</code></pre>
+
+
+        <button id="solution-4" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q is_palindrome</code></pre>
+
+
+<h2 id="more-recursion-practice">More Recursion Practice</h2>
+
+
+<h3 class="question" id="q6">Q6: Common Misconception</h3>
+
+<p>Find the bug with this recursive function.</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">skip_mul</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-string">"""Return the product of n * (n - 2) * (n - 4) * ...
+
+    &gt;&gt;&gt; skip_mul(5) # 5 * 3 * 1
+    15
+    &gt;&gt;&gt; skip_mul(8) # 8 * 6 * 4 * 2
+    384
+    """</span>
+    <span class="hljs-keyword">if</span> n == <span class="hljs-number">2</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">2</span>
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> n * skip_mul(n - <span class="hljs-number">2</span>)</code></pre>
+
+<p>Fix the code in <code>lab03_extra.py</code> and run:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q skip_mul</code></pre>
+
+<div class="solution solution-5">
+
+<p>Consider what happens when we choose an odd number for <code>n</code>. <code>skip_mul(3)</code> will
+return <code>3 * skip_mul(1)</code>. <code>skip_mul(1)</code> will return <code>1 * skip_mul(-1)</code>. You
+may see the problem now. Since we are decreasing <code>n</code> by two at a time, we've
+completed missed our base case of <code>n == 2</code>, and we will end up recursing
+indefinitely. We need to add another base case to make sure this doesn't
+happen.</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">skip_mul</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-keyword">if</span> n == <span class="hljs-number">1</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>
+    <span class="hljs-keyword">elif</span> n == <span class="hljs-number">2</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">2</span>
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> n * skip_mul(n - <span class="hljs-number">2</span>)</code></pre>
+
+</div>
+        <button id="solution-5" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<h3 class="question" id="q7">Q7: Common Misconception</h3>
+
+<p>Find the bugs with the following recursive functions.</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">count_up</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-string">"""Print out all numbers up to and including n in ascending order.
+
+    &gt;&gt;&gt; count_up(5)
+    1
+    2
+    3
+    4
+    5
+    """</span>
+    i = <span class="hljs-number">1</span>
+    <span class="hljs-keyword">if</span> i == n:
+        <span class="hljs-keyword">return</span>
+    print(i)
+    i += <span class="hljs-number">1</span>
+    count_up(n<span class="hljs-number">-1</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">count_up</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-string">"""Print out all numbers up to and including n in ascending order.
+
+    &gt;&gt;&gt; count_up(5)
+    1
+    2
+    3
+    4
+    5
+    """</span>
+    i = <span class="hljs-number">1</span>
+    <span class="hljs-keyword">if</span> i &gt; n:
+        <span class="hljs-keyword">return</span>
+    print(i)
+    i += <span class="hljs-number">1</span>
+    count_up(n)</code></pre>
+
+<p>Once you find the bugs, finish the function in <code>lab03_extra.py</code>, and run:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q count_up</code></pre>
+
+<p><em>Hint</em>: One possible solution uses a helper function to make recursive calls.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">count_up</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-string">"""Print out all numbers up to and including n in ascending order.
+
+    &gt;&gt;&gt; count_up(5)
+    1
+    2
+    3
+    4
+    5
+    """</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">counter</span><span class="hljs-params">(i)</span>:</span>
+<div class="alt solution-6">        <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-6">
+	<span class="hljs-comment"># <span class="hljs-doctag">bug:</span> setting i = 1 in the beginning of both versions of count_up above means</span>
+	<span class="hljs-comment"># that incrementing i is useless; you will never reach your base case (unless</span>
+	<span class="hljs-comment"># n is equal to 1) because you are always resetting i</span>
+
+        <span class="hljs-keyword">if</span> i &lt;= n:
+            print(i)
+            counter(i + <span class="hljs-number">1</span>)</div>    counter(<span class="hljs-number">1</span>)</code></pre>
+
+
+        <button id="solution-6" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<h3 class="question" id="q8">Q8: Is Prime</h3>
+
+<p>Write a function <code>is_prime</code> that takes a single argument <code>n</code> and returns <code>True</code>
+if <code>n</code> is a prime number and <code>False</code> otherwise. Assume <code>n &gt; 1</code>. We implemented
+this in <a href="https://cs61a.org/disc/disc01.pdf">Discussion 1</a> iteratively, now time to do it recursively!</p>
+
+<blockquote><p><em>Hint</em>: You will need a helper function! Remember helper functions are useful
+if you need to keep track of more variables than the given parameters, or
+if you need to change the value of the input.</p></blockquote>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">is_prime</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-string">"""Returns True if n is a prime number and False otherwise.
+
+    &gt;&gt;&gt; is_prime(2)
+    True
+    &gt;&gt;&gt; is_prime(16)
+    False
+    &gt;&gt;&gt; is_prime(521)
+    True
+    """</span>
+<div class="alt solution-7">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-7">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">helper</span><span class="hljs-params">(i)</span>:</span>
+        <span class="hljs-keyword">if</span> i &gt; (n ** <span class="hljs-number">0.5</span>): <span class="hljs-comment"># Could replace with i == n</span>
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">True</span>
+        <span class="hljs-keyword">elif</span> n % i == <span class="hljs-number">0</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span>
+        <span class="hljs-keyword">return</span> helper(i + <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">return</span> helper(<span class="hljs-number">2</span>)</div></code></pre>
+
+
+        <button id="solution-7" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q is_prime</code></pre>
+
+<h3 class="question" id="q9">Q9: Interleaved Sum</h3>
+
+<p>Recall that the <code>summation</code> function computes the sum of a sequence of
+terms from 1 to <code>n</code>:</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">summation</span><span class="hljs-params">(n, term)</span>:</span>
+    <span class="hljs-string">"""Return the sum of the first n terms of a sequence.
+
+    &gt;&gt;&gt; summation(5, lambda x: pow(x, 3))
+    225
+    """</span>
+    total, k = <span class="hljs-number">0</span>, <span class="hljs-number">1</span>
+    <span class="hljs-keyword">while</span> k &lt;= n:
+        total, k = total + term(k), k + <span class="hljs-number">1</span>
+    <span class="hljs-keyword">return</span> total</code></pre>
+
+<p>Write a function <code>interleaved_sum</code> that similarly computes the sum of a
+sequence of terms from 1 to <code>n</code>, but uses different functions to compute
+the terms for odd and even numbers. Do so without using any loops or
+testing in any way if a number is odd or even. (You may test if a
+number is equal to 0, 1, or <code>n</code>.)</p>
+
+<blockquote><p><em>Hint</em>: Use recursion and a helper function!</p></blockquote>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">interleaved_sum</span><span class="hljs-params">(n, odd_term, even_term)</span>:</span>
+    <span class="hljs-string">"""Compute the sum odd_term(1) + even_term(2) + odd_term(3) + ..., up
+    to n.
+
+    &gt;&gt;&gt; # 1 + 2^2 + 3 + 4^2 + 5
+    ... interleaved_sum(5, lambda x: x, lambda x: x*x)
+    29
+    """</span>
+<div class="alt solution-8">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-8">    <span class="hljs-keyword">return</span> interleaved_helper(odd_term, even_term, <span class="hljs-number">1</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">interleaved_helper</span><span class="hljs-params">(term0, term1, k)</span>:</span>
+    <span class="hljs-keyword">if</span> k == n:
+        <span class="hljs-keyword">return</span> term0(k)
+    <span class="hljs-keyword">return</span> term0(k) + interleaved_helper(term1, term0, k+<span class="hljs-number">1</span>)
+
+<span class="hljs-comment"># Alternate solution</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">interleaved_sum2</span><span class="hljs-params">(n, odd_term, even_term)</span>:</span>
+    <span class="hljs-string">"""Compute the sum odd_term(1) + even_term(2) + odd_term(3) + ..., up
+    to n.
+
+    &gt;&gt;&gt; # 1 + 2^2 + 3 + 4^2 + 5
+    ... interleaved_sum2(5, lambda x: x, lambda x: x*x)
+    29
+    """</span>
+    total, term0, term1 = interleaved_helper2(n, odd_term, even_term)
+    <span class="hljs-keyword">return</span> total
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">interleaved_helper2</span><span class="hljs-params">(n, odd_term, even_term)</span>:</span>
+    <span class="hljs-keyword">if</span> n == <span class="hljs-number">1</span>:
+        <span class="hljs-keyword">return</span> odd_term(<span class="hljs-number">1</span>), even_term, odd_term
+    <span class="hljs-keyword">else</span>:
+        total, term0, term1 = interleaved_helper2(n<span class="hljs-number">-1</span>, odd_term,
+                                                  even_term)
+    <span class="hljs-keyword">return</span> total + term0(n), term1, term0
+
+<span class="hljs-comment"># Alternate solution using odd_term and even_term separately</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">interleaved_sum3</span><span class="hljs-params">(n, odd_term, even_term)</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">interleaved_helper3</span><span class="hljs-params">(i, fn)</span>:</span>
+	<span class="hljs-keyword">if</span> i &gt; n:
+	    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+	<span class="hljs-keyword">return</span> fn(i) + interleaved_helper3(i + <span class="hljs-number">2</span>, fn)
+    <span class="hljs-keyword">return</span> interleaved_helper3(<span class="hljs-number">0</span>, even_term) + interleaved_helper3(<span class="hljs-number">1</span>, odd_term)</div></code></pre>
+
+
+        <button id="solution-8" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q interleaved_sum</code></pre>
+
+<h3 class="question" id="q10">Q10: Ten-pairs</h3>
+
+<p>Write a function that takes a positive integer <code>n</code> and returns the
+number of ten-pairs it contains.  A ten-pair is a pairs of digits
+within <code>n</code> that sum to 10.   <em>Do not use any assignment statements.</em></p>
+
+<p>The number 7,823,952 has 3 ten-pairs. The first and fourth digits sum
+to 7+3=10, the second and third digits sum to 8+2=10, and the second
+and last digit sum to 8+2=10:</p>
+
+<blockquote><p><em>Hint</em>: Use a helper function to calculate how many times a digit
+appears in n.</p></blockquote>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">ten_pairs</span><span class="hljs-params">(n)</span>:</span>
+    <span class="hljs-string">"""Return the number of ten-pairs within positive integer n.
+
+    &gt;&gt;&gt; ten_pairs(7823952)
+    3
+    &gt;&gt;&gt; ten_pairs(55055)
+    6
+    &gt;&gt;&gt; ten_pairs(9641469)
+    6
+    """</span>
+<div class="alt solution-9">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-9">    <span class="hljs-keyword">if</span> n &lt; <span class="hljs-number">10</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> ten_pairs(n//<span class="hljs-number">10</span>) + count_digit(n//<span class="hljs-number">10</span>, <span class="hljs-number">10</span> - n%<span class="hljs-number">10</span>)
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">count_digit</span><span class="hljs-params">(n, digit)</span>:</span>
+    <span class="hljs-string">"""Return how many times digit appears in n.
+
+    &gt;&gt;&gt; count_digit(55055, 5)
+    4
+    """</span>
+    <span class="hljs-keyword">if</span> n == <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">if</span> n%<span class="hljs-number">10</span> == digit:
+            <span class="hljs-keyword">return</span> count_digit(n//<span class="hljs-number">10</span>, digit) + <span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">return</span> count_digit(n//<span class="hljs-number">10</span>, digit)</div></code></pre>
+
+
+        <button id="solution-9" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q ten_pairs</code></pre>
+
+  </div>
+
+  <div class="col-md-3 sticky">
+    <nav class="hidden-print hidden-sm hidden-xs sidebar">
+      <ul class="nav nav-stacked noselect">
+  <li><a href="https://cs61a.org/lab/lab03/#topics">Topics</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab03/#recursion">Recursion</a></li>
+  </ul>
+  <li><a href="https://cs61a.org/lab/lab03/#required-questions">Required Questions</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab03/#q1">Q1: AB+C</a></li>
+    <li><a href="https://cs61a.org/lab/lab03/#q2">Q2: GCD</a></li>
+    <li><a href="https://cs61a.org/lab/lab03/#q3">Q3: Hailstone</a></li>
+  </ul>
+  <li><a href="https://cs61a.org/lab/lab03/#optional-questions">Optional Questions</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab03/#midterm-review">Midterm Review</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab03/#q4">Q4: Doge</a></li>
+      <li><a href="https://cs61a.org/lab/lab03/#q5">Q5: Palindrome</a></li>
+    </ul>
+    <li><a href="https://cs61a.org/lab/lab03/#more-recursion-practice">More Recursion Practice</a></li>
+    <ul class="nav nav-stacked noselect">
+      <li><a href="https://cs61a.org/lab/lab03/#q6">Q6: Common Misconception</a></li>
+      <li><a href="https://cs61a.org/lab/lab03/#q7">Q7: Common Misconception</a></li>
+      <li><a href="https://cs61a.org/lab/lab03/#q8">Q8: Is Prime</a></li>
+      <li><a href="https://cs61a.org/lab/lab03/#q9">Q9: Interleaved Sum</a></li>
+      <li><a href="https://cs61a.org/lab/lab03/#q10">Q10: Ten-pairs</a></li>
+    </ul>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/resources.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/studying.html">Studying Guide</a></li>
+            <li><a href="https://cs61a.org/articles/debugging.html">Debugging Guide</a></li>
+            <li><a href="https://cs61a.org/articles/composition.html">Composition Guide</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/articles/about.html">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/about.html#assignments">Assignments</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#exams">Exams</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    
+
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+</script>
+
+
+<script>
+  $(function() {
+    var staging_domains = ['staging.cs61a.org', 'localhost', '127.0.0.1'];
+
+    var staging = staging_domains.indexOf(window.location.hostname) != -1;
+    var after_due_date = new Date("09/10/2017") < new Date();
+    var release_solutions = staging || after_due_date;
+
+    if (release_solutions) {
+      $('.toggle').css('display', 'inline-block');
+      $('.toggle').click(function() {
+        var solution_id = $(this).attr('id');
+        $('div.' + solution_id).slideToggle(600);
+      });
+    }
+  });
+</script>
+
+
+  
+</body></html>

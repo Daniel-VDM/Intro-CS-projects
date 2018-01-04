@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<!-- saved from url=(0028)https://cs61a.org/lab/lab07/ -->
+<html lang="en" class="gr__cs61a_org"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="CS 61A: Structure and Interpretation of Computer Programs">
+    <meta name="keywords" content="CS 61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS">
+    <meta name="author" content="John DeNero, Paul Hilfinger">
+    
+    <meta name="viewport" content="width=device-width">
+
+    <script src="./Lab 7_ Recursive Objects _ CS 61A Fall 2017_files/jquery.min.js.download"></script>
+    <script src="./Lab 7_ Recursive Objects _ CS 61A Fall 2017_files/bootstrap.min.js.download"></script>
+    <script src="./Lab 7_ Recursive Objects _ CS 61A Fall 2017_files/highlight.min.js.download"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <link rel="stylesheet" href="./Lab 7_ Recursive Objects _ CS 61A Fall 2017_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./Lab 7_ Recursive Objects _ CS 61A Fall 2017_files/css">
+    <link rel="stylesheet" href="./Lab 7_ Recursive Objects _ CS 61A Fall 2017_files/style.css">
+    <link rel="stylesheet" href="./Lab 7_ Recursive Objects _ CS 61A Fall 2017_files/mono-blue.css">
+    <link rel="icon" href="https://cs61a.org/assets/images/favicon.ico">
+
+    
+
+    <title>
+Lab 7: Recursive Objects | CS 61A Fall 2017
+</title>
+  </head>
+
+  <body id="index" class="home" data-gr-c-s-loaded="true">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="https://cs61a.org/">CS 61A</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+            <li><a href="https://cs61a.org/resources.html">Resources</a></li>
+            <li><a href="https://cs61a.org/articles/about.html">Policies</a></li>
+            <li><a href="http://tutor.cs61a.org/">Tutor</a></li>
+            <li><a href="https://piazza.com/berkeley/fall2017/cs61a" target="_blank">Piazza</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class="row">
+  <div class="col-md-9">
+    <header>
+      <h1>
+        
+Lab 7: Recursive Objects
+
+        
+        <ul class="inline-block list-inline">
+          <li><a href="https://cs61a.org/lab/lab07/lab07.zip" class="label label-outline">lab07.zip</a></li>
+        </ul>
+        
+      </h1>
+    </header>
+    
+
+<p><i>Due at 11:59pm on Friday, 10/13/2017.</i></p>
+
+
+<h2 id="starter-files">Starter Files</h2>
+
+
+<p>Download <a href="https://cs61a.org/lab/lab07/lab07.zip">lab07.zip</a>.
+Inside the archive, you will find starter files for the questions in this lab,
+  along with a copy of the <a href="https://cs61a.org/lab/lab07/ok">Ok</a> autograder.</p>
+
+
+<h2 id="submission">Submission</h2>
+
+<p>By the end of this lab, you should have submitted the lab with
+<code>python3 ok --submit</code>. You may submit more than once before the
+deadline; only the final submission will be graded.
+Check that you have successfully submitted your code on
+<a href="https://okpy.org/">okpy.org</a>.</p>
+
+<ul>
+  <li>To receive credit for this lab, you must complete Questions 1, 2, 3, 4, and 5 in
+  <a href="https://cs61a.org/lab/lab07/lab07.py">lab07.py</a> and submit through OK.</li>
+  <li>Questions 6 through 9 are <em>extra practice</em>. They can be found in the
+  <a href="https://cs61a.org/lab/lab07/lab07_extra.py">lab07_extra.py</a> file. It is recommended that you complete
+  these problems on your own time.</li>
+</ul>
+
+
+
+    
+<h2 id="linked-lists">Linked Lists</h2>
+
+
+<p>A linked list is either an empty linked list (<code>Link.empty</code>) <strong>or</strong> a Link object
+containing a first value and the rest of the linked list. Here is a part of the
+<code>Link</code> class. The entire class can be found in the assignment's files:</p>
+
+<pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Link</span>:</span>
+    <span class="hljs-string">"""A linked list.
+
+    &gt;&gt;&gt; s = Link(1, Link(2, Link(3)))
+    &gt;&gt;&gt; s.first
+    1
+    &gt;&gt;&gt; s.rest
+    Link(2, Link(3))
+    """</span>
+    empty = ()
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, first, rest=empty)</span>:</span>
+        <span class="hljs-keyword">assert</span> rest <span class="hljs-keyword">is</span> Link.empty <span class="hljs-keyword">or</span> isinstance(rest, Link)
+        self.first = first
+        self.rest = rest
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__repr__</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-keyword">if</span> self.rest <span class="hljs-keyword">is</span> Link.empty:
+            <span class="hljs-keyword">return</span> <span class="hljs-string">'Link({})'</span>.format(self.first)
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">return</span> <span class="hljs-string">'Link({}, {})'</span>.format(self.first, repr(self.rest))
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__str__</span><span class="hljs-params">(self)</span>:</span>
+        <span class="hljs-string">"""Returns a human-readable string representation of the Link
+
+        &gt;&gt;&gt; s = Link(1, Link(2, Link(3, Link(4))))
+        &gt;&gt;&gt; str(s)
+        '&lt;1 2 3 4&gt;'
+        &gt;&gt;&gt; str(Link(1))
+        '&lt;1&gt;'
+        &gt;&gt;&gt; str(Link.empty)  # empty tuple
+        '()'
+        """</span>
+        string = <span class="hljs-string">'&lt;'</span>
+        <span class="hljs-keyword">while</span> self.rest <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> Link.empty:
+            string += str(self.first) + <span class="hljs-string">' '</span>
+            self = self.rest
+        <span class="hljs-keyword">return</span> string + str(self.first) + <span class="hljs-string">'&gt;'</span></code></pre>
+
+<p>To check if a <code>Link</code> is empty, compare it against the class attribute
+<code>Link.empty</code>. For example, the below function prints out whether or not the link
+it is handed is empty:</p>
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">test_empty</span><span class="hljs-params">(link)</span>:</span>
+    <span class="hljs-keyword">if</span> link <span class="hljs-keyword">is</span> Link.empty:
+        print(<span class="hljs-string">'This linked list is empty!'</span>)
+    <span class="hljs-keyword">else</span>:
+        print(<span class="hljs-string">'This linked list is not empty!'</span>)</code></pre>
+
+<blockquote><p>Note: Linked lists are recursive data structures! A linked list contains the
+first element of the list (<code>first</code>) and a reference to another linked list
+(<code>rest</code>) which contains the rest of the values in the list.</p></blockquote>
+
+<h3 class="question" id="q1">Q1: WWPD: Linked Lists</h3>
+
+<blockquote><p>Use Ok to test your knowledge with the following "What Would Python Display?"
+questions:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q link -u</code></pre>
+
+<p>If you get stuck, try drawing out the diagram for the linked list on a piece
+of paper, or loading the <code>Link</code> class into the interpreter with <code>python3 -i</code>
+and the Python file you'd like to load.</p></blockquote>
+
+<pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; from link import *</span>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; link = Link(1, Link(2, Link(3)))</span>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; link.first</span>
+<div class="alt prompt-1">______</div><div class="solution prompt-1">1</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; link.rest.first</span>
+<div class="alt prompt-1">______</div><div class="solution prompt-1">2</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; link.rest.rest.rest is Link.empty</span>
+<div class="alt prompt-1">______</div><div class="solution prompt-1">True</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; link.first = 9001</span>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; link.first</span>
+<div class="alt prompt-1">______</div><div class="solution prompt-1">9001</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; link.rest = link.rest.rest</span>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; link.rest.first</span>
+<div class="alt prompt-1">______</div><div class="solution prompt-1">3</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; link = Link(1)</span>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; link.rest = link</span>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; link.rest.rest.rest.rest.first</span>
+<div class="alt prompt-1">______</div><div class="solution prompt-1">1</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; link = Link(2, Link(3, Link(4)))</span>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; link2 = Link(1, link)</span>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; link2.first</span>
+<div class="alt prompt-1">______</div><div class="solution prompt-1">1</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; link2.rest.first</span>
+<div class="alt prompt-1">______</div><div class="solution prompt-1">2</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; <span class="hljs-built_in">print</span>(link2) <span class="hljs-comment"># Look at the __str__ method of Link in lab07.py</span></span>
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&lt;1 2 3 4&gt;</div></code></pre>
+        <button id="prompt-1" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<h3 class="question" id="q2">Q2: List to Link</h3>
+
+<p>Write a function <code>list_to_link</code> that converts a Python list to a <code>Link</code>.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">list_to_link</span><span class="hljs-params">(lst)</span>:</span>
+    <span class="hljs-string">"""Takes a Python list and returns a Link with the same elements.
+
+    &gt;&gt;&gt; link = list_to_link([1, 2, 3])
+    &gt;&gt;&gt; print(link)
+    &lt;1 2 3&gt;
+    """</span>
+<div class="alt solution-1">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-1">    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> lst:
+        <span class="hljs-keyword">return</span> Link.empty
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> Link(lst[<span class="hljs-number">0</span>], list_to_link(lst[<span class="hljs-number">1</span>:]))</div></code></pre>
+
+
+        <button id="solution-1" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q list_to_link</code></pre>
+
+<h3 class="question" id="q3">Q3: Link to List</h3>
+
+<p>Write a function <code>link_to_list</code> that converts a given <code>Link</code> to a
+Python list.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">link_to_list</span><span class="hljs-params">(link)</span>:</span>
+    <span class="hljs-string">"""Takes a Link and returns a Python list with the same elements.
+
+    &gt;&gt;&gt; link = Link(1, Link(2, Link(3, Link(4))))
+    &gt;&gt;&gt; link_to_list(link)
+    [1, 2, 3, 4]
+    &gt;&gt;&gt; link_to_list(Link.empty)
+    []
+    """</span>
+<div class="alt solution-2">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-2">    <span class="hljs-comment"># Recursive solution</span>
+    <span class="hljs-keyword">if</span> link <span class="hljs-keyword">is</span> Link.empty:
+        <span class="hljs-keyword">return</span> []
+    <span class="hljs-keyword">return</span> [link.first] + link_to_list(link.rest)
+
+<span class="hljs-comment"># Iterative solution</span>
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">link_to_list</span><span class="hljs-params">(link)</span>:</span>
+    result = []
+    <span class="hljs-keyword">while</span> link <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> Link.empty:
+        result.append(link.first)
+        link = link.rest
+    <span class="hljs-keyword">return</span> result</div></code></pre>
+
+
+        <button id="solution-2" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q link_to_list</code></pre>
+
+<h3 class="question" id="q4">Q4: Remove All</h3>
+
+<p>Implement a function <code>remove_all</code> that takes a <code>Link</code>, and a <code>value</code>,
+and remove any linked list node containing that value.  You can assume the
+list already has at least one node containing <code>value</code> and the first element is
+never removed. Notice that you are not returning anything, so you should mutate the list.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">remove_all</span><span class="hljs-params">(link , value)</span>:</span>
+    <span class="hljs-string">"""Remove all the nodes containing value. Assume there exists some
+    nodes to be removed and the first element is never removed.
+
+    &gt;&gt;&gt; l1 = Link(0, Link(2, Link(2, Link(3, Link(1, Link(2, Link(3)))))))
+    &gt;&gt;&gt; print(l1)
+    &lt;0 2 2 3 1 2 3&gt;
+    &gt;&gt;&gt; remove_all(l1, 2)
+    &gt;&gt;&gt; print(l1)
+    &lt;0 3 1 3&gt;
+    &gt;&gt;&gt; remove_all(l1, 3)
+    &gt;&gt;&gt; print(l1)
+    &lt;0 1&gt;
+    """</span>
+<div class="alt solution-3">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-3">    <span class="hljs-keyword">if</span> link <span class="hljs-keyword">is</span> Link.empty <span class="hljs-keyword">or</span> link.rest <span class="hljs-keyword">is</span> Link.empty:
+        <span class="hljs-keyword">return</span>
+    <span class="hljs-keyword">if</span> link.rest.first == value:
+        link.rest = link.rest.rest
+        remove_all(link, value)
+    <span class="hljs-keyword">else</span>:
+        remove_all(link.rest, value)
+
+    <span class="hljs-comment"># alternate solution</span>
+    <span class="hljs-keyword">if</span> link <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> Link.empty <span class="hljs-keyword">and</span> link.rest <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> Link.empty:
+        remove_all(link.rest, value)
+        <span class="hljs-keyword">if</span> link.rest.first == value:
+            link.rest = link.rest.rest</div></code></pre>
+
+
+        <button id="solution-3" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q remove_all</code></pre>
+
+
+<h2 id="trees-again">Trees (Again)</h2>
+
+
+<p>Just like linked lists, we can also represent trees as objects.</p>
+
+<pre><code class="hljs ruby"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Tree</span>:</span>
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(<span class="hljs-keyword">self</span>, label, branches=[])</span></span>:
+        <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> <span class="hljs-symbol">branches:</span>
+            assert isinstance(c, Tree)
+        <span class="hljs-keyword">self</span>.label = label
+        <span class="hljs-keyword">self</span>.branches = list(branches)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__repr__</span><span class="hljs-params">(<span class="hljs-keyword">self</span>)</span></span>:
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">self</span>.<span class="hljs-symbol">branches:</span>
+            branches_str = <span class="hljs-string">', '</span> + repr(<span class="hljs-keyword">self</span>.branches)
+        <span class="hljs-symbol">else:</span>
+            branches_str = <span class="hljs-string">''</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-string">'Tree({0}{1})'</span>.format(<span class="hljs-keyword">self</span>.label, branches_str)
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">is_leaf</span><span class="hljs-params">(<span class="hljs-keyword">self</span>)</span></span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">self</span>.branches
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__eq__</span><span class="hljs-params">(<span class="hljs-keyword">self</span>, other)</span></span>:
+        <span class="hljs-keyword">return</span> type(other) is type(<span class="hljs-keyword">self</span>) <span class="hljs-keyword">and</span> <span class="hljs-keyword">self</span>.label == other.label \
+               <span class="hljs-keyword">and</span> <span class="hljs-keyword">self</span>.branches == other.branches
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__str__</span><span class="hljs-params">(<span class="hljs-keyword">self</span>)</span></span>:
+        <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">print_tree</span><span class="hljs-params">(t, indent=<span class="hljs-number">0</span>)</span></span>:
+            tree_str = <span class="hljs-string">'  '</span> * indent + str(t.label) + <span class="hljs-string">"\n"</span>
+            <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> t.<span class="hljs-symbol">branches:</span>
+                tree_str += print_tree(b, indent + <span class="hljs-number">1</span>)
+            <span class="hljs-keyword">return</span> tree_str
+        <span class="hljs-keyword">return</span> print_tree(<span class="hljs-keyword">self</span>).rstrip()
+
+    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">copy_tree</span><span class="hljs-params">(<span class="hljs-keyword">self</span>)</span></span>:
+        <span class="hljs-keyword">return</span> Tree(<span class="hljs-keyword">self</span>.label, [b.copy_tree() <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> <span class="hljs-keyword">self</span>.branches])</code></pre>
+
+<h3 class="question" id="q5">Q5: WWPD: Trees</h3>
+
+<blockquote><p>Use Ok to test your knowledge with the following "What Would Python Display?"
+questions:</p>
+
+<pre><code class="hljs nginx"><span class="hljs-attribute">python3</span> ok -q trees -u</code></pre>
+
+<p><em>Hint</em>: Remember for all WWPD questions, enter <code>Function</code> if you believe the
+answer is <code>&lt;function ...&gt;</code> and <code>Error</code> if it errors.</p></blockquote>
+
+<pre><code class="hljs shell"><span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; from lab07 import *</span>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; t = Tree(1, Tree(2))</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2">Error</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; t = Tree(1, [Tree(2)])</span>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; t.label</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2">1</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; t.branches[0]</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2">Tree(2)</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; t.branches[0].label</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2">2</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; t.label = t.branches[0].label</span>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; t</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2">Tree(2, [Tree(2)])</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; t.branches.append(Tree(4, [Tree(8)]))</span>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; len(t.branches)</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2">2</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; t.branches[0]</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2">Tree(2)</div>
+<span class="hljs-meta">&gt;</span><span class="bash">&gt;&gt; t.branches[1]</span>
+<div class="alt prompt-2">______</div><div class="solution prompt-2">Tree(4, [Tree(8)])</div></code></pre>
+        <button id="prompt-2" class="btn btn-outline btn-lg toggle prompt" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+
+<h2 id="extra-questions">Extra Questions</h2>
+
+
+<blockquote><p>The following questions are for <strong>extra practice</strong> -- they can be found
+in the the <a href="https://cs61a.org/lab/lab07/lab07_extra.py">lab07_extra.py</a> file. It is recommended
+that you complete these problems on your own time.</p></blockquote>
+
+
+<h3 id="motivation-why-linked-lists">Motivation: Why linked lists</h3>
+
+
+<p>Since you are already familiar with Python's built-in lists, you might be
+wondering why we are teaching you another list representation. There are
+historical reasons, along with practical reasons. Later in the term, you'll be
+programming in Scheme, which is a programming language that uses linked lists
+for almost everything. During lecture, you learned that certain operations are
+faster with linked lists comparing to python-lists. Here you will test
+out those theories in practice.</p>
+
+<p>Python's built-in list is like a sequence of containers with indices on them:</p>
+
+<p><img class="img-responsive center-block" src="./Lab 7_ Recursive Objects _ CS 61A Fall 2017_files/arraylist.png" alt="arraylist"></p>
+
+<p>Linked lists are a list of items pointing to their neighbors. Notice that
+there's no explicit index for each item.</p>
+
+<p><img class="img-responsive center-block" src="./Lab 7_ Recursive Objects _ CS 61A Fall 2017_files/linkedlist.png" alt="linkedlist"></p>
+
+<p>Suppose we want to add an item at the head of the list.</p>
+
+<ul>
+  <li>With Python's built-in list, if you want to put an item into the container
+  labeled with index 0, you must move <strong>all the items</strong> in the list into
+  its neighbor containers to make room for the first item;</li>
+</ul>
+
+<p><img class="img-responsive center-block" src="./Lab 7_ Recursive Objects _ CS 61A Fall 2017_files/arraylist_insert.png" alt="arraylist"></p>
+
+<ul>
+  <li>With a linked list, you tell Python that the neighbor of the new item is the
+  old beginning of the list.</li>
+</ul>
+
+<p><img class="img-responsive center-block" src="./Lab 7_ Recursive Objects _ CS 61A Fall 2017_files/linkedlist_insert.png" alt="arraylist"></p>
+
+<p>To test this, in your terminal, enter the following command: <code>python3 timing.py
+insert 100000</code>, which inserts 100,000 items into the beginning of both a linked
+list and a Python built-in list to compare the speed.</p>
+
+<p>Now, say we want the item at index 3.</p>
+
+<ul>
+  <li>In the built-in list, you can simply grab the item from the container
+  with 3 labeled on it;</li>
+  <li>In the linked list, you need to start at the first item, and go to
+  its neighbor's neighbor's neighbor to finally reach the item at index
+  3.</li>
+</ul>
+
+<p>To test this, enter the following command in your terminal: <code>python3
+timing.py index 10000</code>. This program compares the speed of randomly
+accessing 10,000 items from both a linked list and a
+built-in Python list (each with length 10,000).</p>
+
+<h3 class="question" id="q6">Q6: Cumulative Sum</h3>
+
+<p>Write a function <code>cumulative_sum</code> that mutates the Tree <code>t</code>, where each node's
+label becomes the sum of all entries in the subtree rooted at the node.</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">cumulative_sum</span><span class="hljs-params">(t)</span>:</span>
+    <span class="hljs-string">"""Mutates t where each node's root becomes the sum of all entries in the
+    corresponding subtree rooted at t.
+
+    &gt;&gt;&gt; t = Tree(1, [Tree(3, [Tree(5)]), Tree(7)])
+    &gt;&gt;&gt; cumulative_sum(t)
+    &gt;&gt;&gt; t
+    Tree(16, [Tree(8, [Tree(5)]), Tree(7)])
+    """</span>
+<div class="alt solution-4">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-4">    <span class="hljs-keyword">for</span> st <span class="hljs-keyword">in</span> t.branches:
+        cumulative_sum(st)
+    t.label = sum([st.label <span class="hljs-keyword">for</span> st <span class="hljs-keyword">in</span> t.branches]) + t.label</div></code></pre>
+
+
+        <button id="solution-4" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q cumulative_sum</code></pre>
+
+<h3 class="question" id="q7">Q7: Reverse Other</h3>
+
+<p>Write a function <code>reverse_other</code> that mutates the tree such that <em>every other</em>
+(odd_indexed) level of the tree's entries are all reversed. For example
+<code>Tree(1,[Tree(2), Tree(3)])</code> becomes <code>Tree(1,[Tree(3), Tree(2)])</code></p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">reverse_other</span><span class="hljs-params">(t)</span>:</span>
+    <span class="hljs-string">"""Reverse the entries of every other level of the tree using mutation.
+
+    &gt;&gt;&gt; t = Tree(1, [Tree(2), Tree(3), Tree(4)])
+    &gt;&gt;&gt; reverse_other(t)
+    &gt;&gt;&gt; t
+    Tree(1, [Tree(4), Tree(3), Tree(2)])
+    &gt;&gt;&gt; t = Tree(1, [Tree(2, [Tree(5, [Tree(7), Tree(8)]), Tree(6)]), Tree(3)])
+    &gt;&gt;&gt; reverse_other(t)
+    &gt;&gt;&gt; t
+    Tree(1, [Tree(3, [Tree(5, [Tree(8), Tree(7)]), Tree(6)]), Tree(2)])
+    """</span>
+<div class="alt solution-5">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-5">    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">reverse_helper</span><span class="hljs-params">(t, need_reverse)</span>:</span>
+        <span class="hljs-keyword">if</span> t.is_leaf():
+            <span class="hljs-keyword">return</span>
+        new_labs = [child.label <span class="hljs-keyword">for</span> child <span class="hljs-keyword">in</span> t.branches][::<span class="hljs-number">-1</span>]
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(t.branches)):
+            child = t.branches[i]
+            reverse_helper(child, <span class="hljs-keyword">not</span> need_reverse)
+            <span class="hljs-keyword">if</span> need_reverse:
+                child.label = new_labs[i]
+    reverse_helper(t, <span class="hljs-keyword">True</span>)</div></code></pre>
+
+
+        <button id="solution-5" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q reverse_other</code></pre>
+
+<h3 class="question" id="q8">Q8: Mutable Mapping</h3>
+
+<p>Implement <code>deep_map_mut(fn, link)</code>, which applies a function <code>fn</code> onto
+all elements in the given linked list <code>link</code>. If an element is itself a
+linked list, apply <code>fn</code> to each of its elements, and so on.</p>
+
+<p>Your implementation should mutate the original linked list. Do not
+create any new linked lists.</p>
+
+<blockquote><p><strong>Hint</strong>: The built-in <code>isinstance</code> function may be useful.</p>
+
+<pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; s = Link(<span class="hljs-number">1</span>, Link(<span class="hljs-number">2</span>, Link(<span class="hljs-number">3</span>, Link(<span class="hljs-number">4</span>))))
+<span class="hljs-meta">&gt;&gt;</span>&gt; isinstance(s, Link)
+True
+<span class="hljs-meta">&gt;&gt;</span>&gt; isinstance(s, int)
+False</code></pre></blockquote>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">deep_map_mut</span><span class="hljs-params">(fn, link)</span>:</span>
+    <span class="hljs-string">"""Mutates a deep link by replacing each item found with the
+    result of calling fn on the item.  Does NOT create new Links (so
+    no use of Link's constructor)
+
+    Does not return the modified Link object.
+
+    &gt;&gt;&gt; link1 = Link(3, Link(Link(4), Link(5, Link(6))))
+    &gt;&gt;&gt; deep_map_mut(lambda x: x * x, link1)
+    &gt;&gt;&gt; print(link1)
+    &lt;9 &lt;16&gt; 25 36&gt;
+    """</span>
+<div class="alt solution-6">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-6">    <span class="hljs-keyword">if</span> link <span class="hljs-keyword">is</span> Link.empty:
+        <span class="hljs-keyword">return</span>
+    <span class="hljs-keyword">elif</span> isinstance(link.first, Link):
+        deep_map_mut(fn, link.first)
+    <span class="hljs-keyword">else</span>:
+        link.first = fn(link.first)
+    deep_map_mut(fn, link.rest)</div></code></pre>
+
+
+        <button id="solution-6" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q deep_map_mut</code></pre>
+
+<h3 class="question" id="q9">Q9: Cycles</h3>
+
+<p>The <code>Link</code> class can represent lists with cycles.  That is, a list may
+contain itself as a sublist.</p>
+
+<pre><code class="hljs ruby"><span class="hljs-meta">&gt;&gt;</span>&gt; s = Link(<span class="hljs-number">1</span>, Link(<span class="hljs-number">2</span>, Link(<span class="hljs-number">3</span>)))
+<span class="hljs-meta">&gt;&gt;</span>&gt; s.rest.rest.rest = s
+<span class="hljs-meta">&gt;&gt;</span>&gt; s.rest.rest.rest.rest.rest.first
+<span class="hljs-number">3</span></code></pre>
+
+<p>Implement <code>has_cycle</code>,that returns whether its argument, a <code>Link</code>
+instance, contains a cycle.</p>
+
+<blockquote><p><em>Hint</em>: Iterate through the linked list and try keeping track of which <code>Link</code>
+objects you've already seen.</p></blockquote>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">has_cycle</span><span class="hljs-params">(link)</span>:</span>
+    <span class="hljs-string">"""Return whether link contains a cycle.
+
+    &gt;&gt;&gt; s = Link(1, Link(2, Link(3)))
+    &gt;&gt;&gt; s.rest.rest.rest = s
+    &gt;&gt;&gt; has_cycle(s)
+    True
+    &gt;&gt;&gt; t = Link(1, Link(2, Link(3)))
+    &gt;&gt;&gt; has_cycle(t)
+    False
+    &gt;&gt;&gt; u = Link(2, Link(2, Link(2)))
+    &gt;&gt;&gt; has_cycle(u)
+    False
+    """</span>
+<div class="alt solution-7">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-7">    links = []
+    <span class="hljs-keyword">while</span> link <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> Link.empty:
+        <span class="hljs-keyword">if</span> link <span class="hljs-keyword">in</span> links:
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">True</span>
+        links.append(link)
+        link = link.rest
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span></div></code></pre>
+
+
+        <button id="solution-7" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q has_cycle</code></pre>
+
+<p>As an extra challenge, implement <code>has_cycle_constant</code> with only <a href="http://composingprograms.com/pages/28-efficiency.html#growth-categories">constant space</a>. (If you followed
+the hint above, you will use linear space.) The solution is short (less than 20
+lines of code), but requires a clever idea. Try to discover the solution
+yourself before asking around:</p>
+
+
+
+<pre><code class="hljs python"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">has_cycle_constant</span><span class="hljs-params">(link)</span>:</span>
+    <span class="hljs-string">"""Return whether link contains a cycle.
+
+    &gt;&gt;&gt; s = Link(1, Link(2, Link(3)))
+    &gt;&gt;&gt; s.rest.rest.rest = s
+    &gt;&gt;&gt; has_cycle_constant(s)
+    True
+    &gt;&gt;&gt; t = Link(1, Link(2, Link(3)))
+    &gt;&gt;&gt; has_cycle_constant(t)
+    False
+    """</span>
+<div class="alt solution-8">    <span class="hljs-string">"*** YOUR CODE HERE ***"</span>
+</div><div class="solution solution-8">    <span class="hljs-keyword">if</span> link <span class="hljs-keyword">is</span> Link.empty:
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span>
+    slow, fast = link, link.rest
+    <span class="hljs-keyword">while</span> fast <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> Link.empty:
+        <span class="hljs-keyword">if</span> fast.rest == Link.empty:
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span>
+        <span class="hljs-keyword">elif</span> fast == slow <span class="hljs-keyword">or</span> fast.rest == slow:
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">True</span>
+        <span class="hljs-keyword">else</span>:
+            slow, fast = slow.rest, fast.rest.rest
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span></div></code></pre>
+
+
+        <button id="solution-8" class="btn btn-outline btn-lg toggle solution" style="display: inline-block;">
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q has_cycle_constant</code></pre>
+
+  </div>
+
+  <div class="col-md-3 sticky">
+    <nav class="hidden-print hidden-sm hidden-xs sidebar">
+      <ul class="nav nav-stacked noselect">
+  <li><a href="https://cs61a.org/lab/lab07/#linked-lists">Linked Lists</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab07/#q1">Q1: WWPD: Linked Lists</a></li>
+    <li><a href="https://cs61a.org/lab/lab07/#q2">Q2: List to Link</a></li>
+    <li><a href="https://cs61a.org/lab/lab07/#q3">Q3: Link to List</a></li>
+    <li><a href="https://cs61a.org/lab/lab07/#q4">Q4: Remove All</a></li>
+  </ul>
+  <li><a href="https://cs61a.org/lab/lab07/#trees-again">Trees (Again)</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab07/#q5">Q5: WWPD: Trees</a></li>
+  </ul>
+  <li><a href="https://cs61a.org/lab/lab07/#extra-questions">Extra Questions</a></li>
+  <ul class="nav nav-stacked noselect">
+    <li><a href="https://cs61a.org/lab/lab07/#motivation-why-linked-lists">Motivation: Why linked lists</a></li>
+    <li><a href="https://cs61a.org/lab/lab07/#q6">Q6: Cumulative Sum</a></li>
+    <li><a href="https://cs61a.org/lab/lab07/#q7">Q7: Reverse Other</a></li>
+    <li><a href="https://cs61a.org/lab/lab07/#q8">Q8: Mutable Mapping</a></li>
+    <li><a href="https://cs61a.org/lab/lab07/#q9">Q9: Cycles</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/weekly.html">Weekly Schedule</a></li>
+            <li><a href="https://cs61a.org/office-hours.html">Office Hours</a></li>
+            <li><a href="https://cs61a.org/staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/resources.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/studying.html">Studying Guide</a></li>
+            <li><a href="https://cs61a.org/articles/debugging.html">Debugging Guide</a></li>
+            <li><a href="https://cs61a.org/articles/composition.html">Composition Guide</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="https://cs61a.org/articles/about.html">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="https://cs61a.org/articles/about.html#assignments">Assignments</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#exams">Exams</a></li>
+            <li><a href="https://cs61a.org/articles/about.html#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    
+
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+</script>
+
+
+<script>
+  $(function() {
+    var staging_domains = ['staging.cs61a.org', 'localhost', '127.0.0.1'];
+
+    var staging = staging_domains.indexOf(window.location.hostname) != -1;
+    var after_due_date = new Date("10/14/2017") < new Date();
+    var release_solutions = staging || after_due_date;
+
+    if (release_solutions) {
+      $('.toggle').css('display', 'inline-block');
+      $('.toggle').click(function() {
+        var solution_id = $(this).attr('id');
+        $('div.' + solution_id).slideToggle(600);
+      });
+    }
+  });
+</script>
+
+
+  
+</body></html>
