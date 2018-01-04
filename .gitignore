@@ -1,3 +1,4 @@
+Program_Structure_and_Interpretation/Labs_and_Hwks/CS61A Hwk & Lab Prompts/
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
 *.o
 *.a
@@ -46,6 +47,3 @@ _testmain.go
 #*.png
 #*.jpeg
 *.psd
-
-#Html Prompts for projects
-Program_Structure_and_Interpretation\Labs_and_Hwks\CS61A Hwk & Lab Prompts\*.html
