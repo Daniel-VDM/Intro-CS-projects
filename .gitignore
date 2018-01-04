@@ -46,3 +46,6 @@ _testmain.go
 #*.png
 #*.jpeg
 *.psd
+
+#Html Prompts for projects
+Program_Structure_and_Interpretation\Labs_and_Hwks\CS61A Hwk & Lab Prompts\*
