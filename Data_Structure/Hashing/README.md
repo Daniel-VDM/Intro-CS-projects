@@ -1,4 +1,4 @@
-# -Project-HashTest
+# -Project-Hashing
 This was a 3 part project for Data Structures (CS47B)
 
 ************************************************
