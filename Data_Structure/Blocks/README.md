@@ -1,5 +1,5 @@
 # -Project-Blocks
-This was the Major project for Data Structures (CS47B)
+This was the major project for Data Structures (CS47B)
 
 ************************************************
 The main program was written from scratch.
