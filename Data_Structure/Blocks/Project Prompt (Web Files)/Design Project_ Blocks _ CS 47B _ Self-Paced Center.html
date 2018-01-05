@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<!-- saved from url=(0066)http://www-inst.eecs.berkeley.edu/~selfpace/47b/dp/blocks-project/ -->
+<html lang="en" class="gr__www-inst_eecs_berkeley_edu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./Design Project_ Blocks _ CS 47B _ Self-Paced Center_files/css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="./Design Project_ Blocks _ CS 47B _ Self-Paced Center_files/style.css">
+  <title>Design Project: Blocks | CS 47B | Self-Paced Center</title>
+</head>
+<body data-gr-c-s-loaded="true">
+<nav id="nav-top">
+  <ul class="nav">
+    <li class="nav-item"><a class="nav-top-link" href="http://www-inst.eecs.berkeley.edu/~selfpace/">Self-Paced Center</a></li>
+    <li class="nav-item"><a class="nav-top-link" href="http://www-inst.eecs.berkeley.edu/~selfpace/matlab/">MATLAB</a></li>
+    <li class="nav-item"><a class="nav-top-link" href="http://www-inst.eecs.berkeley.edu/~selfpace/c/">C</a></li>
+    <li class="nav-item"><a class="nav-top-link" href="http://www-inst.eecs.berkeley.edu/~selfpace/unix/">UNIX</a></li>
+    <li class="nav-item"><a class="nav-top-link" href="http://www-inst.eecs.berkeley.edu/~selfpace/cpp/">C++</a></li>
+    <li class="nav-item"><a class="nav-top-link" href="http://www-inst.eecs.berkeley.edu/~selfpace/java">Java</a></li>
+    <li class="nav-item"><a class="nav-top-link" href="http://www-inst.eecs.berkeley.edu/~selfpace/python/">Python</a></li>
+    <li class="nav-item"><a class="nav-top-link-active" href="http://www-inst.eecs.berkeley.edu/~selfpace/47b/">47B</a></li>
+  </ul>
+</nav>
+<nav id="nav-main">
+  <ul class="nav">
+    <li class="nav-item"><a class="nav-main-link" href="http://www-inst.eecs.berkeley.edu/~selfpace/47b/">Calendar</a></li>
+    <li class="nav-item"><a class="nav-main-link" href="http://selfpace47b.youcanbook.me/" target="_blank">Schedule Appointment</a></li>
+    <li class="nav-item"><a class="nav-main-link" href="https://piazza.com/class/j7gdvq7s7c827m" target="_blank">Piazza</a></li>
+  </ul>
+</nav>
+<section>
+  <h1>Design Project: Blocks Project</h1>
+
+  <article>
+    <h2>Goals</h2>
+    <p>This project has a number of interesting features. The problem to be
+    solved is relatively complex. A solution will involve several time/space
+    tradeoffs, and a solution program will be relatively large compared to
+    other programs you have written for CS&nbsp;47B. It also provides an
+    opportunity to store something other than strings in a hash table.</p>
+  </article>
+
+<h2 class="Heading3">
+  <a name="1026525"> </a>Problem
+</h2>
+<p class="Body">
+  <a name="1026526"> </a>Do the assignment described below. 
+</p>
+<p class="Body">
+  <a name="1033280"> </a>For this assignment, you will work with a <span style="color: #000000;  font-style: italic; font-weight: normal; text-decoration: none; text-transform: none; vertical-align: baseline">sponsoring</span> tutor. He or she will act as a sounding board for ideas you have for solving the assignment and will supervise your completion of the necessary programs and writeups. Your sponsor will also be the tutor who grades your solutions; you should make sure that your schedule is compatible with his or hers, <i>as you must have each solution checked by your sponsor before continuing on to the next part.</i> You must arrange for a sponsor before starting work on the assignment.
+</p>
+<p class="Body">
+  <a name="1033633"> </a>A numeric grade between 0 and 24 rather than a "pass" or "not pass" will be assigned to your solution. Satisfaction of checklist items accounts for 20 of the 24 points; the other 4 points will be assigned by your sponsor for things like displaying sufficient progress at pre-arranged intermediate points. Make sure when you choose a sponsor tutor that he or she makes clear what you need to do to earn these 4 points.
+</p>
+<p class="Body">
+  <a name="1034187"> </a>You should get your grade for parts 1 and 2 recorded at the Self-Paced Center as soon as possible after you complete those parts. 
+</p>
+<p class="Body">
+  <a name="1035271"> </a>The last part of this assignment includes a writeup.
+  Prepare the writeup in a file named <tt>writeup</tt>, in one of the following formats:
+  </p><ul>
+  <li>Acrobat (<tt>.pdf</tt>)</li>
+  <li>Microsoft Word (<tt>.doc</tt>)</li>
+  <li>text (<tt>.txt</tt>)</li>
+  <li>HTML (<tt>.html</tt>)</li>
+  </ul>
+  If your HTML writeup includes diagrams, they should be of type GIF (<tt>.gif</tt>) or PNG (<tt>.png</tt>).
+<p></p>
+<p></p>
+<ul>
+	
+</ul>
+<p>
+</p>
+
+<p></p>
+<h2>Background</h2>
+
+<table cellpadding="5" cellspacing="0">
+  <caption></caption>
+  <tbody><tr>
+    <td><a name="1033737"> </a><div class="CellBody"><span style="color: #000000;  font-style: normal; font-weight: normal; text-decoration: none; 
+    text-transform: none; vertical-align: baseline">Those of you who spend much time in toy stores may be familiar with "sliding-block" puzzles. 
+    They consist of a number of rectangular blocks in a tray; the problem is to slide the pieces without lifting any out of the tray, until achieving a certain configuration. 
+    An example (from </span><span style="color: #000000;  font-style: italic; font-weight: normal; text-decoration: none; text-transform: none; vertical-align: baseline">Winning Ways</span>, 
+    E.R. Berlekamp <i>et al.</i>, Academic Press, 1982) is shown in the diagram on the right.</div></td>
+    <td><a name="1033768"> </a><div class="CellBody"><br clear="all"><table align="center"><tbody><tr><td><img src="./Design Project_ Blocks _ CS 47B _ Self-Paced Center_files/blocks.gif" height="144" width="246" align="center" border="0" hspace="0" vspace="0">
+</td></tr></tbody></table><br clear="all"></div></td>
+  </tr>
+</tbody></table>
+
+
+
+
+
+<p class="Body">
+  <a name="1027261"> </a>This project is to write a program that generates a solution to such a puzzle. The first part is a design, the second an implementation of the design, and the third is an optimization and writeup.
+</p>
+<h2 class="Heading3">
+  <a name="1034813"> </a>Program interface
+</h2>
+<p class="Body">
+  <a name="1034814"> </a>Your program will be named <tt>Solver.java</tt>. Its input will come from the command line and from files named there:
+</p>
+<ul>
+	<li><p>
+An optional first argument will be a string whose first two characters are "-o" and whose remaining characters specify information about what debugging output the program should produce. 
+	(You may choose the format of this information.) The string "-ooptions" should cause the program to print all the debugging options and the effect of each option. 
+	If the "-o" argument is not provided, your program should produce no output beyond that required to display a solution to the puzzle.
+</p>
+</li>
+	<li><p>
+The next argument will name a file that specifies an initial tray configuration. 
+	Line 1 of this file will contain two positive integers, the length (number of rows) and width (number of columns) of the tray. 
+	Each subsequent line of this file will contain four nonnegative integers describing a block in the tray: 
+	the length and width of the block (both greater than 0), and the row and column of the upper left corner of the block. 
+	(The upper left corner of the tray is row 0, column 0.) Blocks are indistinguishable except for their size, and may appear in any order in this file. 
+	Thus the block configuration in figure 1 (reprinted below with row and column headers, and with blocks numbered to indicate their position in the example input) 
+	might be represented in the file as follows:
+</p>
+
+
+<table border="1" cellpadding="5" cellspacing="0">
+  <caption></caption>
+  <tbody><tr>
+    <td><pre class="Preformatted">5 4
+2 1 0 0
+2 1 0 3
+2 1 2 0
+2 1 2 3
+2 2 1 1
+1 2 3 1
+1 1 4 0
+1 1 4 1
+1 1 4 2
+1 1 4 3
+</pre>
+</td>
+    <td><a name="1034906"> </a><div class="CellBody"><br clear="all"><table align="center"><tbody><tr><td><img src="./Design Project_ Blocks _ CS 47B _ Self-Paced Center_files/blocks-sample-config.gif" height="154" width="134" align="center" border="0" hspace="0" vspace="0">
+</td></tr></tbody></table><br clear="all"></div></td>
+  </tr>
+  <tr>
+    <td colspan="2" rowspan="1"><p class="Body">
+  <a name="1034908"> </a>Figure 1 — a sample initial configuration
+</p>
+</td>
+  </tr>
+</tbody></table>
+	</li>
+<li><p>The last argument will be the name of a file that specifies a desired final or goal configuration. 
+This file is similar in format to the initial configuration file. 
+Each line of this file contains four nonnegative integers: the length and width of the block (both greater than 0), and the desired position of the upper left corner of the block. 
+This file will not necessarily contain entries for all blocks in the tray. Blocks may appear in any order in this file.</p>
+<p>
+The goal configuration mentioned in the diagram on the previous page is represented by the single line
+</p>
+<pre class="Preformatted">	2 2 3 1
+</pre>
+<p>If there were more than one 2-by-2 block in the initial configuration, the one-line goal would specify the position of 
+<span style="color: #000000;  font-style: italic; font-weight: normal; text-decoration: none; text-transform: none; vertical-align: baseline">any</span> of the 2-by-2 blocks.</p>
+<p>Figure 2 below shows a goal configuration in which three of the 1-by-1 blocks have a specified arrangement, along with the corresponding goal file. 
+Again, if there are more than three 1-by-1 blocks in the initial configuration, it doesn't matter which three of them end up in the specified goal positions.
+Note also that the block positions may appear in any order in this file.</p>
+
+<table border="1" cellpadding="5" cellspacing="0">
+  <caption></caption>
+  <tbody><tr>
+    <td><a name="1034942"> </a><div class="CellBody"><span style="color: #000000;  font-style: italic; font-weight: normal; text-decoration: none; text-transform: none; vertical-align: baseline">goal configuration</span><br clear="all"><table align="center"><tbody><tr><td><img src="./Design Project_ Blocks _ CS 47B _ Self-Paced Center_files/blocks-sample-goal.gif" height="151" width="126" align="center" border="0" hspace="0" vspace="0">
+</td></tr></tbody></table><br clear="all"></div></td>
+    <td><a name="1034944"> </a><div class="CellBody"><span style="color: #000000;  font-style: italic; font-weight: normal; text-decoration: none; text-transform: none; vertical-align: baseline">goal file</span></div><pre class="Preformatted">1 1 3 1
+1 1 4 2
+1 1 3 2
+</pre>
+</td>
+  </tr>
+  <tr>
+    <td colspan="2" rowspan="1"><p class="Body">
+  <a name="1034949"> </a>Figure 2 — a sample goal
+</p>
+</td>
+  </tr>
+</tbody></table>
+
+</li>
+</ul>
+
+
+
+
+
+<p class="Body">
+  <a name="1034955"> </a>Thus your program would be run with the UNIX command
+</p>
+<pre class="Preformatted">	java Solver [-o<span style="color: #000000;  font-style: italic; font-weight: normal; text-decoration: none; text-transform: none; vertical-align: baseline">info</span>] <span style="color: #000000;  font-style: italic; font-weight: normal; text-decoration: none; text-transform: none; vertical-align: baseline">initialConfigFile</span> <span style="color: #000000;  font-style: italic; font-weight: normal; text-decoration: none; text-transform: none; vertical-align: baseline">goalConfigFile
+</span></pre>
+<p class="Body">
+  <a name="1034915"> </a>where the <tt>-o</tt> argument is optional, <span style="color: #000000;  font-style: italic; font-weight: normal; text-decoration: none; text-transform: none; vertical-align: baseline">info</span> is the debugging information you supply, and <span style="color: #000000;  font-style: italic; font-weight: normal; text-decoration: none; text-transform: none; vertical-align: baseline">initialConfigFile</span> and <span style="color: #000000;  font-style: italic; font-weight: normal; text-decoration: none; text-transform: none; vertical-align: baseline">goalConfigFile</span> name the files containing the initial block configuration and the goal configuration respectively. 
+</p>
+<p class="Body">
+  <a name="1034969"> </a>A solution to the puzzle will represent a sequence of position changes of blocks that,
+  when starting with a specified initial configuration, ends up with blocks in the positions specified in the goal. 
+  The only legal moves are those that slide a block horizontally or verticallynot both at once—into adjacent empty space. 
+  Blocks may only be moved an integer number of spaces, and either the row or the column will be the same in the start position as in the end position for each move. 
+  (It's not legal to rotate the tray of blocks.) 
+</p>
+<p class="Body">
+  <a name="1034970"> </a>Your program should produce a line of output for each block move that leads directly to a solution. Each such line will contain four integers: the starting row and column of the upper left corner of the moving block, followed by the upper left corner's updated coordinates. Example output appears below; the indicated moves, applied to the starting configuration of Figure 1, achieve the goal of Figure 2. (The annotations would not appear in the solution output.) 
+</p>
+<pre class="Preformatted">	1 1 0 1		// move the 2x2 block up
+	3 1 2 1		// move the 1x2 block up
+	4 1 3 1		// move a 1x1 block up
+	4 2 3 2		// move another 1x1 block up
+	4 3 4 2		// move the rightmost 1x1 block over
+</pre>
+<p class="Body">
+  <a name="1034990"> </a>If your program, run with debugging output disabled, finds a solution to the puzzle, it should exit normally after producing <span style="color: #000000;  font-style: italic; font-weight: normal; text-decoration: none; text-transform: none; vertical-align: baseline">only</span> output as just described, that is, the lines representing block moves that solve the puzzle. In particular, if the initial configuration satisfies the goal, your program should exit normally after producing no output. If your program cannot find a solution to the puzzle, it should exit with the call
+</p>
+<pre class="Preformatted">	System.exit(1);
+</pre>
+<p class="Body">
+  <a name="1034994"> </a>again after producing no output.
+</p>
+<p class="Body">
+  <a name="1034967"> </a>You should check that command-line arguments are correctly specified, but you may assume that the initial and goal configuration files are free of errors. You may also assume that the length and width of a tray are no larger than 256.
+</p>
+<h2 class="Heading3">
+  <a name="1027278"> </a>Part 1 (4 points)
+</h2>
+<p class="Body">
+  <a name="1035021"> </a>After finding a sponsor, you are to prepare a design for the <tt>Solver</tt> program. You need not produce the shortest possible sequence of moves, nor (for this part) will your program need to be exceptionally efficient. 
+</p>
+<p class="Body">
+  <a name="1035022"> </a>The <tt>Solver</tt> program will need to search the tree of possible move sequences to find a solution to the puzzle. In your design, outline in detail how the program will do the following:
+</p>
+<ul>
+	<li>check if the goal configuration has been achieved;</li>
+	<li>generate moves possible in the current configuration, and choose the move to explore next;</li>
+	<li>make and unmake moves;</li>
+	<li>detect previously visited configurations in order to avoid infinite cycling.</li>
+</ul>
+
+<p class="Body">
+  <a name="1035027"> </a>Your sponsor will expect to see unambiguous descriptions of how the program will perform each of these operations.
+</p>
+<p class="Body">
+  <a name="1035032"> </a>Once you get your design approved, inform the Course Manager to get this approval recorded.
+</p>
+<h2 class="Heading3">
+  <a name="1033318"> </a>Part 2 (8 points)
+</h2>
+<p class="Body">
+  <a name="1035051"> </a>Implement your design from part 1, make it work on small puzzles, and identify modifications to the program necessary to make it work efficiently with large or complicated puzzles.
+</p>
+<p class="Body">
+  <a name="1035049"> </a>Your program should conform to the interface requirements described at the start of this assignment:
+</p>
+<ul>
+	<li><p>
+Command line arguments specify debugging options (this argument is optional) and the initial and goal configuration files.
+</p>
+</li>
+	<li><p>
+When no debugging option is specified, only one line per move, containing four integers, appears in the output. 
+	If the puzzle cannot be solved, the program should exit with the statement
+</p>
+
+
+<pre class="Preformatted">	System.exit (1);
+</pre>
+<dl>
+  <dt class="Indented1"> <a name="1035064"> </a>Otherwise it should exit normally.
+</dt></dl>
+</li>
+</ul>
+<p class="Body">
+  <a name="1035065"> </a>You should also associate debugging output with program events appropriately, and choose an appropriate debugging option for each set of output. Your debugging output facility should allow the user to select both the classes for which output is produced and the level of detail of output. Any interesting event that happens in your program-e.g. making/unmaking a move, encountering a previously seen configuration, determining the set of possible moves, or comparing a configuration with the goal-should be displayed by debugging output activated by some option. You should also incorporate output that will help you make implementation decisions about time/memory tradeoffs. Describe your debugging output facility in your writeup (see below). Your sponsor will ask you to defend your matching of output options with debugging output.
+</p>
+<p class="Body">
+  <a name="1035119"> </a>You are to include an "is OK" method in your class that represents the tray. When an appropriate debugging option is enabled, a call to this method should accompany each change to objects in the class. The "is OK" method should throw <tt>IllegalStateException</tt> with an informative message if it finds a problem, e.g. two blocks occupying the same space in the tray, or a block sitting outside the tray.
+</p>
+<h2 class="Heading4">
+  <a name="1035086"> </a>Program style and organization
+</h2>
+<p class="Body">
+  <a name="1035137"> </a>It is likely in this assignment that you will need to revise code you implement in this version to be able to handle larger puzzles. Thus you should organize your program into classes that allow easy substitution of efficient code for inefficient code or of one algorithm for another (e.g. depth-first move processing for breadth-first) in each area.
+</p>
+<p class="Body">
+  <a name="1035087"> </a>As usual, your code should include informative comments for all your classes and methods. Use straightforward algorithms where possible. Give your variables and methods informative names. Declare all the data fields and methods within each class to have the proper <tt>public/private/protected/package</tt> qualifier. In particular, you are not allowed to make things public that would allow a user to corrupt your data structures (even if none of your own code would do this).
+</p>
+<h2 class="Heading4">
+  <a name="1035068"> </a>Testing
+</h2>
+<p class="Body">
+  <a name="1035069"> </a>A compiled <tt>Checker</tt> program is available in the <tt>~cs47b/lib/puzzles</tt> directories (e.g. <tt>easy</tt>) to verify the output of your <tt>Solver</tt> program. To use it, copy any of the files <tt>Checker.class</tt> and <tt>TrayVerifier.class</tt> from the <tt>~cs47b/lib</tt> directory to your own directory: </p><pre class="Preformatted">    cp ~cs47b/lib/Checker.class .           # Note the trailing, standalone '.'
+    cp ~cs47b/lib/TrayVerifier.class .
+</pre>
+Then, on a UNIX system, you may run the checker with a command like:
+<pre>    java Solver <span style="font-style: italic;">init goal</span> | java Checker <span style="font-style: italic;">init goal</span>
+</pre>
+<p class="Body">
+  <a name="1035071"> </a>(<span style="font-style: italic;">init</span> and <span style="font-style: italic;">goal</span> stand for names of files containing the initial and goal configurations, respectively.)
+</p>
+<p class="Body">
+  <a name="1035072"> </a>Each of your classes must contain a <tt>main</tt> method that <u>thoroughly</u> tests the public and private methods of the class. Bring tests of individual classes with you to the Self-Paced Center for your sponsor to inspect. Also, the directory <tt>~cs47b/lib/puzzles/easy</tt> contains a number of puzzle files that your program must solve correctly: 
+  </p><pre>  ls ~cs47b/lib/puzzles/easy
+  </pre>
+  Run your program on all of these puzzles - a file named <tt>README</tt> describes them:
+  <pre>  cat ~cs47b/lib/puzzles/easy/README 
+  </pre>
+   ...A shell script <tt>run.easy</tt> will test them all at once - bring this output with you when you have this part graded:
+  <pre class="Preformatted">    cp ~cs47b/lib/puzzles/easy/run.easy .           # Note the trailing, standalone '.'
+    chmod +x run.easy
+    
+    script
+    ./run.easy
+    exit                             # The output will be a file named "typescript"
+    </pre>
+<p></p>
+<h2 class="Heading4">
+  <a name="1035107"> </a>Plan for part 3
+</h2>
+<p class="Body">
+  <a name="1035108"> </a>Producing a program that can solve large or complicated puzzles involves answering a number of questions.
+</p>
+<ul>
+<li>
+<p>
+Move generation will involve examining either the blocks in the tray or the empty space in the tray. Should the tray be stored as a list of blocks/empty spaces to optimize move generation, or should the locations in the tray be represented explicitly with a two-dimensional array? If the former, should blocks/spaces in the list be sorted?<br>
+</p>
+</li>
+<li>
+<p>
+What board representation optimizes the operation of checking whether the goal has been reached? If this representation is incompatible with implementations that optimize move generation, how should the conflict be resolved?<br>
+</p>
+</li>
+<li>
+<p>
+Should block moves of more than one space be considered? Why or why not?<br>
+</p>
+</li>
+<li>
+<p>
+Should the tree of possible move sequences be processed depth first, breadth first, or some other way?<br>
+</p>
+</li>
+<li>
+<p>
+The program needs to make and unmake moves. Again, a representation that optimizes these operations may not be so good for others. Determine how to evaluate tradeoffs among representations.<br>
+</p>
+</li>
+<li>
+<p>
+The program must detect configurations that have previously been seen in order to avoid infinite loops. Hashing is a good technique to apply here. What's a good hash function for configurations? The default limits for Java memory allocation may limit the maximum number of configurations that the table can contain. (The blocks in the puzzle diagrammed in Figure 1 may be moved into 65,880 different configurations.) How can this constraint be accommodated, and what effect does it have on other operations?<br>
+</p>
+</li>
+</ul>
+
+<p class="Body">
+  <a name="1035115"> </a>Some of these questions can be answered with careful analysis. Others require empirical evidence. Your program (with appropriate debugging options enabled) should produce enough information for you to make intelligent decisions about where its processing bottlenecks are. 
+</p>
+<p class="Body">
+  <a name="1035116"> </a>Your sponsor will expect you to identify and defend, in your plan for part 3, at least three avenues for program improvement, along with design decisions that you feel you made correctly in the current version.
+</p>
+<p class="Body">
+  <a name="1035179"> </a>Again, once you get your program graded and an optimization plan approved, inform the Course Manager to get this approval recorded. If you spend too much time trying to make the program for this part efficient, you will lose pacing points and risk lowering your course grade.
+</p>
+<h2 class="Heading3">
+  <a name="1035155"> </a>Part 3 (8 points)
+</h2>
+<p class="Body">
+  <a name="1035156"> </a>Make your program efficient enough to solve at least ten of the puzzles in the directory <tt>~cs47b/lib/puzzles/hard</tt>, using no more than two minutes each on one of the workstations in the Self-Paced Center, run with default settings for Java memory allocation. A file named <tt>README</tt> in the directory describes the puzzles; the shell script <tt>run.hard</tt> runs the <tt>Solver</tt> program on them.
+</p>
+<p class="Body">
+  <a name="1035157"> </a>Also provide a writeup that documents and defends the decisions you made to design the program. This writeup will include the following:
+</p>
+<ul>
+	<li><p>
+a description of your data structures for the tray and blocks;
+</p>
+</li>
+	<li><p>
+a list of the operations on blocks, boards, and the collection of boards seen earlier in the solution search;
+</p>
+</li>
+	<li><p>
+a list of alternative strategies for selecting moves and alternatives for representing blocks, boards, and the collection of already-seen boards;
+</p>
+</li>
+	<li><p>
+analysis of the advantages and disadvantages of each alternative in these lists;
+</p>
+</li>
+	<li><p>
+a description of the alternatives you adopted and of evidence you collected that support your choices.
+</p>
+</li>
+</ul>
+
+<p class="Body">
+  <a name="1035162"> </a>This writeup will include the material in the designs you produced for parts 1 and 2. 
+  Submit the writeup and your solution program online as described previously.
+</p>
+<h2 class="Heading3">
+  <a name="1027740"> </a>Checklist
+</h2>
+<h3>Part 1 (4 points)</h3>
+<ul>
+  <li class="SmartList1">Detailed pseudocode outline of the <tt>Solver</tt> class, including the following operations:
+  <ul>
+    <li class="SmartList2">goal checking;
+    </li><li class="SmartList2">move generation;
+    </li><li class="SmartList2">making and unmaking of moves;
+    </li><li class="SmartList2">detection of previously visited configurations.
+  </li></ul>
+</li></ul>
+<h3>Part 2 (8 points)</h3>
+<ul>
+  <li class="SmartList1">Correctly working code:
+  <ul>
+    <li class="SmartList2">solutions found where possible;
+    </li><li class="SmartList2">user interface provided as specified (command-line arguments, output format, exit status, debugging output).
+  </li></ul>
+  </li><li class="SmartList1"><a name="1030046"> </a>Well-designed debugging output:
+  <ul>
+    <li class="SmartList2"><a name="1030049"> </a>all interesting events revealed;
+    </li><li class="SmartList2"><a name="1030052"> </a>output appropriately matched to requested output options;
+    </li><li class="SmartList2"><a name="1033673"> </a>debugging information sufficient to identify at least three avenues for efficiency improvement.
+  </li></ul>
+  </li><li class="SmartList1"><a name="1030021"> </a>Sufficient testing:
+  <ul>
+    <li class="SmartList2"><a name="1030022"> </a>a <tt>main</tt> method included with each class that thoroughly tests its operations;
+    </li><li class="SmartList2"><a name="1030028"> </a>all program statements tested;
+    </li><li class="SmartList2"><a name="1035230"> </a>a transcript of correct behavior on the puzzles in <tt>~cs47b/lib/puzzles/easy</tt>.
+  </li></ul>
+  </li><li class="SmartList1"><a name="1030029"> </a>Good program organization:
+  <ul>
+    <li class="SmartList2"><a name="1030075"> </a>appropriate division into classes that allow easy substitution of algorithm and implementation choices;
+    </li><li class="SmartList2"><a name="1030080"> </a>no unnecessarily public data.
+  </li></ul>
+  </li><li class="SmartList1"><a name="1030030"> </a>A printed listing of your classes and methods, indented to show their structure, accompanied by comments that describe their purpose and arguments.
+  </li><li class="SmartList1"><a name="1030031"> </a>Reasonable names for methods and parameters.
+  </li><li class="SmartList1"><a name="1033672"> </a>Identification of efficiency improvements:
+  <ul>
+    <li class="SmartList2"><a name="1033676"> </a>description, supported by analysis and program instrumentation, of at least three program bottlenecks;
+    </li><li class="SmartList2"><a name="1033679"> </a>description of program modifications necessary to remove the bottlenecks;
+    </li><li class="SmartList2"><a name="1033681"> </a>defense of program design decisions that <i>do not</i> need revision.
+  </li></ul>
+</li></ul>
+<h3 class="Heading4">Part 3 (6 points)</h3>
+<ul>
+  <li class="SmartList1"><a name="1030081"> </a>Ten puzzles in 
+<tt>~cs47b/lib/puzzles/hard</tt> each solved within two minutes using 
+your inst account.
+  </li><li class="SmartList1"><a name="1030086"> </a>Writeup that documents and defends design decisions:
+  <ul>
+    <li class="SmartList2"><a name="1030095"> </a>a description of your data structures for the tray and blocks;
+    </li><li class="SmartList2"><a name="1035241"> </a>a list of the operations on blocks, boards, and the collection of boards seen earlier in the solution search;
+    </li><li class="SmartList2"><a name="1033930"> </a>a list of alternative strategies for selecting moves and alternatives for representing blocks, boards, and the collection of already-seen boards;
+    </li><li class="SmartList2"><a name="1033931"> </a>analysis of the advantages and disadvantages of each alternative in these lists;
+    </li><li class="SmartList2"><a name="1030098"> </a>a description of the alternatives you adopted and of evidence you collected that support your choices.
+  </li></ul>
+</li></ul>
+<h3 class="Heading4">
+  <a name="1033651"> </a>Other (4 points)
+</h3>
+<ul>
+  <li class="SmartList1"><a name="1033652"> </a>Satisfaction of conditions arranged with the sponsoring tutor.
+</li></ul>
+</section>
+<footer style="height: 50px">
+</footer>
+
+
+</body></html>
