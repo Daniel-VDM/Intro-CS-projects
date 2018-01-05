@@ -32,5 +32,9 @@ This was my first major program of which I had to design from the ground up. It 
 Lastly, I had to do a writeup of the project where I covered what parts I could improve on as well as how I implemented certain parts of the program. I would recommend reading that since it describes the program in depth as well as my thought process. It's the file: "47B Blocks Write Up.pdf" in the main Blocks directory.
 
 
+##### IF YOU WANT TO RUN THE PROGRAM #####
+
+**I included a folder (Titled "Runnable") with all the class files, initial board state, and goal board state for anyone to run. *Please read the readme.***
+
 
 
