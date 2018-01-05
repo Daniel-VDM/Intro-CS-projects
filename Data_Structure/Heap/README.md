@@ -30,7 +30,9 @@ I found this project to be interesting because I have only seen array implementa
 
 An interesting approach that I took with this was that I used a "tracer" node to keep track of where the next element in the heap would be added. Determining what node was the correct tracer proved to be the hardest of this project. After some research and thinking, I found that using the binary representation of the size of the heap was the best way of finding the tracer. Essentially, whenever I tried to find the tracer, I would iterate through the binary representation of the heap (in string form, not including the first character). The tracer would start off as the root. While iterating through the string, if the character was "0" I would assign the tracer to the left child and if the character was "1" I would assign the tracer to the right child. Once the interation finished, the tracer would be found. Doing this meant that finding the tracer took O(log n). 
 
-Once I had the correct tracer, adding an element would take O(1). However since the tracer would be wrong after the insertion, I would have to refind the tracer, which meant that interting took O(log n). Deletion would also take O(log n) since I would have to refind the tracer after I popped off the heap and re-heapify. *Note: for specificity, it would be O(2 log n) to delete because re-heapify takes O(log n).* So, because I found an efficient way of find the tracer I am able to have the same time complexity as an array based heap, which I find to be fascinating.
+Once I had the correct tracer, adding an element would take O(1). However since the tracer would be wrong after the insertion, I would have to refind the tracer, which meant that interting took O(log n). Deletion would also take O(log n) since I would have to refind the tracer after I popped off the heap and re-heapify. *Note: for specificity, it would be O(2 log n) to delete because re-heapify takes O(log n).* 
+
+So, because I found an efficient way of find the tracer I am able to have the same time complexity as an array based heap, which I find to be fascinating.
 
 
 ************************************************
