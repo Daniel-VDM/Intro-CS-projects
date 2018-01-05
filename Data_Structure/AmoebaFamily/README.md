@@ -15,11 +15,18 @@ Short Description of the project (Copied from the prompt)
 The file AmoebaFamily.java contains most of the code to represent an amoeba family. Its main method sets up the following tree:
 *You supply code to allow the amoebas in the family to be processed.*
 
+**Checklist**
+>- an addChild method that uses ArrayList.iterator() to examine amoeba children;
+>- an efficient print() method that prints amoeba names in the specified order;
+>- one version of the AmoebaIterator class in which the next() method efficiently returns amoebas in preorder, with children returned oldest first;
+>- another version of the AmoebaIterator class in which the next() method efficiently returns amoebas breadth first;
+>- constructors for these iterators that run in constant time.
+
 ************************************************
 
 ##### PERSONAL NOTE #####
   
-This was the first project of the semester so it covered the basics of iterators. The goal of the project was to implement a Depth First Search and Breadth First Search algorithm as well as mastering iterators in Java. I included a lot of comments while doing the program that show my thought process while completing the assignment.
+This was the first project of the semester so it covered the basics of iterators. The goal of the project was to implement a Depth First Search and Breadth First Search algorithm as well as mastering iterators in Java. I included a lot of comments while writing the program that show my thought process while completing the assignment.
 
 
 ************************************************
