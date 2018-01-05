@@ -21,3 +21,5 @@ which correspond to the problem stated above. Indicate, on the program listing y
 ##### PERSONAL NOTE #####
   
 I implemented the hashtable into the program inorder to make it work. Relatively simple stuff.
+
+Also, I included a file called "Runnable" which has eveything needed to run the program. 
