@@ -14,6 +14,8 @@ This project is to write a program that generates a solution to such a puzzle. T
 
 **For more details on the project and its specification take a look at the prompt *(http://www-inst.eecs.berkeley.edu/~selfpace/47b/dp/blocks-project/)*. Just incase it has been changed, I have included the webfiles for the Fall 2017 version of the project. Its in the folder titled "Project Prompt (Web Files)"**
 
+************************************************
+
 ##### PERSONAL NOTE #####
   
 This was my first major program of which I had to design from the ground up. It incorporates a lot of different ideas in computer science with an emphasis on Data Structures.
@@ -31,6 +33,8 @@ This was my first major program of which I had to design from the ground up. It 
 
 Lastly, I had to do a writeup of the project where I covered what parts I could improve on as well as how I implemented certain parts of the program. I would recommend reading that since it describes the program in depth as well as my thought process. It's the file: "47B Blocks Write Up.pdf" in the main Blocks directory.
 
+
+************************************************
 
 ##### IF YOU WANT TO RUN THE PROGRAM #####
 
