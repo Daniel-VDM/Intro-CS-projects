@@ -1,4 +1,4 @@
-# -CS61A-Hog
+# -Project-Hog
 First major project for Structure and Interpretation of Computer Programs 
 
 ************************************************
