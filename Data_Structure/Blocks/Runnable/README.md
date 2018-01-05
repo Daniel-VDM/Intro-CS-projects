@@ -1,5 +1,4 @@
 # READ THIS PLEASE
---------
 
 If you want to run my code for yourself, execute the the Solver.class file via the terminal.
 
