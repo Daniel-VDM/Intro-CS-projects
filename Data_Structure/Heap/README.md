@@ -37,4 +37,4 @@ Once I had the correct tracer, adding an element would take O(1). However since 
 
 ##### IF YOU WANT TO RUN THE PROGRAM #####
 
-**I included a folder (Titled "Runnable") with all the information and files needed to run this *Please read the readme.***
+**I included a folder (Titled "Runnable") with all the information and files needed to run it. *Please read the readme.***
