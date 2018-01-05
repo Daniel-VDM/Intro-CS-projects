@@ -2,7 +2,7 @@
 
 If you want to run my code for yourself, execute the the Solver.class file via the terminal.
 
-Refer to the project prompt for full specification of the program.
+Reference the project prompt for full specification of the program.
 
 **An example would be something like this: "java Solver c52 50.52.goal" executed when in a directory with all of the contents of this folder**
 
