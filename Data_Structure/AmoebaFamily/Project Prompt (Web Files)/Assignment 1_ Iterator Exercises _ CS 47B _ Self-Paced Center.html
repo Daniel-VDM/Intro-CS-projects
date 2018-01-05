@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<!-- saved from url=(0070)http://www-inst.eecs.berkeley.edu/~selfpace/47b/p1/iterator-exercises/ -->
+<html lang="en" class="gr__www-inst_eecs_berkeley_edu"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./Assignment 1_ Iterator Exercises _ CS 47B _ Self-Paced Center_files/css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="./Assignment 1_ Iterator Exercises _ CS 47B _ Self-Paced Center_files/style.css">
+  <title>Assignment 1: Iterator Exercises | CS 47B | Self-Paced Center</title>
+</head>
+<body data-gr-c-s-loaded="true">
+<nav id="nav-top">
+  <ul class="nav">
+    <li class="nav-item"><a class="nav-top-link" href="http://www-inst.eecs.berkeley.edu/~selfpace/">Self-Paced Center</a></li>
+    <li class="nav-item"><a class="nav-top-link" href="http://www-inst.eecs.berkeley.edu/~selfpace/matlab/">MATLAB</a></li>
+    <li class="nav-item"><a class="nav-top-link" href="http://www-inst.eecs.berkeley.edu/~selfpace/c/">C</a></li>
+    <li class="nav-item"><a class="nav-top-link" href="http://www-inst.eecs.berkeley.edu/~selfpace/unix/">UNIX</a></li>
+    <li class="nav-item"><a class="nav-top-link" href="http://www-inst.eecs.berkeley.edu/~selfpace/cpp/">C++</a></li>
+    <li class="nav-item"><a class="nav-top-link" href="http://www-inst.eecs.berkeley.edu/~selfpace/java">Java</a></li>
+    <li class="nav-item"><a class="nav-top-link" href="http://www-inst.eecs.berkeley.edu/~selfpace/python/">Python</a></li>
+    <li class="nav-item"><a class="nav-top-link-active" href="http://www-inst.eecs.berkeley.edu/~selfpace/47b/">47B</a></li>
+  </ul>
+</nav>
+<nav id="nav-main">
+  <ul class="nav">
+    <li class="nav-item"><a class="nav-main-link" href="http://www-inst.eecs.berkeley.edu/~selfpace/47b/">Calendar</a></li>
+    <li class="nav-item"><a class="nav-main-link" href="http://selfpace47b.youcanbook.me/" target="_blank">Schedule Appointment</a></li>
+    <li class="nav-item"><a class="nav-main-link" href="https://piazza.com/class/j7gdvq7s7c827m" target="_blank">Piazza</a></li>
+  </ul>
+</nav>
+<section>
+  <h1>Assignment 1: Iterator Exercises</h1>
+
+  <article>
+    <h2>Goals</h2>
+
+    <p>These exercises familiarize you with the design and use of an
+    <dfn>iterator</dfn>, a class used to process all the elements in a
+    collection one by one.</p>
+  </article>
+
+  <article>
+    <h2>Readings</h2>
+    <ul>
+      <li><cite>Data Structures and Problem Solving using Java (4th Edition)</cite> Sections 6.2 - 6.3</li>
+      <li><cite>Data Structures and Problem Solving using Java (4th Edition)</cite> Sections 17.1 - 17.2, 17.5</li>
+      <li><cite>Data Structures and Problem Solving using Java (4th Edition)</cite> Section 18.4</li>
+      <li><cite>Data Structures and Problem Solving using Java (4th Edition)</cite> Chapter 15</li>
+    </ul>
+  </article>
+
+  <article>
+    <h2>Background</h2>
+
+    <p>An amoeba family tree is simpler than a normal family tree because
+    amoebas do not get married. An amoeba has one parent, perhaps a million
+    siblings (brothers and sisters), and billions and billions of children. An
+    amoeba also has a name.</p>
+
+    <p>The file <a href="http://www-inst.eecs.berkeley.edu/~selfpace/doc/47b/AmoebaFamily.java"><code>AmoebaFamily.java</code></a> contains most of the code to represent an amoeba family. Its <code>main</code> method sets up the following tree:</p>
+
+    <figure>
+      <img src="./Assignment 1_ Iterator Exercises _ CS 47B _ Self-Paced Center_files/amoeba-family-tree.gif" height="113" width="570">
+    </figure>
+
+    <p>You supply code to allow the amoebas in the family to be processed.</p>
+
+    <article>
+      <h3>Files</h3>
+      <ul>
+        <li><a href="http://www-inst.eecs.berkeley.edu/~selfpace/doc/47b/AmoebaFamily.java">AmoebaFamily.java</a></li>
+      </ul>
+    </article>
+  </article>
+
+  <article>
+    <h2>Exercise 1</h2>
+    <p>Provide the body for the <code>AmoebaFamily.addChild</code>
+    method. Given a name of the parent amoeba and the name of a new child,
+    <code>addChild</code> should return having added a new amoeba as the
+    youngest child of the named parent amoeba. Do not change any of the
+    framework code; you may, however, supply additional methods. Also, do not
+    use the <code>ArrayList.get</code> method; instead, use the
+    <code>ArrayList.iterator()</code> method to iterate over each amoeba's
+    children.</p>
+  </article>
+
+  <article>
+    <h2>Exercise 2</h2>
+
+    <p>Provide the body for the <code>AmoebaFamily.print()</code> method. It
+    should print the names of all amoebas in the family in <em>preorder</em>,
+    with children's names printed oldest first. Output for the family set up in
+    the <code>AmoebaFamily.main</code> method should be</p>
+
+    <pre>Amos McCoy
+mom/dad
+me
+Mike
+Bart
+Lisa
+Homer
+Marge
+Bill
+Hilary
+Fred
+Wilma</pre>
+
+    <p>The <code>print</code> method or one of the methods it calls should be
+    recursive. It should print the names of an amoeba family of <code>N</code>
+    amoebas in <code>O(N)</code> operations (counting each call to
+    <code>Amoeba.toString()</code> as a single operation). Do not change any of
+    the framework code; you may, however, supply additional methods.</p>
+
+    <p>Test your code for Exercises 1 and 2 using the
+    <code>AmoebaFamily.main</code> method.</p>
+  </article>
+
+  <article>
+    <h2>Exercise 3</h2>
+
+    <p>Complete the <code>AmoebaIterator</code> class. It should successively
+    return amoebas from the family in preorder, with children amoebas returned
+    oldest first. Thus, for the family set up in the
+    <code>AmoebaFamily.main</code> method, the amoeba named "Amos McCoy" should
+    be returned by the first call to <code>next()</code>; the second call to
+    <code>next()</code> should return the amoeba named "mom/dad"; and so on. Do
+    not change any of the framework code.</p>
+
+    <p>Iteration over all of the amoebas in a family of <code>N</code> amoebas
+    should require no more than <code>O(N)</code> operations. Also, the
+    iterator constructor should run in constant time (thus, a solution that
+    puts all the amoebas into a linear structure, then returns them one by one
+    is not allowed). Your implementation will require the use of a
+    <code>Stack</code>.</p>
+
+    <p>Uncomment the code at the end of the <code>AmoebaFamily.main</code>
+    method to test your solution. It should produce the same output as the call
+    to <code>family.print()</code>.</p>
+  </article>
+
+  <article>
+    <h2>Exercise 4</h2>
+
+    <p>Rewrite the <code>AmoebaIterator</code> class so that amoebas are
+    returned <em>breadth first</em>. That is, the root of the family should be
+    returned first, then all of its children (oldest first), then all of their
+    children, and so on. For the family constructed in the
+    <code>AmoebaFamily.main</code> method, the amoebas should be returned in
+    the following sequence:</p>
+
+    <pre>Amos McCoy
+mom/dad
+me
+Fred
+Wilma
+Mike
+Homer
+Marge
+Bart
+Lisa
+Bill
+Hilary</pre>
+
+    <p>As in Exercise 3, enumeration of all the amoebas in a family of
+    <code>N</code> amoebas should require no more than <code>O(N)</code>
+    operations, and the constructor must run in constant time. Your
+    implementation will require the use of a <code>Queue</code> where the
+    Exercise 3 solution used a <code>Stack</code>.</p>
+
+    <p>Test your code with the <code>AmoebaFamily.main</code> method from
+    Exercise 3.</p>
+  </article>
+
+  <article>
+    <h2>Checklist</h2>
+    <ul>
+      <li>Correctly working additions to the framework, implemented without changing any of the framework code:
+        <ul>
+          <li>an <code>addChild</code> method that uses <code>ArrayList.iterator()</code> to examine amoeba children;</li>
+          <li>an efficient <code>print()</code> method that prints amoeba names in the specified order;</li>
+          <li>one version of the <code>AmoebaIterator</code> class in which the <code>next()</code> method efficiently returns amoebas in preorder, with children returned oldest first;</li>
+          <li>another version of the <code>AmoebaIterator</code> class in which the <code>next()</code> method efficiently returns amoebas breadth first;</li>
+          <li>constructors for these iterators that run in constant time.</li>
+        </ul>
+      </li>
+      <li>Program listings, with methods indented to show their structure, accompanied by comments that describe their purpose and arguments.</li>
+      <li>Reasonable names for variables, methods, and parameters.</li>
+    </ul>
+  </article>
+</section>
+<footer style="height: 50px">
+</footer>
+
+
+</body></html>
