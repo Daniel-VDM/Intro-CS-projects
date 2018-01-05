@@ -2,7 +2,7 @@
 This was the major project for Data Structures (CS47B)
 
 ************************************************
-The main program was written from scratch.
+The main program was written from scratch by me.
 ************************************************
 
 Short Description of the project (Copied from the prompt)
