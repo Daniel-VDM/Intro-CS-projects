@@ -1,0 +1,33 @@
+COM This is my BORG program
+COM It will do some math and print the answer
+START
+   VAR ANSWER
+   PRINT ANSWER
+   START
+      VAR ARG1 = 10
+      VAR ARG2 = 3
+      PRINT ARG1
+      PRINT ARG2
+      PRINT ARG1 ^ ARG2
+      ANSWER = ARG1 - ARG2
+      PRINT ANSWER
+      ANSWER ++
+      PRINT ANSWER
+   FINISH
+   PRINT ARG1
+   PRINT ANSWER / ANSWER
+   PRINT ANSWER
+   START
+      VAR newANSWER = ANSWER + 1
+      PRINT newANSWER
+      PRINT ARG2
+      PRINT newANSWER ++
+   FINISH
+   PRINT ANSWER
+   PRINT newANSWER
+   ANSWER = ANSWER % 5
+   PRINT ANSWER
+   VAR decANSWER = ANSWER --
+   PRINT decANSWER
+   PRINT ANSWER
+FINISH
