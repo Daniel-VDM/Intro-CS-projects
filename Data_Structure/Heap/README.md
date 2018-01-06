@@ -19,7 +19,6 @@ Modify the implementation so that it no longer uses an array (or ArrayList, or a
 >- Remove one more element from the heap (this should restore the heap to how it was just after initialization).
 >- Add two more elements, and then remove two more elements.
 
-
 **For more details on the project and its specification take a look at the prompt *(http://www-inst.eecs.berkeley.edu/~selfpace/47b/p3/heap-exercises/)*. Just incase it has been changed, I have included the webfiles for the Fall 2017 version of the project. Its in the folder titled "Project Prompt (Web Files)"**
 
 ************************************************

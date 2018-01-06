@@ -22,6 +22,8 @@ The file AmoebaFamily.java contains most of the code to represent an amoeba fami
 >- another version of the AmoebaIterator class in which the next() method efficiently returns amoebas breadth first;
 >- constructors for these iterators that run in constant time.
 
+**For more details on the project and its specification take a look at the prompt *(http://www-inst.eecs.berkeley.edu/~selfpace/47b/p1/iterator-exercises/)*. Just incase it has been changed, I have included the webfiles for the Fall 2017 version of the project. Its in the folder titled "Project Prompt (Web Files)"**
+
 ************************************************
 
 ##### PERSONAL NOTE #####

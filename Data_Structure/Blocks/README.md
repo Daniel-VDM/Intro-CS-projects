@@ -11,7 +11,6 @@ Those of you who spend much time in toy stores may be familiar with "sliding-blo
 
 This project is to write a program that generates a solution to such a puzzle. The first part is a design, the second an implementation of the design, and the third is an optimization and writeup.
 
-
 **For more details on the project and its specification take a look at the prompt *(http://www-inst.eecs.berkeley.edu/~selfpace/47b/dp/blocks-project/)*. Just incase it has been changed, I have included the webfiles for the Fall 2017 version of the project. Its in the folder titled "Project Prompt (Web Files)"**
 
 ************************************************
