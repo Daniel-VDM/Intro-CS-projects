@@ -8,7 +8,7 @@ Reference the project prompt for full specification of the program.
 
 *Note: You can add your own graph to the data.txt and it will find the MST.*
 
-#### How to input your own graph ####
+#### HOW TO INPUT YOUR OWN GRAPH ####
 >Each line is an edge with the following key: **start_vertex end_vertex weight**. 
 >The code:
 >~~~
