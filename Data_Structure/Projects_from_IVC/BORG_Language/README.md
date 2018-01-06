@@ -11,7 +11,32 @@ The goal of the project was to create an interpreter for my own made up language
 
 Variables and their scope was stored in a custom Hashtable (written by hand instead of using the java Hashtable)
 
-*Note: this program was created before I attended UC Berkeley so it's probably not done in an efficient or robust manner; since I was not experienced with software design*
+*Note: this program was created before I attended UC Berkeley so it's probably not done in an efficient or robust manner.*
+
+**Here is a sample code of BORG**
+~~~
+COM This is my BORG program
+COM It will do some math and print the answer
+START
+   VAR ANSWER
+   PRINT ANSWER
+   START
+      VAR ARG1 = 10
+      VAR ARG2 = 3
+      PRINT ARG1
+      PRINT ARG2
+      PRINT ARG1 ^ ARG2
+      ANSWER = ARG1 - ARG2
+      PRINT ANSWER
+      ANSWER ++
+      PRINT ANSWER
+   FINISH
+   PRINT ARG1
+   PRINT ANSWER / ANSWER
+   PRINT ANSWER
+FINISH
+~~~
+*Contents of ProgramTest.txt*
 
 ##### IF YOU WANT TO RUN THE PROGRAM #####
 
