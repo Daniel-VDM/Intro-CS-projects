@@ -7,7 +7,7 @@ The entire program was written by me.
 
 Short Description of the project 
 -------------------------------------------------------------
-This is a simple calculator for math expressions that were written in Reverse Polish (aka Postfix notation). The core logic of the program relied on using a stack (wrtten by hand instead of using the java stack) to compute the value of the expression. 
+This is a simple calculator for math expressions that were written in Reverse Polish (aka Postfix notation). The core logic of the program relied on using a stack (wrtten by hand instead of using the java stack) to compute the value of the input expression. 
 
 -------------------------------------------------------------
 
