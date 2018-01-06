@@ -1,10 +1,6 @@
 # Data Structure Projects From Irvine Valley College
 
-*These projects were relatively easier than the projects that I did at UC Berkeley. However, they do show different applications of Data Structures.*
-
-*I think the BORG project stands out the most out of these projects as it was done from scratch and at the time I found it to be quite challenging.* 
-
-*These projects DO NOT come with prompts, instead I just included a short description of the program and my approach*
+*These projects were relatively easier than the projects that I did at UC Berkeley. However, they do show different applications of Data Structures. **I think the BORG project stands out the most out of these projects as it was done from scratch and at the time I found it to be quite challenging.** These projects DO NOT come with prompts, instead I just included a short description of the program and my approach*
 
 ##### SHORT DESCRIPTION OF EACH PROJECT  #####
 *Each project was fully written by me*
