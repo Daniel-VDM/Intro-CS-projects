@@ -14,4 +14,4 @@ Reference the project prompt for full specification of the program.
 >~~~
 >1 2 3
 >~~~
->Would be an edge from vertex 1 to vertex 2 with a weight of 3
+>Would be an edge from *vertex 1* to *vertex 2* with a **weight of 3**
