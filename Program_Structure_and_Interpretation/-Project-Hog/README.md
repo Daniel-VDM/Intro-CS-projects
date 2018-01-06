@@ -39,5 +39,5 @@ Disclaimer:  All projects in CS61A (Structure and Interpretation of Computer Pro
   
 For this specific project, it taught me the fundamentals of Python aswell as the use of Higher Order Functions. 
 
-*Note: All of the code that I wrote for this program is surrounded by a comment marking the start and end*
+*Note: All of the code that I wrote for this program is surrounded by a comment marking the start and end.*
 

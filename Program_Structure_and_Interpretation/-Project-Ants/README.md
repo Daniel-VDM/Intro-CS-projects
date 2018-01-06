@@ -41,7 +41,7 @@ This project built on the idea of data abstraction and untalized the object syst
 
 I was able to do the extra portion for this project which was to implement an ant that was able to inflict a 'status effect' for any bee that was hit by said ant. Furthermore, I had to implement the status effect logic. The status effect logic was quite challenging as we had to implement a stacking effect that had unique characteristics. Take a look at the prompt for more information on the requirement of the stacking effect. Doing the extra credit demonstrates my ability to understand OOP and 'reuse' code and implementations to create something new.
 
-*Note: All of the code that I wrote for this program is surrounded by a comment marking the start and end*
+*Note: All of the code that I wrote for this program is surrounded by a comment marking the start and end.*
 
 
 

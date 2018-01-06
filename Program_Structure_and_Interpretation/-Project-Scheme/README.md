@@ -37,5 +37,5 @@ This project incorporated everything that I learned about Python to the applicat
 
 I was able to do the extra portion for this project which was to implement an optimized implementation of Scheme_eval (the interpreters evaluation routine) that supported tail recursion. I was also able to implement macros.
 
-*Note: All of the code that I wrote for this program is surrounded by a comment marking the start and end*
+*Note: All of the code that I wrote for this program is surrounded by a comment marking the start and end.*
 
