@@ -12,9 +12,9 @@ Two CS 47B students have a jug filled with eight liters of Jolt Cola that they w
 The file JugSolver.java contains part of a program to solve this problem. The program recursively searches to find a sequence of steps (each step pours one jug into another) that produces the desired amount. The program has a flaw, namely that it doesn't keep track of configurations that it has seen before; infinite recursion results.
 
 Without changing any of the existing code (except perhaps to change the value of the DEBUGGING variable), add statements that fix the program. In particular, you are to use a java.util.Hashtable object to keep track of configurations already seen. Test your completed program on the arguments
-
->8 5 3 8 0 4
-
+~~~
+8 5 3 8 0 4
+~~~
 which correspond to the problem stated above. Indicate, on the program listing you bring to the Self-Paced Center for grading, what you added to the framework code.
 ************************************************
 
