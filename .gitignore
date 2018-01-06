@@ -48,3 +48,6 @@ _testmain.go
 #*.jpeg
 *.psd
 /Data_Structure/Heap/dist/
+/Data_Structure/MST/build/
+/Data_Structure/MST/nbproject/private/
+/Data_Structure/MST/dist/
