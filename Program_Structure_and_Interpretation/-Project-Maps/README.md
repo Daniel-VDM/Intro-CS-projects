@@ -17,16 +17,16 @@ The maps.zip archive contains all the starter code and data sets. The project us
 
 Short Description of each file:
 
-- abstractions.py: Data abstractions used in the project
-- recommend.py: Machine learning algorithms and data processing
-- utils.py: Utility functions for data processing
-- ucb.py: Utility functions for CS 61A
-- data: A directory of Yelp users, restaurants, and reviews
-- ok: The autograder
-- proj2.ok: The ok configuration file
-- tests: A directory of tests used by ok
-- users: A directory of user files
-- visualize: A directory of tools for drawing the final visualization 
+>- abstractions.py: Data abstractions used in the project
+>- recommend.py: Machine learning algorithms and data processing
+>- utils.py: Utility functions for data processing
+>- ucb.py: Utility functions for CS 61A
+>- data: A directory of Yelp users, restaurants, and reviews
+>- ok: The autograder
+>- proj2.ok: The ok configuration file
+>- tests: A directory of tests used by ok
+>- users: A directory of user files
+>- visualize: A directory of tools for drawing the final visualization 
 
 -------------------------------------------------------------
 
