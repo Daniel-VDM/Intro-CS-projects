@@ -38,6 +38,8 @@ FINISH
 ~~~
 *Contents of ProgramTest.txt*
 
+-------------------------------------------------------------
+
 ##### IF YOU WANT TO RUN THE PROGRAM #####
 
 **I included a folder (Titled "Runnable") with all the information and files needed to run it. *Please read the readme.***
