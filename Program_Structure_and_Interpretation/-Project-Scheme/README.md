@@ -25,6 +25,8 @@ Short Description of each file:
 >- tests: a directory of tests used by ok
 >- mytests.rst: A space for you to add your custom tests in Python; see section on adding your own tests
 
+**For more details on the project and its specification take a look at the prompt. I have included the webfiles for the Fall 2017 version of the project. Its in the folder titled "Project Prompt (Web Files)"**
+
 -------------------------------------------------------------
 
 ##### PERSONAL NOTE #####
