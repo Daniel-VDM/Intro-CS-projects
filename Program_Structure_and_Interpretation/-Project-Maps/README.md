@@ -36,7 +36,7 @@ Disclaimer:  All projects in CS61A (Structure and Interpretation of Computer Pro
 This project introduced the concept of data abstraction, in which we had to create and use our own data abstraction. It was a precursor to learning and using the object system in Python. Furthermore, it exposed me to the methods of machine learning as well as working on a larger project. 
 This project specifically emphasized the use of lists and dictionaries while working with abstract data types. 
 
-*Note: All code that I wrote for this program is surrounded by a comment stating the start and end of my code*
+*Note: All of the code that I wrote for this program is surrounded by a comment marking the start and end*
 
 
 
