@@ -3,6 +3,7 @@ Miscellaneous Labs and Homework code
 
 This displays my knowledge of 3 programming languages, thus 3 programming paradigms: Python (mostly Object Oriented Programming), Scheme (Functional Programming), and SQL (Declarative Programming). 
 
+-------------------------------------------------------------
 
 ##### Personal Note #####
 All homeworks and lab assignments were done via a prompt provided on the course website(https://cs61a.org/).

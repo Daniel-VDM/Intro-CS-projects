@@ -28,6 +28,8 @@ Short Description of each file:
 - users: A directory of user files
 - visualize: A directory of tools for drawing the final visualization 
 
+-------------------------------------------------------------
+
 ##### PERSONAL NOTE #####
 
 Disclaimer:  All projects in CS61A (Structure and Interpretation of Computer Programs) at UC Berkeley were NOT done from scratch. Instead, students had to create core logic algorithms using the tools provided and learned. Furthermore, a testing program is provided alongside the project (called 'okpy') to ensure that the algorithms functions as desired. 

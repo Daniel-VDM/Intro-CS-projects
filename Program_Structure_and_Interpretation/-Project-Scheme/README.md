@@ -25,6 +25,8 @@ Short Description of each file:
 - tests: a directory of tests used by ok
 - mytests.rst: A space for you to add your custom tests in Python; see section on adding your own tests
 
+-------------------------------------------------------------
+
 ##### PERSONAL NOTE #####
 
 Disclaimer:  All projects in CS61A (Structure and Interpretation of Computer Programs) at UC Berkeley were NOT done from scratch. Instead, students had to create core logic algorithms using the tools provided and learned. Furthermore, a testing program is provided alongside the project (called 'okpy') to ensure that the algorithms functions as desired. 
