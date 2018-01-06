@@ -9,8 +9,9 @@ Reference the project prompt for full specification of the program.
 *Note: You can add your own graph to the data.txt and it will find the MST.*
 
 #### How to input your own graph ####
-> Each line is an edge with the following key: **start_vertex end_vertex weight**. 
+Each line is an edge with the following key: **start_vertex end_vertex weight**. 
 
->The code:
->>**1 2 3**
->Would be an edge from vertex 1 to vertex 2 with a weight of 3
+The code:
+>**1 2 3**
+
+Would be an edge from vertex 1 to vertex 2 with a weight of 3
