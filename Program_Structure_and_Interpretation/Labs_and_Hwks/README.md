@@ -5,7 +5,7 @@ This displays my knowledge of 3 programming languages, thus 3 programming paradi
 
 -------------------------------------------------------------
 
-##### Personal Note #####
+##### PERSONAL NOTE #####
 All homeworks and lab assignments were done via a prompt provided on the course website(https://cs61a.org/).
 However, I have provided the web files for the Fall 2017 Homeworks and Lab assignment prompts.
 Furthermore, all assignments were accompanied by a program checker (okpy).
