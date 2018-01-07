@@ -1,6 +1,6 @@
 # Overview
 
-#### If you would like to contact me, My e-mail is dvandermaden0@berkeley.edu ####
+#### If you would like to contact me, My e-mail is: dvandermaden0@berkeley.edu . ####
 
 Data_Structure
 ----------------
