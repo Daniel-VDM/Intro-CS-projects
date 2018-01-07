@@ -6,6 +6,9 @@ All projects were done in Fall 2017
 *These projects were part of UC Berkeley's CS47B course, a matriculation course for Data Structures. It was a self paced course that focused on the projects portion of UC Berkeley's Data Structures course.*
 
 ##### SHORT DESCRIPTION OF EACH PROJECT  #####
+
+************************************************
+
 *More details of each project can be found in the README.md of each folder*
 
 1) **AmoebaFamily**
@@ -26,5 +29,6 @@ All projects were done in Fall 2017
 6) **Projects_from_IVC**
 > All projects contained in this folder was done before I attended UC Berkeley. It includes all notable projected that I did in Data Structures at Irvine Valley College. 
 
+************************************************
 
 
