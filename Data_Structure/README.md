@@ -1,4 +1,4 @@
-# Data Structure Projects From UC Berkeley
+# Data Structure Projects
 
 All projects were done in Fall 2017
 -------------
