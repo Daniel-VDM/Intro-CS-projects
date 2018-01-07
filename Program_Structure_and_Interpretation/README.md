@@ -1,6 +1,6 @@
 # Structure and Interpretation of Computer Programs Projects From UC Berkeley
 
-All projects are done in Fall 2017
+All projects were done in Fall 2017
 -------------
 
 *These projects were part of UC Berkeley's CS61A course.*
