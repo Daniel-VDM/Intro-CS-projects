@@ -13,7 +13,7 @@ This project combines functional and object-oriented programming paradigms, focu
 
 The ants.zip archive contains several files, but all of your changes will be made to ants.py.
 
-Short Description of each file:
+*Short Description of each file:*
 
 >- ants.py: The game logic of Ants Vs. SomeBees
 >- ants_gui.py: The original GUI for Ants Vs. SomeBees

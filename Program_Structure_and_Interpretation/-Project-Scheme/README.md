@@ -11,7 +11,7 @@ In this project, you will develop an interpreter for a subset of the Scheme lang
 
 You will also implement some small programs in Scheme. Scheme is a simple but powerful functional language. You should find that much of what you have learned about Python transfers cleanly to Scheme as well as to other programming languages.
 
-Short Description of each file:
+*Short Description of each file:*
 
 >- scheme.py: the Scheme evaluator
 >- scheme_reader.py: the Scheme syntactic analyzer

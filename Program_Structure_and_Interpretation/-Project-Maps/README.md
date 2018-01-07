@@ -17,7 +17,7 @@ This project uses concepts from Sections 2.1, 2.2, 2.3, and 2.4.3 of Composing P
 
 The maps.zip archive contains all the starter code and data sets. The project uses several files, but all of your changes will be made to utils.py, abstractions.py, and recommend.py.
 
-Short Description of each file:
+*Short Description of each file:*
 
 >- abstractions.py: Data abstractions used in the project
 >- recommend.py: Machine learning algorithms and data processing
