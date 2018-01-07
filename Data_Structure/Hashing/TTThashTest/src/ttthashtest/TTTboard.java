@@ -48,6 +48,7 @@ public class TTTboard {
         // Code omitted to save paper.
     }
     
+    //Code added here ~~~
     //hashCode method to make it ezer if to add other hash implimentations 
     @Override
     public int hashCode (){
