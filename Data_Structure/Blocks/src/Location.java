@@ -21,8 +21,8 @@ public class Location
    
    //Constructor
    Location(int row, int column){
-     this.row = row; 
-     this.column = column;
+      this.row = row; 
+      this.column = column;
    }
 
    //Accessors
@@ -40,12 +40,12 @@ public class Location
     */
    public static void genBoardLocations(int width, int height){
       if(allLocations != null)
-         return;
+        return;
                
       allLocations = new Location[width][height];
       for(int i = 0; i < width; i++)
-         for(int j = 0; j < height; j++)
-            allLocations[i][j] = new Location(i, j);
+        for(int j = 0; j < height; j++)
+          allLocations[i][j] = new Location(i, j);
    }
    
    /**
@@ -57,7 +57,7 @@ public class Location
     */
    public static Location getLocationRef(int row, int col){
       try{
-         return allLocations[row][col]; 
+        return allLocations[row][col]; 
       } catch(ArrayIndexOutOfBoundsException a){ 
         return null; 
       }
@@ -71,9 +71,9 @@ public class Location
     * @return the sum of the two locations
     */
    public Location add(Location other){
-    if(other == null)
-      return null;
-    return getLocationRef(this.row + other.row, this.column + other.column); 
+      if(other == null)
+        return null;
+      return getLocationRef(this.row + other.row, this.column + other.column); 
    }
    
    /**
@@ -83,9 +83,9 @@ public class Location
     * @return this - location
     */
    public Location sub(Location other){
-    if(other == null)
-      return null;
-    return getLocationRef(this.row - other.row, this.column - other.column); 
+      if(other == null)
+        return null;
+      return getLocationRef(this.row - other.row, this.column - other.column); 
    }
    
    /**
@@ -120,38 +120,38 @@ public class Location
    //Test main for this Class
    public static void main(String args[]){
       Location.genBoardLocations(3,3);
-    System.out.println("Table position test for a 3x3 board");
-    System.out.println(Arrays.deepToString(allLocations));
-    
-    System.out.println("\nFetching table position (1 0): " 
-        + getLocationRef(1,0));
-    System.out.println("Fetching table position (9 9): " 
-        + getLocationRef(9,9));
-    
-    Location test = getLocationRef(0,0);
-    System.out.println("\nTest equals on same obj (using getLocationRef): " 
-        + test.equals(getLocationRef(0, 0)));
-    System.out.println("Test equals on different obj (creating new obj): " 
-        + test.equals(new Location(0,0)));
-    
-    System.out.println("\nTesting Math");
-    Location arg1 = new Location(1,1);
-    Location arg2 = new Location(1,0);
-    
-    System.out.println("Testing addition: " + arg1 + " + " + arg2 + " = "
-        + arg1.add(arg2));
-    System.out.println("Testing addition out of bound: " + arg1 + " + " 
-        + new Location(9,9) + " = " + arg1.add( new Location(9,9)));
-    System.out.println("Testing subtraction: " + arg1 + " - " + arg2 + " = "
-        + arg1.sub(arg2));
-    System.out.println("Testing subtraction out of bound: " + arg1 + " - " 
-        + new Location(9,9) + " = " + arg1.add( new Location(9,9)));
-    System.out.println("\nTesting multiplication by 1 for valid and 10"
-        + " for invalid");
-    System.out.println("Valid: " + arg1.mult(1));
-    System.out.println("Invalid: " + arg1.mult(10));
-    
-    System.out.println("\nHashCode test: "+ new Location(9,9).hashCode());
+      System.out.println("Table position test for a 3x3 board");
+      System.out.println(Arrays.deepToString(allLocations));
+      
+      System.out.println("\nFetching table position (1 0): " 
+          + getLocationRef(1,0));
+      System.out.println("Fetching table position (9 9): " 
+          + getLocationRef(9,9));
+      
+      Location test = getLocationRef(0,0);
+      System.out.println("\nTest equals on same obj (using getLocationRef): " 
+          + test.equals(getLocationRef(0, 0)));
+      System.out.println("Test equals on different obj (creating new obj): " 
+          + test.equals(new Location(0,0)));
+      
+      System.out.println("\nTesting Math");
+      Location arg1 = new Location(1,1);
+      Location arg2 = new Location(1,0);
+      
+      System.out.println("Testing addition: " + arg1 + " + " + arg2 + " = "
+          + arg1.add(arg2));
+      System.out.println("Testing addition out of bound: " + arg1 + " + " 
+          + new Location(9,9) + " = " + arg1.add( new Location(9,9)));
+      System.out.println("Testing subtraction: " + arg1 + " - " + arg2 + " = "
+          + arg1.sub(arg2));
+      System.out.println("Testing subtraction out of bound: " + arg1 + " - " 
+          + new Location(9,9) + " = " + arg1.add( new Location(9,9)));
+      System.out.println("\nTesting multiplication by 1 for valid and 10"
+          + " for invalid");
+      System.out.println("Valid: " + arg1.mult(1));
+      System.out.println("Invalid: " + arg1.mult(10));
+      
+      System.out.println("\nHashCode test: "+ new Location(9,9).hashCode());
    }
 }
 //Output for this main

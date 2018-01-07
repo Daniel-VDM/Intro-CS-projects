@@ -29,20 +29,19 @@ public class Solver
       //Boolean Array to setup the board
       boolean[][] occupied = new boolean[width][height];
       for(Block b: ini)
-         for(int i = 0; i < b.getWidth(); i++)
-            for(int j = 0; j < b.getHeight(); j++)
-              occupied[b.getRowPosition() + i][b.getColPosition() + j] = true;
+        for(int i = 0; i < b.getWidth(); i++)
+          for(int j = 0; j < b.getHeight(); j++)
+            occupied[b.getRowPosition() + i][b.getColPosition() + j] = true;
       
       //Set the free locations of currCopy board
       for(int i = 0; i < width; i++)
-         for(int j = 0; j < height; j++)
-            if(!occupied[i][j])
-              this.free.add(Location.getLocationRef(i, j));
+        for(int j = 0; j < height; j++)
+          if(!occupied[i][j])
+            this.free.add(Location.getLocationRef(i, j));
       
       //Set Boards
       this.ini = new Board(ini, free);
       this.goal = new Board(goal);
-
    }
    
    /**
@@ -51,50 +50,48 @@ public class Solver
     * @return Solved Board or Null if no solution
     */
    public Board solve(){
-
-    //Check if the initial Board is the goal
-    if(this.ini.checkGoal(this.goal))
-         return this.ini;
-
-    LinkedList<Board> queue = new LinkedList<>();
+      //Check if the initial Board is the goal
+      if(this.ini.checkGoal(this.goal))
+        return this.ini;
+      
+      LinkedList<Board> queue = new LinkedList<>();
       this.seen = new HashSet<>();
       queue.add(this.ini);
       this.seen.add(this.ini);
       Board currCopy, newBoard;
       
       while(!queue.isEmpty()){
-         currCopy = queue.get(0);
-         queue.remove(0);
+        currCopy = queue.get(0);
+        queue.remove(0);
         
-         for(Block b: currCopy.getLayout()){
-            for(Location direction: Location.DIRECTIONS){
-               
-               newBoard = currCopy.move(b, direction);
-               
-               //If it is an invalid move, do the next item in queue
-               if(newBoard == null)
-                  continue;
-               
-               if(!this.seen.contains(newBoard)){
-                  this.seen.add(newBoard);
-                  queue.add(newBoard);
-                  //Set links for displaying path when done
-                  newBoard.setPath(currCopy, b, direction);
-               }
-
-               //Check goal
-               if(newBoard.checkGoal(goal)){
-                if (this.DEBUG == 3)
-                  System.out.println("Boards tested: " + this.seen.size());
-                  return newBoard;
-               }
+        for(Block b: currCopy.getLayout()){
+          for(Location direction: Location.DIRECTIONS){
+            
+            newBoard = currCopy.move(b, direction);
+            
+            //If it is an invalid move, do the next item in queue
+            if(newBoard == null)
+              continue;
+            
+            if(!this.seen.contains(newBoard)){
+              this.seen.add(newBoard);
+              queue.add(newBoard);
+              //Set links for displaying path when done
+              newBoard.setPath(currCopy, b, direction);
             }
-         }
+            //Check goal
+            if(newBoard.checkGoal(goal)){
+              if (this.DEBUG == 3)
+                System.out.println("Boards tested: " + this.seen.size());
+              return newBoard;
+            }
+          }
+        }
       }
       if (this.DEBUG == 3)
-      System.out.println("Boards tested: " + this.seen.size());
+        System.out.println("Boards tested: " + this.seen.size());
       return null;
-   }
+  }
    
    /**
     * Method to print path from solution to start. Uses a DFS to print path 
@@ -175,50 +172,49 @@ public class Solver
     */
    public static Solver setSolver(String iniFile, 
                    String goalFile, int DebugMode)throws Exception{
-    BufferedReader reader;
-    HashSet<Block> iniConfig = new HashSet<>();
-    HashSet<Block> goalConfig = new HashSet<>();
-    String[] token;
+      BufferedReader reader;
+      HashSet<Block> iniConfig = new HashSet<>();
+      HashSet<Block> goalConfig = new HashSet<>();
+      String[] token;
+    
+      reader = reader(iniFile);
+      token = reader.readLine().split(" ");
+      int height = Integer.parseInt(token[0]);
+      int width = Integer.parseInt(token[1]);
+      Location.genBoardLocations(width, height);
   
-    reader = reader(iniFile);
-    token = reader.readLine().split(" ");
-    int height = Integer.parseInt(token[0]);
-    int width = Integer.parseInt(token[1]);
-    Location.genBoardLocations(width, height);
-
-    //Set the iniConfig for the given board
-    while (true) {
+      //Set the iniConfig for the given board
+      while (true) {
         try {
-            token = reader.readLine().split(" ");
+          token = reader.readLine().split(" ");
         } catch (Exception e) {
-            break;
+          break;
         } if (token == null) {
-            break;
+          break;
         } else {
-            iniConfig.add (new Block(Integer.parseInt(token[0]),
-                  Integer.parseInt(token[1]),
-                  Integer.parseInt(token[3]),
-                  Integer.parseInt(token[2])));
-        }
-    }
+          iniConfig.add (new Block(Integer.parseInt(token[0]),
+                                   Integer.parseInt(token[1]),
+                                   Integer.parseInt(token[3]),
+                                   Integer.parseInt(token[2])));
+      }
+   }
   
     //Set the goalConfig for the solver
     reader = reader(goalFile);
     while (true) {
-        try {
-            token = reader.readLine().split(" ");
-        } catch (Exception e) {
-            break;
-        } if (token == null) {
-            break;
-        } else {
-          goalConfig.add (new Block(Integer.parseInt(token[0]),
-                  Integer.parseInt(token[1]),
-                  Integer.parseInt(token[3]),
-                  Integer.parseInt(token[2])));
-        }
+      try {
+        token = reader.readLine().split(" ");
+      } catch (Exception e) {
+        break;
+      } if (token == null) {
+        break;
+      } else {
+        goalConfig.add (new Block(Integer.parseInt(token[0]),
+                                  Integer.parseInt(token[1]),
+                                  Integer.parseInt(token[3]),
+                                  Integer.parseInt(token[2])));
+      }
     }
-    
     return new Solver(iniConfig, goalConfig, height, width, DebugMode);
    }
    
@@ -228,64 +224,64 @@ public class Solver
     * @param arg user debug mode
     * @throws Exception if invalid argument
     */
-    public static int setDEBUG(String arg) throws Exception{
-       //Debug option output
-       switch (arg) {
-           case "-ooption":
-               System.out.println("Help: Here are all the available "
-                       + "debugging options");
-               System.out.println("-> '-oMoves': Print moves required from "
-                       + "start to finish");
-               System.out.println("-> '-oCheckSolveOnly': Only prints if a "
-                       + "solution can be found or not");
-               System.out.println("-> '-oSeeBoards': Prints board before and"
-                       + "after it is solved");
-               System.out.println("-> '-oTestedConfigs': Prints the number of"
-                       + "boards that we checked");
-               System.out.println("-> '-oShowTimes': Print the time it takes"
-                  + "to execute the solver");
-               System.out.println("-> '-oShowHashSetCheckTime': Print the time "
-                  + "it takes check a hashTable of boards (checks hashCode)");
-               System.exit(1);
-           case "-oMoves": return 0;
-           case "-oCheckSolveOnly": return 1;
-           case "-oSeeBoards": return 2;
-           case "-oTestedConfigs": return 3;
-           case "-oShowTimes": return 4;
-           case "-oShowHashSetCheckTime": return 5;
-           default:
-               throw new Exception("Invalid argument for Debug");
-       }
+   public static int setDEBUG(String arg) throws Exception{
+      //Debug option output
+      switch (arg) {
+        case "-ooption":
+          System.out.println("Help: Here are all the available "
+                  + "debugging options");
+          System.out.println("-> '-oMoves': Print moves required from "
+                  + "start to finish");
+          System.out.println("-> '-oCheckSolveOnly': Only prints if a "
+                  + "solution can be found or not");
+          System.out.println("-> '-oSeeBoards': Prints board before and"
+                  + "after it is solved");
+          System.out.println("-> '-oTestedConfigs': Prints the number of"
+                  + "boards that we checked");
+          System.out.println("-> '-oShowTimes': Print the time it takes"
+             + "to execute the solver");
+          System.out.println("-> '-oShowHashSetCheckTime': Print the time "
+             + "it takes check a hashTable of boards (checks hashCode)");
+          System.exit(1);
+        case "-oMoves": return 0;
+        case "-oCheckSolveOnly": return 1;
+        case "-oSeeBoards": return 2;
+        case "-oTestedConfigs": return 3;
+        case "-oShowTimes": return 4;
+        case "-oShowHashSetCheckTime": return 5;
+        default:
+          throw new Exception("Invalid argument for Debug");
+      }
    }
    
    
    //Main Method
    public static void main(String[] args) throws Exception{
-     int argLen = args.length;
-       
-     System.out.println(argLen);
-     
-       //Throw exception if invalid argument
-       if (argLen < 2 || argLen > 3) {
+      int argLen = args.length;
+        
+      System.out.println(argLen);
+      
+      //Throw exception if invalid argument
+      if (argLen < 2 || argLen > 3) {
         System.err.println("Invalid Arguments");
         System.exit(1);
-       }
-       
-       //Set File Locations
-       String iniFile = null, goalFile = null;
-       int DebugMode = -1;
-       
-       if (argLen == 2){
-           iniFile = args[0];
-           goalFile = args[1];
-       } 
-       
-       if (argLen == 3){
-         DebugMode = setDEBUG(args[0]);
-           iniFile = args[1];
-           goalFile = args[2];
-       }
-       
+      }
+      
+      //Set File Locations
+      String iniFile = null, goalFile = null;
+      int DebugMode = -1;
+      
+      if (argLen == 2){
+        iniFile = args[0];
+        goalFile = args[1];
+      } 
+      
+      if (argLen == 3){
+        DebugMode = setDEBUG(args[0]);
+        iniFile = args[1];
+        goalFile = args[2];
+      }
+      
       //Setup puzzle
       Solver puzzle = setSolver(iniFile, goalFile, DebugMode);
       
@@ -327,6 +323,5 @@ public class Solver
         System.out.println("Time to check a board on a hashSet of boards: " 
             + checkEnd + " ns");
       }
-        
    }
 }

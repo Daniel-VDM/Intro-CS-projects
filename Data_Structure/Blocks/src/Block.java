@@ -18,16 +18,16 @@ public class Block
    //Overloaded Constructors
    Block(int height, int width, int x, int y){
      this.blockCount++;
-      this.height = height;
-      this.width = width;
-      this.postition = Location.getLocationRef(x, y);
+     this.height = height;
+     this.width = width;
+     this.postition = Location.getLocationRef(x, y);
    }
    
    Block(int height, int width, Location position){
      this.blockCount++;
      this.height = height;
      this.width = width;
-      this.postition = position;
+     this.postition = position;
    }
    
    //Accessors
@@ -54,15 +54,15 @@ public class Block
          checkSize = this.width;
          start = this.postition.add(Location.NORTH);
          checkedDir = Location.EAST;
-      }else if(direction == Location.SOUTH){
+      } else if(direction == Location.SOUTH) {
          checkSize = this.width;
          start = this.postition.add(Location.SOUTH.mult(height));
          checkedDir = Location.EAST;
-      }else if(direction == Location.EAST){
+      } else if(direction == Location.EAST) {
          checkSize = this.height;
          start = this.postition.add(Location.EAST.mult(width));
          checkedDir = Location.SOUTH;
-      }else if(direction == Location.WEST){
+      } else if(direction == Location.WEST) {
          checkSize = this.height;
          start = this.postition.add(Location.WEST);
          checkedDir = Location.SOUTH;
@@ -108,25 +108,25 @@ public class Block
                                  HashSet<Location> empty){
       Location newFreeTuple = null;
       int stepsToOppSide = (occupied.length == this.width) ? this.height 
-                                             :this.width;
+                                                           : this.width;
       this.postition = this.postition.add(direction);
       for(Location p: occupied){
-        empty.remove(p);
+         empty.remove(p);
          if(direction == Location.NORTH || direction == Location.WEST)
-          newFreeTuple = p.add(direction.mult(-stepsToOppSide));
+            newFreeTuple = p.add(direction.mult(-stepsToOppSide));
          if(direction == Location.SOUTH || direction == Location.EAST)
-          newFreeTuple = p.sub(direction.mult(stepsToOppSide));
+           newFreeTuple = p.sub(direction.mult(stepsToOppSide));
          empty.add(newFreeTuple);
       }      
    }
    
    //Assumes that argument is always a block object
    public boolean equals(Object o){
-        Block other = (Block) o;
-         return (other.postition == this.postition 
-              && other.height == this.height 
-              && other.width == this.width);
-      }
+      Block other = (Block) o;
+      return (other.postition == this.postition 
+           && other.height == this.height 
+           && other.width == this.width);
+   }
       
    public int hashCode(){
       return (int) (this.height*(Math.pow(this.blockCount, 3)) 
@@ -165,15 +165,15 @@ public class Block
          
          move = b.getFreeMoves(dir);
          System.out.println("Block: " + b);
-      System.out.println("Free Spaces: " + free);
-      System.out.println("Direction: " + dir);
+         System.out.println("Free Spaces: " + free);
+         System.out.println("Direction: " + dir);
       
-      if(b.movable(move, free)) {
-         System.out.println("Moved");
-         b.move(dir, move, free);
-         System.out.println("Moved Block:" + b + "\n");
-      } else
-         System.out.println("No Move\n");
+         if(b.movable(move, free)) {
+            System.out.println("Moved");
+            b.move(dir, move, free);
+            System.out.println("Moved Block:" + b + "\n");
+         } else
+            System.out.println("No Move\n");
       }
       
       System.out.println("Testing equals");
