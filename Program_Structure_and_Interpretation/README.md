@@ -3,7 +3,7 @@
 All projects were done in Fall 2017
 -------------
 
-*These projects were part of UC Berkeley's CS61A course.*
+*These projects were done as part of UC Berkeley's CS61A course.*
 
 ************************************************
 
