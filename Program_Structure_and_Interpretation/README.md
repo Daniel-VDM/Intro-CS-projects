@@ -5,9 +5,10 @@ All projects were done in Fall 2017
 
 *These projects were part of UC Berkeley's CS61A course.*
 
-##### SHORT DESCRIPTION OF EACH PROJECT  #####
 
 ************************************************
+
+##### SHORT DESCRIPTION OF EACH PROJECT  #####
 
 *More details of each project can be found in the README.md of each folder*
 
@@ -26,4 +27,3 @@ All projects were done in Fall 2017
 5) **Labs_and_Hwks**
 > This is a folder with all of my labs and homeworks. Most homeworks were problems that could be solved with little code, but emphesized certain ideas. Some of the last question of the homeworks and labs are very similar to common intervew questions. Labs were more similar to mini versions of a project. 
 
-************************************************
