@@ -4,7 +4,7 @@ UC Berkeley projects done in Fall 2017 | IVC projects done in Spring 2017
 -------------
 
 
-*These projects were part of UC Berkeley's CS47B course, a matriculation course for Data Structures. It was a self paced course that focused on the projects portion of UC Berkeley's Data Structures course.*
+*Projects in this directory were part of UC Berkeley's CS47B course, a matriculation course for Data Structures. It was a self paced course that focused on the projects portion of UC Berkeley's Data Structures course.*
 
 ************************************************
 
