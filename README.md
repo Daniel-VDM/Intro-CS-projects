@@ -1,7 +1,7 @@
 # Overview
 
-#### Hi there, I am Daniel Van Der Maden and this is a repository of all notable projects that I have done for school. ####
-#### If you would like to contact me, my e-mail is: dvandermaden0@berkeley.edu. ####
+#### Hi there, I am Daniel Van Der Maden and this is a repository of all notable projects that I have done for school. If you would like to contact me, my email is: dvandermaden0@berkeley.edu. ####
+#### Here is a short description of each folder ####
 
 Data_Structure
 ----------------
@@ -23,5 +23,7 @@ Program_Structure_and_Interpretation:
 >
 >- The Scheme project demonstrates my knowledge of building the core logic of an interpreter as well as my knowledge of the Scheme language. 
 >- Ants project demonstrates my knowledge of working on a large scale project using object oriented programming. 
+
+
 
 
