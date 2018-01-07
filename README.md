@@ -1,7 +1,7 @@
 # Overview
 
 #### Hi there, I am Daniel Van Der Maden and this is a repository of all notable projects that I have done for school. ####
-#### If you would like to contact me, My e-mail is: dvandermaden0@berkeley.edu. ####
+#### If you would like to contact me, my e-mail is: dvandermaden0@berkeley.edu. ####
 
 Data_Structure
 ----------------
