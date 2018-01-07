@@ -9,7 +9,7 @@ Data_Structure
 >
 >*There are 9 projects. Notable projects are: __Blocks__, __Heap__, __MST__, and __BORG_Language__. (BORG program can be found in the IVC folder)*
 >
->- The Blocks project is a large program that I wrote from scratch which incorporated multiple data structures and efficient algorithms to solve sliding-block puzzles in a timely manner. 
+>- The Blocks project is a large program that I wrote from scratch which incorporated multiple data structures and efficient algorithms in order to solve sliding-block puzzles in a timely manner. 
 >- The Heap project is my implementation of a node based Heap that has the same time complexity as an array based Heap.
 >- The MST project is my approach to storing a graph and finding the minimum spanning tree of said graph. 
 >- The BORG_Language project is an interpreter for my own made up language called BORG.  
