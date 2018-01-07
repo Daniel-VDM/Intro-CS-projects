@@ -2,7 +2,7 @@
 First major project for Structure and Interpretation of Computer Programs 
 
 ************************************************
-All code written by me was done in: hog.py 
+All code written by me was done in: **hog.py** 
 ************************************************
 
 Short Description of the project (Copied from the prompt)

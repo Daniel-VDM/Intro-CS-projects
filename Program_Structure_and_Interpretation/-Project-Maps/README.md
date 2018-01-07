@@ -2,7 +2,7 @@
 Second major project for Structure and Interpretation of Computer Programs
 
 ************************************************
-All code written by me was done in: abstractions.py, recommend.py, utils.py
+All code written by me was done in: **abstractions.py**, **recommend.py**, **utils.py**
 ************************************************
 
 Short Description of the project (Copied from the prompt)
