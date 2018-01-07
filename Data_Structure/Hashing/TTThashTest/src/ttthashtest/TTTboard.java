@@ -106,4 +106,5 @@ public class TTTboard {
             System.out.print("hash:" + (int)hash + "\t");
         return (int)hash;
     }
+    //~~~ end of code added
 }

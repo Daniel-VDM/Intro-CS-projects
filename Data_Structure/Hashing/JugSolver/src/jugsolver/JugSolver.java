@@ -12,6 +12,7 @@ public class JugSolver
     private int capacity[];
     //CODE ADDED HERE
     private Hashtable<String, JugContents> seen; //Create a HashTable
+    //END
 	
     public JugSolver(int amt0, int amt1, int amt2, int d){
         capacity = new int[3];
@@ -50,6 +51,7 @@ public class JugSolver
         if (seen.containsKey(key))  
             return false;
         seen.put(key, b);
+        //END
         
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 3; j++)
