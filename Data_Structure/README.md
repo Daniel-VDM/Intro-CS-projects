@@ -21,7 +21,7 @@ All projects were done in Fall 2017
 > This project was mostly an algorithm analysis project to see the efficiency of different hashing algorithms. Furthermore, I had to implement hashsets to make certain programs work.
 
 4) **Heap**
-> This program implements a Node (parent and child pointer) version of a Heap that had the same time complexity as an array based Heap.
+> This program implements a Node (parent and child pointer) version of a Heap that has the same time complexity as an array based Heap.
 
 5) **MST**
 > This program is able to take graphs and find their Minimum Spanning Trees.
