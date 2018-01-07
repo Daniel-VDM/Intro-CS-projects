@@ -1,8 +1,6 @@
 # Overview
 
-
-
-##### SHORT DESCRIPTION OF EACH FOLDER  #####
+#### If you would like to contact me, My e-mail is dvandermaden0@berkeleu.edu ####
 
 Data_Structure
 ----------------
