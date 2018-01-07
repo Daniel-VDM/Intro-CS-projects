@@ -1,12 +1,12 @@
 # Overview
 
-#### If you would like to contact me, My e-mail is: dvandermaden0@berkeley.edu . ####
+#### If you would like to contact me, My e-mail is: dvandermaden0@berkeley.edu. ####
 
 Data_Structure
 ----------------
 > Prior to transferring to UC Berkeley I took a Data Structure course that covered the basics. Once I attended UC Berkeley I took a matriculation course to satisfy my Data Structures requirement. This folder contains all the projects done in that class as well as all notable projects that were done at IVC. All programs were written in Java.
 >
->*There are 9 project. However, some projects of note are: __Blocks__, __Heap__, __MST__, and __BORG_Language__. (BORG program can be found in the IVC folder)*
+>*There are 9 projects. However, some projects of note are: __Blocks__, __Heap__, __MST__, and __BORG_Language__. (BORG program can be found in the IVC folder)*
 >
 >- The Blocks project is a large program that I wrote from scratch which incorporated multiple data structures and efficient algorithms to solve sliding-block puzzles in a timely manner. 
 >- The Heap project is my implementation of a node based Heap that has the same time complexity as an array based Heap.
