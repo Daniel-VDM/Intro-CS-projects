@@ -21,6 +21,6 @@ Program_Structure_and_Interpretation:
 >*There are 4 projects. However two projects of note are the __Scheme project__ and __Ants project__.*
 >
 >- The Scheme project demonstrates my knowledge of building the core logic of an interpreter as well as my knowledge of the Scheme language. 
->- Ants project demonstrates my knowledge of programming on a large scale project using object oriented programming. 
+>- Ants project demonstrates my knowledge of working on a large scale project using object oriented programming. 
 
 
