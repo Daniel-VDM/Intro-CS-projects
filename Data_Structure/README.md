@@ -1,6 +1,6 @@
 # Data Structure Projects
 
-All projects were done in Fall 2017
+UC Berkeley projects were done in Fall 2017 | IVC projects were done in Spring 2017 
 -------------
 
 
