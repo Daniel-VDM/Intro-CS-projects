@@ -21,9 +21,9 @@ This was my first major program that I had to design from the ground up. It inco
 
 *The main logic of the program lies in the Solve class. Here is a brief overview of what the program does:*  
 >The program reads in the initial board layout (creating an initial 'board' object) and reads in the desired goal state. Then it performs a Breadth First Search on variations of the initial board until it finds a solution. 
-
+>
 >The Solver has 2 main data structures: A Linked List of 'board' objects that are to be searched (used for breadth first search), and a Hashset of seen 'board' objects. 
-
+>
 >The way the Solver finds a solution is by dequeuing a board from the linked list, then it generates new boards from all possible moves of said dequeued board. (All possible moves are: Moving a block up, down, left or right.) The Solver then checks if any of the new boards have been seen before by checking if they are in the 'seen' Hash Set. If it they are not, the Solver adds them to the seen Hashset and enqueues the boards to the Linked List. Then it checks if any of the new boards matches the goal state. If one of them do, the Solver exits the BFS and prints all the board states leading up to the solution. If none of the new boards match the goal state, it dequeues the next board from the Linked List and repeats the process. *This is just a brief overview of the program. The actual implementation is more involved. Reference my code, Javadoc or write up for more details*
 
 *The program specification also required that I implemented useful debugging features of which I included the following:*
