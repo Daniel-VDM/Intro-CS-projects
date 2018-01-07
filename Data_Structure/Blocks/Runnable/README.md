@@ -11,6 +11,6 @@ Reference the project prompt for full specification of the program.
 *Note that the Checker class was provided by the course.*
 
 
-__More puzzles can be found in the puzzle folder, found in the previous directory__
+__More puzzles can be found in the puzzle folder, found in the previous directory.__
 
 
