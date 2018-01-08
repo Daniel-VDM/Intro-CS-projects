@@ -38,7 +38,7 @@ This was my first major program that I had to design from the ground up. It inco
 >- Prints how long it takes to solve the puzzle
 >- Prints how long it takes to Hash a board and look up a board (contains method).
 
-Lastly, I had to do a writeup of the project where I covered what parts I could improve on as well as how I implemented certain parts of the program. I would recommend reading that since it describes the program in depth as well as my thought process. It's the file: "47B Blocks Write Up.pdf" in the main Blocks directory.
+Lastly, I had to do a writeup of the project where I covered what parts I could improve on as well as how I implemented certain parts of the program. I would recommend reading that since it describes the program in depth as well as my thought process. It's the file: *47B Blocks Write Up.pdf* in the main Blocks directory.
 
 
 ************************************************
