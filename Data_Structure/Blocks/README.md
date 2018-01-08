@@ -40,7 +40,7 @@ Lastly, I had to do a writeup of the project where I covered what parts I could 
 
 ************************************************
 
-**WHAT THE OUTPUT MEANS**
+#### WHAT THE OUTPUT MEANS ####
 
 *For the default output, it prints the moves required from top to bottom. So the first move in the solution is at the top of the output. Furthermore, each line has 4 numbers in this format: `x1 y1 x2 y2`. This means that the block at position **x1,y1** must be moved to position **x2,y2**. For example:*
 ~~~
