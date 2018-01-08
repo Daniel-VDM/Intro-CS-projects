@@ -4,7 +4,7 @@ If you want to run my code for yourself, execute the the MST.jar file via the te
 
 Reference the project prompt for full specification of the program.
 
-**An example would be something like this: "java -jar MST.jar" executed when in a directory with all of the contents of this folder**
+**An example would be something like this: `java -jar MST.jar` executed when in a directory with all of the contents of this folder**
 
 *Note: You can add your own graph to the data.txt and it will find the MST.*
 
