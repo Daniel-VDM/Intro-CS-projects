@@ -30,7 +30,7 @@ This was my first major program that I had to design from the ground up. It inco
 
 *The program specification also required that I implemented useful debugging features of which I included the following:*
 >- Printing the number of moves from start to finish
->- Only Checking if the board can be solved (so it does NOT output the board states leading up to the solution)
+>- Only check if the board can be solved (so it does NOT output the solution steps.)
 >- Print before and after board states ONLY
 >- Prints number of boards that have been checked
 >- Prints how long it takes to solve the puzzle
