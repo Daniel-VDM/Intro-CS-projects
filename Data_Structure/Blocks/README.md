@@ -38,6 +38,17 @@ This was my first major program that I had to design from the ground up. It inco
 
 Lastly, I had to do a writeup of the project where I covered what parts I could improve on as well as how I implemented certain parts of the program. I would recommend reading that since it describes the program in depth as well as my thought process. It's the file: "47B Blocks Write Up.pdf" in the main Blocks directory.
 
+**WHAT THE OUTPUT MEANS**
+
+*For the default output, it prints the moves required from top to bottom. So the first move in the solution is at the top of the output. Furthermore, each line has 4 numbers in this format: `x1 y1 x2 y2`. This means that the block at position **x1,y1** must be moved to position **x2,y2**. For example:*
+~~~
+1 1 0 1		// move block at (1,1) to (0,1) - First Step
+3 1 2 1		// move block at (3,1) to (2,1)
+4 1 3 1		// move block at (4,1) to (3,1)
+4 2 3 2		// move block at (4,2) to (3,2)
+4 3 4 2		// move block at (4,3) to (4,2) - Last Step
+~~~
+
 
 ************************************************
 
