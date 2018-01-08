@@ -7,7 +7,7 @@ The main program was written from scratch by me.
 
 Short Description of the project (Copied from the prompt)
 -------------------------------------------------------------
-Those of you who spend much time in toy stores may be familiar with "sliding-block" puzzles. They consist of a number of rectangular blocks in a tray; the problem is to slide the pieces without lifting any out of the tray, until achieving a certain configuration. An example (from Winning Ways, E.R. Berlekamp et al., Academic Press, 1982) is shown in the diagram on the right. ![Pic](blocks.png?raw=true)
+Those of you who spend much time in toy stores may be familiar with "sliding-block" puzzles. They consist of a number of rectangular blocks in a tray; the problem is to slide the pieces without lifting any out of the tray, until achieving a certain configuration. An example (from Winning Ways, E.R. Berlekamp et al., Academic Press, 1982) is shown in the diagram on the right. ![Pic](blocks.gif?raw=true)
 
 This project is to write a program that generates a solution to such a puzzle. The first part is a design, the second an implementation of the design, and the third is an optimization and writeup.
 
