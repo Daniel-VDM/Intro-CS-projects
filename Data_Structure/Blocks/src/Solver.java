@@ -140,11 +140,10 @@ public class Solver
         System.exit(1);
       }
       
-      int count = 0;
-      Board currCopy = curr;
-      while(currCopy != null){
+      int count = 1;
+      while(curr != null){
         count++;
-        currCopy = currCopy.getParent();
+        curr = curr.getParent();
       }
       return count;
    }
