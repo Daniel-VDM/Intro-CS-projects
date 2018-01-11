@@ -257,8 +257,6 @@ public class Solver
    //Main Method
    public static void main(String[] args) throws Exception{
       int argLen = args.length;
-        
-      System.out.println(argLen);
       
       //Throw exception if invalid argument
       if (argLen < 2 || argLen > 3) {
