@@ -56,11 +56,10 @@ public class Location
     * @return desired Location object
     */
    public static Location getLocationRef(int row, int col){
-      try{
-        return allLocations[row][col]; 
-      } catch(ArrayIndexOutOfBoundsException a){ 
-        return null; 
-      }
+      if (row >= 0 && col >= 0 && row < allLocations.length 
+                               && col < allLocations[row].length)
+        return allLocations[row][col];
+      return null;
    }
    
    
