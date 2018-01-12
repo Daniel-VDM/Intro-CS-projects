@@ -24,4 +24,4 @@ __More puzzles can be found in the puzzle folder (found in the previous director
 4 2 3 2		// move block at (4,2) to (3,2)
 4 3 4 2		// move block at (4,3) to (4,2) - Last Step
 ~~~
-
+*Note that the x,y coordinates reference the top left of the blocks. The program knows the size of the block, it just uses the top left as an anchor.*
