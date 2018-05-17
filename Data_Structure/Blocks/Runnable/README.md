@@ -14,6 +14,28 @@ __More puzzles can be found in the puzzle folder (found in the previous director
 
 ************************************************
 
+##### Quick Discription #####
+
+The 2 required arguments are the initial board and the goal board. The program takes the initial board and solves it to get to the desired goal board. In doing so it will output all the necessary steps to transform the inital board to the goal board. Below are descriptions of how a board is represented in a text file and what the output of the program mean.
+
+************************************************
+
+##### BOARD REPRESENTATION #####
+
+A board is represented in a text file where the first line has 2 arguments, `BoardHeight BoardWidth` then all remaning lines represent the blocks of said board. The remaining lines have 4 arguments, `BlockHeight BlockWidth BlockXPos BlockYPos`. As noted in the program specification, the `(X, Y)` position of a block is the **top left** of the described block. 
+
+
+![Pic](SampleConfig.gif?raw=true)
+So for the picture above, the text file representing the board would be:
+~~~
+5 4
+1 1 3 1
+1 1 4 1
+1 1 3 2
+~~~
+
+************************************************
+
 ##### WHAT THE OUTPUT MEANS #####
 
 *For the default output, it prints the moves required from top to bottom. So the first move in the solution is at the top of the output. Furthermore, each line has 4 numbers in this format: `x1 y1 x2 y2`. This means that the block at position **x1,y1** must be moved to position **x2,y2**. For example:*

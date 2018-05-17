@@ -1,0 +1,140 @@
+body {
+    font-family: "Open Sans", sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* TODO: Improve CSS engineering of these general tags. */
+section {
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+section a {
+    color: #0070c9;
+    text-decoration: none;
+}
+
+section a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    font-size: 40px;
+    font-weight: normal;
+}
+
+h2 {
+    font-size: 32px;
+    font-weight: normal;
+}
+
+figure {
+    text-align: center;
+}
+
+pre {
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+code,
+samp {
+    font-size: 14px;
+}
+
+#nav-top {
+    background-color: #444;
+}
+
+#nav-main {
+    background-color: #f3f3f3;
+    border: 1px solid #e7e7e7;
+    position: sticky;
+    top: 0px;
+}
+
+.nav {
+    list-style-type: none;
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+}
+
+.nav-item {
+    display: inline;
+}
+
+.nav-top-link,
+.nav-top-link-active {
+    display: inline-block;
+    padding: 7px 30px;
+    text-decoration: none;
+}
+
+.nav-top-link {
+    color: #fff;
+}
+
+.nav-top-link:hover,
+.nav-top-link:active,
+.nav-top-link-active {
+    color: #aaa;
+}
+
+.nav-main-link {
+    display: inline-block;
+    color: #000;
+    padding: 15px 15px;
+    text-decoration: none;
+}
+
+/*.nav-main-link:hover {
+    background-color: #ddd;
+}*/
+
+#calendar {
+    border: 1px solid #bbb;
+    border-collapse: collapse;
+}
+
+#calendar a {
+    color: #0070c9;
+    text-decoration: none;
+}
+
+#calendar a:hover {
+    text-decoration: underline;
+}
+
+.calendar-header,
+.calendar-cell,
+.calendar-cell-week {
+    border: 1px solid #bbb;
+    padding: 15px;
+}
+
+.calendar-cell-week {
+    text-align: center;
+}
+
+.calendar-reading-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.calendar-reading-list li {
+    padding: 5px 0;
+}
+
+.note {
+    background-color: #e6f4ff;
+    border-left: 5px solid #0070c9;
+    margin: 20px 0;
+    padding: 15px 30px 15px 15px;
+}
