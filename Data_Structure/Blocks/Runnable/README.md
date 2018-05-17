@@ -26,7 +26,9 @@ A board is represented in a text file where the first line has 2 arguments, `Boa
 
 
 ![Pic](SampleConfig.gif?raw=true)
+
 So for the picture above, the text file representing the board would be:
+
 ~~~
 5 4
 1 1 3 1
