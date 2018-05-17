@@ -24,7 +24,7 @@ The 2 required arguments are the initial board and the goal board. The program t
 
 A inital board is represented in a text file where the first line has 2 arguments, `BoardHeight BoardWidth` then all remaning lines represent the blocks of said board. The remaining lines have 4 arguments, `BlockHeight BlockWidth BlockXPos BlockYPos`. As noted in the program specification, the `(X, Y)` position of a block is the **top left** of the described block.
 
-A goal board is identical to the inital board. However, it *does not* have the arguments for the board size, so it does not have the first line of an initial board. It just has 4 arguments per line to describe the blocks in the desired goal configuration.
+A goal board is almost identical to the inital board. However, it *does not* have the arguments for the board size, so it does not have the first line of an initial board. It just has 4 arguments per line to describe the blocks in the desired goal configuration.
 
 
 ![Pic](SampleConfig.gif?raw=true)
