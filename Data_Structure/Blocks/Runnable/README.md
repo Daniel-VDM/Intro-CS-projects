@@ -16,7 +16,7 @@ __More puzzles can be found in the puzzle folder (found in the previous director
 
 ##### Quick Discription #####
 
-The 2 required arguments are the initial board and the goal board. The program takes the initial board and solves it to get to the desired goal board. In doing so it will output all the necessary steps to transform the inital board to the goal board. Below are descriptions of how a board is represented in a text file and what the output of the program mean.
+The 2 required arguments are the initial board and the goal board. The program takes the initial board and solves it to get to the desired goal board. In doing so, it will output all the necessary steps to transform the inital board into the goal board. Below are descriptions of how a board is represented in a text file and what the output of the program mean.
 
 ************************************************
 
