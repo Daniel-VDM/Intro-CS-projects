@@ -143,14 +143,45 @@ public class Solver
         return count;
     }
 
+
     /**
      * 
      * HERE ARE A BUNCH OF STATIC METHODS FOR READING BOARDS FROM FILES
      * 
      */
 
-    //A method for a file reader
-    public static BufferedReader reader (String fileName) throws Exception {
+    /**
+     * Configures the Block Hashset of a board from the buffer.
+     *
+     * @param reader A buffer from the file that contains the desired blocks
+     * @param bdBlks THe Hashset of a desired board state
+     */
+    private static void ConfigBlocks(BufferedReader reader, HashSet<Block> bdBlks) {
+        String[] token;
+        while (true) {
+            try {
+                token = reader.readLine().split(" ");
+            } catch (Exception e) {
+                break;
+            } if (token == null) {
+                break;
+            } else {
+                bdBlks.add (new Block(Integer.parseInt(token[0]),
+                        Integer.parseInt(token[1]),
+                        Integer.parseInt(token[3]),
+                        Integer.parseInt(token[2])));
+            }
+        }
+    }
+
+    /**
+     * Simple method to create a BufferReader given a file
+     *
+     * @param fileName location of file
+     * @return buffered reader of the file
+     * @throws Exception
+     */
+    private static BufferedReader reader (String fileName) throws Exception {
         File wordFile = new File (fileName);
         FileReader stuff = new FileReader(wordFile);
         return new BufferedReader (stuff);
@@ -170,45 +201,19 @@ public class Solver
         HashSet<Block> iniConfig = new HashSet<>();
         HashSet<Block> goalConfig = new HashSet<>();
         String[] token;
-    
+
+
+        //Set the iniConfig for the given board
         reader = reader(iniFile);
         token = reader.readLine().split(" ");
         int height = Integer.parseInt(token[0]);
         int width = Integer.parseInt(token[1]);
         Location.genBoardLocations(width, height);
-    
-        //Set the iniConfig for the given board
-        while (true) {
-            try {
-                token = reader.readLine().split(" ");
-            } catch (Exception e) {
-                break;
-            } if (token == null) {
-                break;
-            } else {
-                iniConfig.add (new Block(Integer.parseInt(token[0]),
-                                         Integer.parseInt(token[1]),
-                                         Integer.parseInt(token[3]),
-                                         Integer.parseInt(token[2])));
-            }   
-        }
+        ConfigBlocks(reader, iniConfig);
 
         //Set the goalConfig for the solver
-        reader = reader(goalFile);
-        while (true) {
-            try {
-                token = reader.readLine().split(" ");
-            } catch (Exception e) {
-                break;
-            } if (token == null) {
-                break;
-            } else {
-                goalConfig.add (new Block(Integer.parseInt(token[0]),
-                                          Integer.parseInt(token[1]),
-                                          Integer.parseInt(token[3]),
-                                          Integer.parseInt(token[2])));
-            }
-        }
+        ConfigBlocks(reader(goalFile), goalConfig);
+
         return new Solver(iniConfig, goalConfig, height, width, DebugMode);
     }
 
