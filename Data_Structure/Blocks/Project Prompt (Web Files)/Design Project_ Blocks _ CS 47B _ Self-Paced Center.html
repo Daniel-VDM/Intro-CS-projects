@@ -190,7 +190,7 @@ Note also that the block positions may appear in any order in this file.</p>
 <p class="Body">
   <a name="1034955"> </a>Thus your program would be run with the UNIX command
 </p>
-<pre class="Preformatted">	java Solver [-o<span style="color: #000000;  font-style: italic; font-weight: normal; text-decoration: none; text-transform: none; vertical-align: baseline">info</span>] <span style="color: #000000;  font-style: italic; font-weight: normal; text-decoration: none; text-transform: none; vertical-align: baseline">initialConfigFile</span> <span style="color: #000000;  font-style: italic; font-weight: normal; text-decoration: none; text-transform: none; vertical-align: baseline">goalConfigFile
+<pre class="Preformatted">	java Solver.Solver [-o<span style="color: #000000;  font-style: italic; font-weight: normal; text-decoration: none; text-transform: none; vertical-align: baseline">info</span>] <span style="color: #000000;  font-style: italic; font-weight: normal; text-decoration: none; text-transform: none; vertical-align: baseline">initialConfigFile</span> <span style="color: #000000;  font-style: italic; font-weight: normal; text-decoration: none; text-transform: none; vertical-align: baseline">goalConfigFile
 </span></pre>
 <p class="Body">
   <a name="1034915"> </a>where the <tt>-o</tt> argument is optional, <span style="color: #000000;  font-style: italic; font-weight: normal; text-decoration: none; text-transform: none; vertical-align: baseline">info</span> is the debugging information you supply, and <span style="color: #000000;  font-style: italic; font-weight: normal; text-decoration: none; text-transform: none; vertical-align: baseline">initialConfigFile</span> and <span style="color: #000000;  font-style: italic; font-weight: normal; text-decoration: none; text-transform: none; vertical-align: baseline">goalConfigFile</span> name the files containing the initial block configuration and the goal configuration respectively. 
@@ -226,10 +226,10 @@ Note also that the block positions may appear in any order in this file.</p>
   <a name="1027278"> </a>Part 1 (4 points)
 </h2>
 <p class="Body">
-  <a name="1035021"> </a>After finding a sponsor, you are to prepare a design for the <tt>Solver</tt> program. You need not produce the shortest possible sequence of moves, nor (for this part) will your program need to be exceptionally efficient. 
+  <a name="1035021"> </a>After finding a sponsor, you are to prepare a design for the <tt>Solver.Solver</tt> program. You need not produce the shortest possible sequence of moves, nor (for this part) will your program need to be exceptionally efficient.
 </p>
 <p class="Body">
-  <a name="1035022"> </a>The <tt>Solver</tt> program will need to search the tree of possible move sequences to find a solution to the puzzle. In your design, outline in detail how the program will do the following:
+  <a name="1035022"> </a>The <tt>Solver.Solver</tt> program will need to search the tree of possible move sequences to find a solution to the puzzle. In your design, outline in detail how the program will do the following:
 </p>
 <ul>
 	<li>check if the goal configuration has been achieved;</li>
@@ -290,11 +290,11 @@ When no debugging option is specified, only one line per move, containing four i
   <a name="1035068"> </a>Testing
 </h2>
 <p class="Body">
-  <a name="1035069"> </a>A compiled <tt>Checker</tt> program is available in the <tt>~cs47b/lib/puzzles</tt> directories (e.g. <tt>easy</tt>) to verify the output of your <tt>Solver</tt> program. To use it, copy any of the files <tt>Checker.class</tt> and <tt>TrayVerifier.class</tt> from the <tt>~cs47b/lib</tt> directory to your own directory: </p><pre class="Preformatted">    cp ~cs47b/lib/Checker.class .           # Note the trailing, standalone '.'
+  <a name="1035069"> </a>A compiled <tt>Checker</tt> program is available in the <tt>~cs47b/lib/puzzles</tt> directories (e.g. <tt>easy</tt>) to verify the output of your <tt>Solver.Solver</tt> program. To use it, copy any of the files <tt>Checker.class</tt> and <tt>TrayVerifier.class</tt> from the <tt>~cs47b/lib</tt> directory to your own directory: </p><pre class="Preformatted">    cp ~cs47b/lib/Checker.class .           # Note the trailing, standalone '.'
     cp ~cs47b/lib/TrayVerifier.class .
 </pre>
 Then, on a UNIX system, you may run the checker with a command like:
-<pre>    java Solver <span style="font-style: italic;">init goal</span> | java Checker <span style="font-style: italic;">init goal</span>
+<pre>    java Solver.Solver <span style="font-style: italic;">init goal</span> | java Checker <span style="font-style: italic;">init goal</span>
 </pre>
 <p class="Body">
   <a name="1035071"> </a>(<span style="font-style: italic;">init</span> and <span style="font-style: italic;">goal</span> stand for names of files containing the initial and goal configurations, respectively.)
@@ -367,7 +367,7 @@ The program must detect configurations that have previously been seen in order t
   <a name="1035155"> </a>Part 3 (8 points)
 </h2>
 <p class="Body">
-  <a name="1035156"> </a>Make your program efficient enough to solve at least ten of the puzzles in the directory <tt>~cs47b/lib/puzzles/hard</tt>, using no more than two minutes each on one of the workstations in the Self-Paced Center, run with default settings for Java memory allocation. A file named <tt>README</tt> in the directory describes the puzzles; the shell script <tt>run.hard</tt> runs the <tt>Solver</tt> program on them.
+  <a name="1035156"> </a>Make your program efficient enough to solve at least ten of the puzzles in the directory <tt>~cs47b/lib/puzzles/hard</tt>, using no more than two minutes each on one of the workstations in the Self-Paced Center, run with default settings for Java memory allocation. A file named <tt>README</tt> in the directory describes the puzzles; the shell script <tt>run.hard</tt> runs the <tt>Solver.Solver</tt> program on them.
 </p>
 <p class="Body">
   <a name="1035157"> </a>Also provide a writeup that documents and defends the decisions you made to design the program. This writeup will include the following:
@@ -404,7 +404,7 @@ a description of the alternatives you adopted and of evidence you collected that
 </h2>
 <h3>Part 1 (4 points)</h3>
 <ul>
-  <li class="SmartList1">Detailed pseudocode outline of the <tt>Solver</tt> class, including the following operations:
+  <li class="SmartList1">Detailed pseudocode outline of the <tt>Solver.Solver</tt> class, including the following operations:
   <ul>
     <li class="SmartList2">goal checking;
     </li><li class="SmartList2">move generation;

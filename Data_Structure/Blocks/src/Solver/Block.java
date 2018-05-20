@@ -1,3 +1,5 @@
+package Solver;
+
 import java.util.HashSet;
 
 /**
@@ -39,11 +41,11 @@ public class Block
    
    
     /**
-     * Generates an array of Location(s) which represent the spaces needed for 
+     * Generates an array of Solver.Location(s) which represent the spaces needed for
      * a move in a given direction (the argument)
      * 
-     * @param direction the Location direction desired
-     * @return Location Array of free in desired direction
+     * @param direction the Solver.Location direction desired
+     * @return Solver.Location Array of free in desired direction
      */
     public Location[] getFreeMoves(Location direction){
         int checkSize = 0;
@@ -98,8 +100,8 @@ public class Block
      * Move current block in the direction desired
      * 
      * @param direction direction that is desired
-     * @param occupied Array of occupied Location places
-     * @param empty HashSet of empty Location places
+     * @param occupied Array of occupied Solver.Location places
+     * @param empty HashSet of empty Solver.Location places
      */
     public void move(Location direction, Location[] occupied, 
                                  HashSet<Location> empty){
@@ -136,7 +138,7 @@ public class Block
     }
 
     /**
-     * @return a new INSTANCE of a Block object that has the same contents as
+     * @return a new INSTANCE of a Solver.Block object that has the same contents as
      * the instance it was called on.
      */
     public Block copy(){
@@ -161,14 +163,14 @@ public class Block
             free.add(Location.getLocationRef(0, 2));
          
             move = b.getFreeMoves(dir);
-            System.out.println("Block: " + b);
+            System.out.println("Solver.Block: " + b);
             System.out.println("Free Spaces: " + free);
             System.out.println("Direction: " + dir);
       
             if(b.movable(move, free)) {
                 System.out.println("Moved");
                 b.move(dir, move, free);
-                System.out.println("Moved Block:" + b + "\n");
+                System.out.println("Moved Solver.Block:" + b + "\n");
             } else {
                 System.out.println("No Move\n");
             }
@@ -185,27 +187,27 @@ public class Block
 }
 //output for this main
 /*
-Block: 2 2 1 1
+Solver.Block: 2 2 1 1
 Free Spaces: [0 0, 0 1, 1 0, 0 2, 2 0]
 Direction: -1 0
 Moved
-Moved Block:2 2 0 1
+Moved Solver.Block:2 2 0 1
 
-Block: 2 2 1 1
+Solver.Block: 2 2 1 1
 Free Spaces: [0 0, 0 1, 1 0, 0 2, 2 0]
 Direction: 1 0
 No Move
 
-Block: 2 2 1 1
+Solver.Block: 2 2 1 1
 Free Spaces: [0 0, 0 1, 1 0, 0 2, 2 0]
 Direction: 0 1
 No Move
 
-Block: 2 2 1 1
+Solver.Block: 2 2 1 1
 Free Spaces: [0 0, 0 1, 1 0, 0 2, 2 0]
 Direction: 0 -1
 Moved
-Moved Block:2 2 1 0
+Moved Solver.Block:2 2 1 0
 
 Testing equals
 2 2 1 1 == 2 2 1 1 -> true

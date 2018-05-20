@@ -1,12 +1,12 @@
 # READ THIS PLEASE
 
-If you want to run my code for yourself, execute the the Solver.class file via the terminal.
+If you want to run my code for yourself, execute the the Solver.Solver.class file via the terminal.
 
 Reference the project prompt for full specification of the program and starting arguments.
 
-**An example would be something like this: `java Solver c52 50.52.goal` executed when in a directory with all of the contents of this folder**
+**An example would be something like this: `java Solver.Solver c52 50.52.goal` executed when in a directory with all of the contents of this folder**
 
-**An example of verifying that the program works as desired is by piping my program through a checker with the following command: `java Solver c52 50.52.goal | java Checker c52 50.52.goal`**
+**An example of verifying that the program works as desired is by piping my program through a checker with the following command: `java Solver.Solver c52 50.52.goal | java Checker c52 50.52.goal`**
 
 *Note that the Checker class was provided by the course.*
 

@@ -1,7 +1,9 @@
+package Solver;
+
 import java.util.*;
 
 /**
- * This object represents a Board and has method to set paths,
+ * This object represents a Solver.Board and has method to set paths,
  * generate moves, and check for win condition
  * 
  * @author Daniel Van Der Maden
@@ -40,7 +42,7 @@ public class Board
      * solution is found
      *  
      * @param parent the board that generated the current board
-     * @param movedBlockRef the Block that was moved to get to this
+     * @param movedBlockRef the Solver.Block that was moved to get to this
      * @param movedDirRef the direction taken to get to this
      */
     public void setPath(Board parent, Block movedBlockRef, Location movedDirRef){
@@ -53,7 +55,7 @@ public class Board
      * Move a block in a desired direction
      * 
      * @param b the block you are trying to move
-     * @param dir the Location 'direction' that you are moving
+     * @param dir the Solver.Location 'direction' that you are moving
      * @return A board with the block moved or null if it was an invalid move
      */
     public Board move(Block b, Location dir){
@@ -139,7 +141,7 @@ public class Board
         free.add(Location.getLocationRef(0, 1));
         free.add(Location.getLocationRef(0, 2));
         
-        //Test Code for Black Board
+        //Test Code for Black Solver.Board
         HashSet<Location> allLocations = new HashSet<>();
         for (int i = 0; i < Location.getTableWidth(); i++)
             for (int j = 0; j < Location.getTableHeight(); j++)
@@ -148,17 +150,17 @@ public class Board
         Board test = new Board(parts, free);
         Board blank = new Board(new HashSet<Block>(), allLocations);
         
-        System.out.println("Test Board output: " + test);
+        System.out.println("Test Solver.Board output: " + test);
         System.out.println("Blank board output: " + blank);
       
         System.out.println("\nTesting Set Paths");
         test.setPath(new Board(new HashSet<Block>()), new Block(1,1,0,2), 
                                            Location.getLocationRef(2,0));
-        System.out.println("Parent Board: " + test.getParent());
-        System.out.println("Moved Block: " + test.getMovedBlockRef());
+        System.out.println("Parent Solver.Board: " + test.getParent());
+        System.out.println("Moved Solver.Block: " + test.getMovedBlockRef());
         System.out.println("Moved direction: " + test.getMovedDirRef());
         
-        System.out.println("\nTesting Block movement");
+        System.out.println("\nTesting Solver.Block movement");
         
         Board resultGood = test.move(new Block(2,2,1,1), Location.NORTH);
         Board resultBad = test.move(new Block(2,2,1,1), Location.SOUTH);
@@ -187,7 +189,7 @@ public class Board
 }
 //Output for this main
 /*
- Test Board output: 
+ Test Solver.Board output:
 2 2 1 1
 1 1 0 0
 
@@ -195,12 +197,12 @@ Blank board output:
 
 
 Testing Set Paths
-Parent Board: 
+Parent Solver.Board:
 
-Moved Block: 1 1 2 0
+Moved Solver.Block: 1 1 2 0
 Moved direction: 0 2
 
-Testing Block movement
+Testing Solver.Block movement
 Moving the 2x2 block up -> 
 2 2 0 1
 1 1 0 0

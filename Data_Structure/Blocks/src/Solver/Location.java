@@ -1,12 +1,14 @@
+package Solver;
+
 import java.util.Arrays;
 
 /**
  *
  *  This is an Object that represents a location in a board
- *  It saves a 2D array of Location Objects for a given board
+ *  It saves a 2D array of Solver.Location Objects for a given board
  *  So that we can REFERENCE the objects and instead of created new 
- *  Location instances. This Object also supports Location addition, used
- *  to move blocks in the Block object.
+ *  Solver.Location instances. This Object also supports Solver.Location addition, used
+ *  to move blocks in the Solver.Block object.
  * 
  * @author Daniel Van Der Maden
  *
@@ -33,7 +35,7 @@ public class Location
 
 
     /**
-     * Sets a Class array of all Location objects for the given board
+     * Sets a Class array of all Solver.Location objects for the given board
      *
      * @param width of the board
      * @param height of the board
@@ -47,11 +49,11 @@ public class Location
     }
 
     /**
-     * Returns a Location reference for a table
+     * Returns a Solver.Location reference for a table
      * 
      * @param row desired this.row
      * @param col desired this.column
-     * @return desired Location object
+     * @return desired Solver.Location object
      */
     public static Location getLocationRef(int row, int col){
         if (row >= 0 && col >= 0 && row < allLocations.length 
@@ -103,7 +105,7 @@ public class Location
 
 
     /**
-     * Movement Instances of a Location - Used in computing the Moves
+     * Movement Instances of a Solver.Location - Used in computing the Moves
      */
     public final static Location NORTH = new Location(0,-1), 
                                 SOUTH = new Location(0,1),

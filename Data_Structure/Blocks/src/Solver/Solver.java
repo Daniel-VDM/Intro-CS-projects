@@ -1,3 +1,5 @@
+package Solver;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -46,10 +48,10 @@ public class Solver
     /**
      * The main 'logic' of the program
      * 
-     * @return Solved Board or Null if no solution
+     * @return Solved Solver.Board or Null if no solution
      */
     public Board solve(){
-        //Check if the initial Board is the goal
+        //Check if the initial Solver.Board is the goal
         if(this.ini.checkGoal(this.goal))
             return this.ini;
         
@@ -151,7 +153,7 @@ public class Solver
      */
 
     /**
-     * Configures the Block Hashset of a board from the buffer.
+     * Configures the Solver.Block Hashset of a board from the buffer.
      *
      * @param reader A buffer from the file that contains the desired blocks
      * @param bdBlks THe Hashset of a desired board state
@@ -192,7 +194,7 @@ public class Solver
      * 
      * @param iniFile The initial file location
      * @param goalFile the goal file location
-     * @return a Solver instance with the board setup
+     * @return a Solver.Solver instance with the board setup
      * @throws Exception File read exception
      */
     public static Solver setSolver(String iniFile, 
@@ -284,7 +286,7 @@ public class Solver
         
         //Debug stuff
         if(puzzle.DEBUG == 2)
-            System.out.println("Board before solve:" + puzzle.ini);
+            System.out.println("Solver.Board before solve:" + puzzle.ini);
         
         long start = 0;
         if(puzzle.DEBUG == 4)
@@ -306,7 +308,7 @@ public class Solver
                 System.out.println("No Solution-");
         }
         if(puzzle.DEBUG == 2)
-            System.out.println("Board after solve:" + solved);
+            System.out.println("Solver.Board after solve:" + solved);
         
         long time = System.currentTimeMillis() - start;
         if(puzzle.DEBUG == 4)
