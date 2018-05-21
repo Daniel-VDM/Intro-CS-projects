@@ -21,8 +21,7 @@ public class Solver
     private Board ini, goal;
 
     //Constructor
-    public Solver(HashSet<Block> ini, HashSet<Block> goal,
-                    int height, int width, int DEBUG){
+    public Solver(HashSet<Block> ini, HashSet<Block> goal, int height, int width, int DEBUG){
         this.height = height;
         this.width = width;
         this.DEBUG = DEBUG;

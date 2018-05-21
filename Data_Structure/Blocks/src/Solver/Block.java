@@ -103,8 +103,7 @@ public class Block
      * @param occupied Array of occupied Solver.Location places
      * @param empty HashSet of empty Solver.Location places
      */
-    public void move(Location direction, Location[] occupied, 
-                                 HashSet<Location> empty){
+    public void move(Location direction, Location[] occupied, HashSet<Location> empty){
         Location newFreeTuple = null;
         int stepsToOppSide = (occupied.length == this.width) ? this.height 
                                                              : this.width;
