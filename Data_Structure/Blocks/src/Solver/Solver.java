@@ -12,17 +12,12 @@ import java.util.*;
 
 public class Solver
 {
-    private final int height, width; 
     private final int DEBUG;
-
     private HashSet<Board> seen;
-
     private Board ini, goal;
 
     //Constructor
     public Solver(HashSet<Block> ini, HashSet<Block> goal, int height, int width, int DEBUG){
-        this.height = height;
-        this.width = width;
         this.DEBUG = DEBUG;
         HashSet<Location> free = new HashSet<>();
       
