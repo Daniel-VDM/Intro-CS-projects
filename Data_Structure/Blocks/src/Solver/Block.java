@@ -84,7 +84,7 @@ public class Block
      * Checks if there is space for this block to move in the current board
      * 
      * @param free space needed for a move
-     * @param emptyPlaces free spaces in current table
+     * @param emptyLocation free spaces in current table
      * @return T/F if you can move the block
      */
     public boolean movable(Location[] free, HashSet<Location> emptyLocation){

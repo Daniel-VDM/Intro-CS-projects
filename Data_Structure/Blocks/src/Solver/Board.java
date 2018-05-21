@@ -106,20 +106,18 @@ public class Board
     }
 
     public String toString(){
-        String s = "\n";
+        StringBuilder s = new StringBuilder("\n");
         for (Block b:this.layout)
-            s += b.toString() + "\n";
-        return s;
+            s.append(b.toString()).append("\n");
+        return s.toString();
     }
 
     /**
      * @return A new instance of a board that is the same as current
      */
     public Board copy(){
-        HashSet<Block> newLayout = new HashSet<>();
-        HashSet<Location> newFree = new HashSet<>();
-        newLayout.addAll(layout);
-        newFree.addAll(free);
+        HashSet<Block> newLayout = new HashSet<>(layout);
+        HashSet<Location> newFree = new HashSet<>(free);
         return new Board(newLayout, newFree);
     }
 
@@ -148,13 +146,13 @@ public class Board
                 allLocations.add(Location.getLocationRef(i, j));
         
         Board test = new Board(parts, free);
-        Board blank = new Board(new HashSet<Block>(), allLocations);
+        Board blank = new Board(new HashSet<>(), allLocations);
         
         System.out.println("Test Solver.Board output: " + test);
         System.out.println("Blank board output: " + blank);
       
         System.out.println("\nTesting Set Paths");
-        test.setPath(new Board(new HashSet<Block>()), new Block(1,1,0,2), 
+        test.setPath(new Board(new HashSet<>()), new Block(1,1,0,2),
                                            Location.getLocationRef(2,0));
         System.out.println("Parent Solver.Board: " + test.getParent());
         System.out.println("Moved Solver.Block: " + test.getMovedBlockRef());

@@ -13,10 +13,10 @@ import java.util.*;
 public class Solver
 {
     private final int height, width; 
-    public final int DEBUG;
+    private final int DEBUG;
 
-    public HashSet<Location> free;
-    public HashSet<Board> seen;
+    private HashSet<Location> free;
+    private HashSet<Board> seen;
 
     private Board ini, goal;
 
@@ -50,7 +50,7 @@ public class Solver
      * 
      * @return Solved Solver.Board or Null if no solution
      */
-    public Board solve(){
+    private Board solve(){
         //Check if the initial Solver.Board is the goal
         if(this.ini.checkGoal(this.goal))
             return this.ini;
@@ -96,7 +96,7 @@ public class Solver
      * 
      * @param curr The board you want to start printing from
      */
-    public void printPath(Board curr){
+    private void printPath(Board curr){
         if(curr == null){
             //System.err.println("No Solution");
             System.exit(1);
@@ -132,7 +132,7 @@ public class Solver
      * @param curr The board you want to start printing from 
      * @return  number of moves required
      */
-    public int numOfMoves(Board curr){
+    private int numOfMoves(Board curr){
         if(curr == null){
             System.err.println("No9 Solution");
             System.exit(1);
@@ -165,14 +165,12 @@ public class Solver
                 token = reader.readLine().split(" ");
             } catch (Exception e) {
                 break;
-            } if (token == null) {
-                break;
-            } else {
+            } if (token != null) {
                 bdBlks.add (new Block(Integer.parseInt(token[0]),
                         Integer.parseInt(token[1]),
                         Integer.parseInt(token[3]),
                         Integer.parseInt(token[2])));
-            }
+            } else break;
         }
     }
 
@@ -181,7 +179,7 @@ public class Solver
      *
      * @param fileName location of file
      * @return buffered reader of the file
-     * @throws Exception
+     * @throws Exception if anything goes wrong (standard exception)
      */
     private static BufferedReader reader (String fileName) throws Exception {
         File wordFile = new File (fileName);
@@ -197,7 +195,7 @@ public class Solver
      * @return a Solver.Solver instance with the board setup
      * @throws Exception File read exception
      */
-    public static Solver setSolver(String iniFile, 
+    private static Solver setSolver(String iniFile,
                    String goalFile, int DebugMode)throws Exception{
         BufferedReader reader;
         HashSet<Block> iniConfig = new HashSet<>();
@@ -225,7 +223,7 @@ public class Solver
      * @param arg user debug mode
      * @throws Exception if invalid argument
      */
-    public static int setDEBUG(String arg) throws Exception{
+    private static int setDEBUG(String arg) throws Exception{
         //Debug option output
         switch (arg) {
             case "-ooption":
