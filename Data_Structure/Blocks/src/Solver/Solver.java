@@ -15,7 +15,6 @@ public class Solver
     private final int height, width; 
     private final int DEBUG;
 
-    private HashSet<Location> free;
     private HashSet<Board> seen;
 
     private Board ini, goal;
@@ -25,7 +24,7 @@ public class Solver
         this.height = height;
         this.width = width;
         this.DEBUG = DEBUG;
-        this.free = new HashSet<>();
+        HashSet<Location> free = new HashSet<>();
       
         //Boolean Array to setup the board
         boolean[][] occupied = new boolean[width][height];
@@ -37,7 +36,7 @@ public class Solver
         //Set the free locations of currCopy board
         for(int i = 0; i < width; i++)
             for(int j = 0; j < height; j++)
-                if(!occupied[i][j]) this.free.add(Location.getLocationRef(i, j));
+                if(!occupied[i][j]) free.add(Location.getLocationRef(i, j));
       
         //Set Boards
         this.ini = new Board(ini, free);
@@ -133,7 +132,7 @@ public class Solver
      */
     private int numOfMoves(Board curr){
         if(curr == null){
-            System.err.println("No9 Solution");
+            System.err.println("No Solution");
             System.exit(1);
         }
         int count = 1;
@@ -194,13 +193,11 @@ public class Solver
      * @return a Solver.Solver instance with the board setup
      * @throws Exception File read exception
      */
-    private static Solver setSolver(String iniFile,
-                   String goalFile, int DebugMode)throws Exception{
+    private static Solver setSolver(String iniFile, String goalFile, int DebugMode)throws Exception{
         BufferedReader reader;
         HashSet<Block> iniConfig = new HashSet<>();
         HashSet<Block> goalConfig = new HashSet<>();
         String[] token;
-
 
         //Set the iniConfig for the given board
         reader = reader(iniFile);
