@@ -6,53 +6,32 @@
 ; Some utility functions that you may find useful to implement.
 
 (define (cons-all first rests)
-  (map (lambda (x) (cons first x)) rests)
-)
+  (map (lambda (x) (cons first x)) rests))
 
 (define (zip pairs)
-  (cons (map car pairs) (list (map cadr pairs)))
-)
+  (cons (map car pairs) (list (map cadr pairs))))
 
 ;; Problem 17
 ;; Returns a list of two-element lists
 (define (enumerate s)
-  ; BEGIN PROBLEM 17
   (define (enum i lst)
     (if (null? lst)
       nil
-      (cons
-        (list i (car lst))
-        (enum (+ i 1) (cdr lst))
-      )
-    )
-  )
-  (enum 0 s)  
-)
-  ; END PROBLEM 17
+      (cons (list i (car lst))
+            (enum (+ i 1) (cdr lst)))))
+  (enum 0 s))
 
 ;; Problem 18
 ;; List all ways to make change for TOTAL with DENOMS
 (define (list-change total denoms)
-  ; BEGIN PROBLEM 18
   (cond 
-    ((= total 0)
-      (cons nil nil)
-    )
-    ((or (< total 0) (null? denoms))
-      nil
-    )
+    ((= total 0) (cons nil nil))
+    ((or (< total 0) (null? denoms)) nil)
     (else
-      (let
-        (
-          (with-first (cons-all (car denoms) (list-change (- total (car denoms)) denoms)) )
-          (without-first (list-change total (cdr denoms)))
-        )
-        (append with-first without-first) 
-      )
-    )
-  )
-)
-; END PROBLEM 18
+      (let ((with-first (cons-all (car denoms) (list-change (- total (car denoms)) denoms)) )
+            (without-first (list-change total (cdr denoms))))
+        (append with-first without-first)))))
+
 
 ;; Problem 19
 ;; Returns a function that checks if an expression is the special form FORM
